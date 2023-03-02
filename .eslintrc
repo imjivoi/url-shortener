@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "extends": ["@nuxtjs/eslint-config-typescript", "plugin:prettier/recommended"],
+  "rules": {
+    "no-console": "off",
+    "sort-imports": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": ["external", "builtin", "internal", "parent", "sibling", "index", "object", "type"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc" /* sort in ascending order. Options: ['ignore', 'asc', 'desc'] */,
+          "caseInsensitive": false /* ignore case. Options: [true, false] */
+        }
+      }
+    ],
+    "camelcase": "off",
+    "typescript-eslint/no-var-requires": "off",
+    "vue/no-multiple-template-root": "off",
+    "vue/multi-word-component-names": "off",
+    "vue/script-setup-uses-vars": "error",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/first": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}
