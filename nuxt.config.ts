@@ -16,12 +16,14 @@ export default defineNuxtConfig({
     entities: fileURLToPath(new URL('./entities', import.meta.url)),
     assets: fileURLToPath(new URL('./app/assets', import.meta.url)),
     server: fileURLToPath(new URL('./server', import.meta.url)),
+    widgets: fileURLToPath(new URL('./widgets', import.meta.url)),
   },
   imports: { dirs: ['./shared/ui', './shared/composables'] },
   dir: {
     layouts: './shared/layouts',
     middleware: './app/middleware',
     public: './app/public',
+    plugins: './app/plugins',
   },
   components: {
     dirs: [{ path: './shared/ui', prefix: 'shared-ui' }],

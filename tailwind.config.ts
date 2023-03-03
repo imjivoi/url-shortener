@@ -7,6 +7,7 @@ export default <Partial<Config>>{
     './pages/**/*.vue',
     './features/**/*.vue',
     './entities/**/*.vue',
+    './widgets/**/*.vue',
   ],
   daisyui: {
     styled: true,

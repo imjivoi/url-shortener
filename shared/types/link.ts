@@ -5,9 +5,15 @@ export const CreateUrlSchema = z.object({
   original_url: z.string().url(),
 })
 
-export type UrlType = {
+export type LinkType = {
   id: string
   original_url: string
   redirect_url: string
   title: string
+  clicks: number
+}
+
+export type TotalLinktatisticType = {
+  links: number
+  clicks: number
 }

@@ -4,7 +4,12 @@
   "compilerOptions": {
     "types": ["@nuxtjs/supabase", "@nuxt/types"],
     "paths": {
-      "server/*": ["./server/*"]
+      "server/*": ["./server/*"],
+      "app/*": ["./app/*"],
+      "entities/*": ["./entities/*"],
+      "features/*": ["./features/*"],
+      "widgets/*": ["./widgets/*"],
+      "shared/*": ["./shared/*"]
     }
   }
 }

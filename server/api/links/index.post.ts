@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   const { original_url, title } = body.data
 
   const { data, error } = await client
-    .from('urls')
+    .from('links')
     .insert([
       {
         title,
@@ -37,10 +37,10 @@ export default defineEventHandler(async (event) => {
     .single()
 
   if (!error) {
-    await client.from('urls_users').insert([
+    await client.from('links_users').insert([
       {
         user_id: user!.id,
-        url_id: data!.id,
+        link_id: data!.id,
       },
     ])
   }

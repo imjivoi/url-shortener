@@ -21,11 +21,11 @@ export default defineEventHandler(async (event) => {
     })
   }
   const currentUrl = config.public.DOMAIN_URL + '/' + params.data.token
-  const { data, error } = await client.from('urls').select('original_url, id').eq('redirect_url', currentUrl).single()
+  const { data, error } = await client.from('links').select('original_url, id').eq('redirect_url', currentUrl).single()
   if (data?.original_url) {
-    const { error: visitError } = await client.from('url_click').insert([
+    const { error: visitError } = await client.from('link_click').insert([
       {
-        url_stat_id: data.id,
+        link_stat_id: data.id,
       },
     ])
 

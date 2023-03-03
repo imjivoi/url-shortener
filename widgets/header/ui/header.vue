@@ -1,6 +1,6 @@
 <template>
-  <header>
-    <div class="navbar bg-base-100 container mx-auto">
+  <header class="shadow-md bg-base-100">
+    <div class="navbar container mx-auto">
       <div class="navbar-start">
         <div class="dropdown">
           <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -48,12 +48,7 @@
           </select>
         </div>
 
-        <input
-          type="checkbox"
-          class="toggle toggle-primary toggle-md"
-          :checked="$colorMode.preference === 'dark' || $colorMode.value === 'dark'"
-          @change="toggleTheme"
-        />
+        <shared-ui-color-toggle />
       </div>
     </div>
   </header>
@@ -63,13 +58,5 @@ const localePath = useLocalePath()
 
 const user = useSupabaseUser()
 
-const colorMode = useColorMode()
 const { locale: currentLocale, locales } = useI18n()
-const toggleTheme = (event: Event) => {
-  if (event.target!.checked) {
-    colorMode.preference = 'dark'
-  } else {
-    colorMode.preference = 'light'
-  }
-}
 </script>

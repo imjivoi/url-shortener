@@ -1,5 +1,5 @@
 import { supabaseClient } from 'server/supabase'
-import { UrlType } from 'shared/types'
+import { LinkType } from 'shared/types'
 
 import { serverSupabaseUser } from '#supabase/server'
 
@@ -7,9 +7,9 @@ export default defineEventHandler(async (event) => {
   const user = await serverSupabaseUser(event)
   const client = supabaseClient(event)
 
-  const result: UrlType[] = []
+  const result: LinkType[] = []
 
-  const { data, error } = await client.from('urls_users').select('url:urls(*)').eq('user_id', user?.id)
+  const { data, error } = await client.from('links_users').select('link:links(*)').eq('user_id', user?.id)
   if (error) {
     console.log(error)
     throw createError({
@@ -17,17 +17,16 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Internal server error',
     })
   }
-
   for await (const item of data) {
     const { data: urlClicks, error: urlClicksError } = await client
-      .from('url_click')
+      .from('link_click')
       .select('id')
-      .eq('url_stat_id', item.url!.id)
+      .eq('link_stat_id', item.link!.id)
 
     if (urlClicks) {
-      item.url.total_clicks = urlClicks.length
+      item.link!.clicks = urlClicks.length
     }
-    result.push(item.url)
+    result.push(item.link)
   }
 
   return result
