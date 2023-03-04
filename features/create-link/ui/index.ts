@@ -1,1 +1,1 @@
-export { default as FeatureCreateLinkModal } from './create-link-modal.vue'
+export { default as FeatureCreateLinkTrigger } from './create-link-trigger.vue'

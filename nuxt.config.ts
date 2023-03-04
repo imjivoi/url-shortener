@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     server: fileURLToPath(new URL('./server', import.meta.url)),
     widgets: fileURLToPath(new URL('./widgets', import.meta.url)),
   },
-  imports: { dirs: ['./shared/ui', './shared/composables'] },
+  imports: { dirs: ['shared/ui', 'shared/composables'] },
   dir: {
     layouts: './shared/layouts',
     middleware: './app/middleware',
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   components: {
     dirs: [{ path: './shared/ui', prefix: 'shared-ui' }],
   },
-  css: ['~/app/styles/index.scss'],
+  css: ['vue-final-modal/style.css', '~/app/styles/index.scss'],
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-svgo',

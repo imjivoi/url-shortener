@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!pending && !linksData?.length" class="h-full flex items-center justify-center">
-    <feature-create-link-modal />
+  <div v-if="!pending && !linksData?.length" class="flex items-center justify-center">
+    <feature-create-link-trigger @success="refresh" />
   </div>
   <div v-if="linksData?.length">
     <h2 class="mb-2 text-2xl font-bold text-center">Links</h2>
@@ -9,26 +9,34 @@
       :key="link.id"
       :link="link"
       @copy="copyLink(link.redirect_url)"
-      @delete="deleteLink(link.id)"
+      @delete="openConfirmDeleteModal"
     />
     <div class="mt-10 text-center">
-      <feature-create-link-modal>Add new link</feature-create-link-modal>
+      <feature-create-link-trigger @success="refresh" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { useClipboard } from '@vueuse/core'
+import { useModal } from 'vue-final-modal'
 import { useToast } from 'vue-toastification'
 
 import { EntityLinkCard } from 'entities/url'
-import { FeatureCreateLinkModal } from 'features/create-link'
+import { FeatureCreateLinkTrigger } from 'features/create-link'
+import ConfirmModal from 'shared/ui/confirm-modal.vue'
 
 const { copy } = useClipboard()
 const toast = useToast()
+const { open: openConfirmDeleteModal } = useModal({
+  component: ConfirmModal,
+  attrs: {
+    title: 'Do you realy want to delete this link?',
+  },
+})
 
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 
-const { data: linksData, pending } = useLazyFetch('/api/links', { headers })
+const { data: linksData, pending, refresh } = useLazyFetch('/api/links', { headers })
 
 const copyLink = async (value: string) => {
   await copy(value)
