@@ -3,13 +3,11 @@ import { useSafeValidatedParams, z } from 'h3-zod'
 import { supabaseClient } from 'server/supabase'
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
-
   const client = supabaseClient(event)
   const params = useSafeValidatedParams(
     event,
     z.object({
-      token: z.string(),
+      alias: z.string(),
     }),
   )
   if (!params.success) {
@@ -20,12 +18,11 @@ export default defineEventHandler(async (event) => {
       data: formattedErrors,
     })
   }
-  const currentUrl = config.public.DOMAIN_URL + '/' + params.data.token
-  const { data, error } = await client.from('links').select('original_url, id').eq('redirect_url', currentUrl).single()
+  const { data, error } = await client.from('links').select('original_url, id').eq('alias', params.data.alias).single()
   if (data?.original_url) {
     const { error: visitError } = await client.from('link_click').insert([
       {
-        link_stat_id: data.id,
+        link_id: data.id,
       },
     ])
 

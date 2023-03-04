@@ -3,6 +3,6 @@
 </template>
 <script lang="ts" setup>
 definePageMeta({
-  middleware: 'token',
+  middleware: 'alias',
 })
 </script>

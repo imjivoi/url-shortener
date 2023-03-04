@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { original_url, title } = body.data
+  const { original_url, title, alias } = body.data
 
   const { data, error } = await client
     .from('links')
@@ -30,7 +30,8 @@ export default defineEventHandler(async (event) => {
       {
         title,
         original_url,
-        redirect_url: config.public.DOMAIN_URL + '/' + nanoid(10),
+        redirect_url: config.public.DOMAIN_URL + '/' + alias,
+        alias,
       },
     ])
     .select('*')

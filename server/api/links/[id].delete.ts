@@ -21,5 +21,11 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const {error} = await client.from('')
+  const { error } = await client.from('links').delete().eq('id', params.data.id)
+  console.log(error)
+
+  if (error) {
+    throw createError({ statusCode: 500 })
+  }
+  return ''
 })

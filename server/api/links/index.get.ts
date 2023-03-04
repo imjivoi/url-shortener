@@ -21,10 +21,10 @@ export default defineEventHandler(async (event) => {
     const { data: urlClicks, error: urlClicksError } = await client
       .from('link_click')
       .select('id')
-      .eq('link_stat_id', item.link!.id)
+      .eq('link_id', item.link!.id)
 
     if (urlClicks) {
-      item.link!.clicks = urlClicks.length
+      item.link!.clicks = urlClicks.length || 0
     }
     result.push(item.link)
   }

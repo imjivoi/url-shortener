@@ -9,5 +9,5 @@ import { EntityLinksTotalStatistic } from 'entities/url'
 import { WidgetLinksList } from 'widgets/links'
 
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
-const { data: linksStatistic, pending: pendingLinksStatistic } = useLazyFetch('/api/links/statistic', { headers })
+const { data: linksStatistic, pending: pendingLinksStatistic } = useLazyFetch('/api/links/click', { headers })
 </script>

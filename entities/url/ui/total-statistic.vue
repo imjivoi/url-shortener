@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { TotalLinktatisticType } from '../../../shared/types'
+import { TotalLinktatisticType } from 'shared/types'
 
 interface Props {
   statistic: TotalLinktatisticType

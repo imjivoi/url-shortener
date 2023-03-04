@@ -16,14 +16,14 @@
       </div>
       <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-10">
         <div>
-          {{ link.clicks }}
+          {{ link.clicks || 0 }}
           <Icon size="15px" name="ion:stats-chart-outline" />
         </div>
         <div class="flex flex-col sm:flex-row">
           <button class="btn btn-sm btn-ghost hover:text-primary">
             <Icon size="15px" name="material-symbols:content-copy-outline" @click="$emit('copy')" />
           </button>
-          <button class="btn btn-sm btn-ghost hover:text-error">
+          <button class="btn btn-sm btn-ghost hover:text-error" @click="$emit('delete')">
             <Icon size="15px" name="material-symbols:delete-outline" />
           </button>
         </div>

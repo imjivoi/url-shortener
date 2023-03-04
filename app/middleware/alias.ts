@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware(async ({ params }) => {
   const headers = useRequestHeaders(['cookie']) as Record<string, string>
-  const response = await $fetch(`/api/url/get-by-token/${params.token}`, {
+  const response = await $fetch(`/api/links/alias/${params.alias}`, {
     method: 'GET',
     headers,
   })
