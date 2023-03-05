@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   components: {
     dirs: [{ path: './shared/ui', prefix: 'shared-ui' }],
   },
-  css: ['vue-final-modal/style.css', '~/app/styles/index.scss'],
+  css: ['~/app/styles/index.scss'],
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-svgo',
@@ -39,8 +39,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-viewport',
     '@nuxtjs/device',
-    '@nuxtjs/color-mode',
     '@nuxtjs/i18n',
+    '@nuxtjs/color-mode',
   ],
   colorMode,
   i18n,

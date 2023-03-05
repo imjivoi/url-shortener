@@ -8,7 +8,7 @@
         </div>
         <div class="stat-title">Links</div>
         <div class="stat-value text-primary">
-          {{ statistic.links }}
+          {{ statistic?.links }}
         </div>
       </div>
 
@@ -18,7 +18,7 @@
         </div>
         <div class="stat-title">Clicks</div>
         <div class="stat-value text-secondary">
-          {{ statistic.clicks }}
+          {{ statistic?.clicks }}
         </div>
       </div>
     </div>
@@ -26,10 +26,10 @@
 </template>
 
 <script lang="ts" setup>
-import { TotalLinktatisticType } from 'shared/types'
+import { TotalLinkStatisticType } from 'shared/types'
 
 interface Props {
-  statistic: TotalLinktatisticType
+  statistic: TotalLinkStatisticType | null
 }
 
 defineProps<Props>()

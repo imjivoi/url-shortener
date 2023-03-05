@@ -1,8 +1,10 @@
 body {
-  height: 100vh;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
 #__nuxt {
   height: 100%;
+  position: relative;
+  min-height: 100vh;
 }

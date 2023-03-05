@@ -147,7 +147,7 @@ const checkAlias = async () => {
   try {
     const response = await $fetch(`/api/links/alias/${alias.value}`, { headers })
     if (response) {
-      alias.value = 'Alias already exist'
+      aliasError.value = 'Alias already exist'
     }
   } catch (error) {}
 }

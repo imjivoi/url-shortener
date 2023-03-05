@@ -5,6 +5,7 @@
     :lock-scroll="true"
     overlay-transition="vfm-fade"
     content-transition="vfm-fade"
+    teleport-to="#__nuxt"
   >
     <button class="btn btn-sm btn-circle absolute right-2 top-2 z-10 sm:z-0" @click="$emit('update:modelValue')">
       <Icon size="20px" name="material-symbols:close-rounded" />

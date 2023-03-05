@@ -3,13 +3,6 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "types": ["@nuxtjs/supabase", "@nuxt/types"],
-    "paths": {
-      "server/*": ["./server/*"],
-      "app/*": ["./app/*"],
-      "entities/*": ["./entities/*"],
-      "features/*": ["./features/*"],
-      "widgets/*": ["./widgets/*"],
-      "shared/*": ["./shared/*"]
-    }
+    "paths": {}
   }
 }

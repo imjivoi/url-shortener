@@ -1,8 +1,8 @@
 <template>
-  <client-only>
+  <ColorScheme placeholder="..." tag="span">
     <label class="swap swap-rotate">
       <!-- this hidden checkbox controls the state -->
-      <input type="checkbox" :checked="checked" @change="toggleTheme" />
+      <input type="checkbox" :checked="isDark" @change="toggleTheme" />
 
       <!-- sun icon -->
       <svg class="swap-off fill-warning w-[25px] h-[25px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -18,12 +18,12 @@
         />
       </svg>
     </label>
-  </client-only>
+  </ColorScheme>
 </template>
 <script lang="ts" setup>
 const colorMode = useColorMode()
 
-const checked = computed(() => colorMode.preference === 'dark' || colorMode.value === 'dark')
+const isDark = computed(() => colorMode.preference === 'dark' || colorMode.value === 'dark')
 
 const toggleTheme = (event: Event) => {
   if (event.target!.checked) {

@@ -32,13 +32,18 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useClipboard } from '@vueuse/core'
+import { useToast } from 'vue-toastification'
+
 import { LinkType } from 'shared/types'
 
 interface Props {
   link: LinkType
 }
-const { t } = useI18n()
 
 defineProps<Props>()
+
 const emits = defineEmits(['copy', 'delete'])
+
+
 </script>

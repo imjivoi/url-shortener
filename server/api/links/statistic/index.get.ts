@@ -1,5 +1,5 @@
 import { supabaseClient } from 'server/supabase'
-import { TotalLinktatisticType } from 'shared/types'
+import { TotalLinkStatisticType } from 'server/types'
 
 import { serverSupabaseUser } from '#supabase/server'
 
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const client = supabaseClient(event)
   const user = await serverSupabaseUser(event)
 
-  const result: TotalLinktatisticType = {
+  const result: TotalLinkStatisticType = {
     links: 0,
     clicks: 0,
   }
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  result.links = data.length
+  result.links = data.length || 0
 
   for await (const item of data) {
     const { data: urlClicks, error: urlClicksError } = await client

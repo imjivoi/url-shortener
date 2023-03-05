@@ -20,5 +20,4 @@ export default <Partial<Config>>{
   },
 
   plugins: [require('daisyui')],
-  darkMode: 'class',
 }
