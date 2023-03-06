@@ -1,5 +1,4 @@
 import { useSafeValidatedBody } from 'h3-zod'
-import { nanoid } from 'nanoid'
 
 import { supabaseClient } from 'server/supabase'
 import { CreateUrlSchema } from 'shared/types'
@@ -25,26 +24,18 @@ export default defineEventHandler(async (event) => {
   const { original_url, title, alias } = body.data
 
   const { data, error } = await client
-    .from('links')
+    .from('link')
     .insert([
       {
         title,
         original_url,
         redirect_url: config.public.DOMAIN_URL + '/' + alias,
         alias,
+        user_id: user!.id,
       },
     ])
     .select('*')
     .single()
-
-  if (!error) {
-    await client.from('links_users').insert([
-      {
-        user_id: user!.id,
-        link_id: data!.id,
-      },
-    ])
-  }
 
   return data
 })

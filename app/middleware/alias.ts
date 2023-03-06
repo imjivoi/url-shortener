@@ -1,4 +1,6 @@
 export default defineNuxtRouteMiddleware(async ({ params }) => {
+  const device = useDevice()
+
   const headers = useRequestHeaders(['cookie']) as Record<string, string>
   const response = await $fetch(`/api/links/alias/${params.alias}`, {
     method: 'GET',
@@ -9,4 +11,5 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
       external: true,
     })
   }
+  return navigateTo('/')
 })

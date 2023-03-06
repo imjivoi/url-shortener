@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     clicks: 0,
   }
 
-  const { data, error } = await client.from('links_users').select('link:links(*)').eq('user_id', user?.id)
+  const { count: linkCount, error } = await client.from('link').select('id', { count: 'exact' }).eq('user_id', user?.id)
   if (error) {
     console.log(error)
     throw createError({
@@ -21,18 +21,13 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  result.links = data.length || 0
+  result.links = linkCount || 0
 
-  for await (const item of data) {
-    const { data: urlClicks, error: urlClicksError } = await client
-      .from('link_click')
-      .select('id')
-      .eq('link_id', item.link!.id)
-
-    if (urlClicks) {
-      result.clicks += urlClicks.length || 0
-    }
-  }
-
+  const { count: clickCount, error: clickCountError } = await client
+    .from('click')
+    .select('link!inner(user_id)', { count: 'exact' })
+    .eq('link.user_id', user?.id)
+  console.log(clickCountError)
+  result.clicks = clickCount || 0
   return result
 })

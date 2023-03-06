@@ -1,5 +1,6 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
+import { createClick } from 'server/model'
 import { supabaseClient } from 'server/supabase'
 
 export default defineEventHandler(async (event) => {
@@ -18,15 +19,10 @@ export default defineEventHandler(async (event) => {
       data: formattedErrors,
     })
   }
-  const { data, error } = await client.from('links').select('original_url, id').eq('alias', params.data.alias).single()
-  if (data?.original_url) {
-    const { error: visitError } = await client.from('link_click').insert([
-      {
-        link_id: data.id,
-      },
-    ])
 
-    console.log(visitError)
+  const { data, error } = await client.from('link').select('original_url, id').eq('alias', params.data.alias).single()
+  if (data?.original_url) {
+    await createClick(event, data.id)
   }
   return data
 })

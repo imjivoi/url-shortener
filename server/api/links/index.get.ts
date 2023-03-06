@@ -44,10 +44,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const { data, error, count } = await client
-    .from('links_users')
-    .select('link:links(*)', { count: 'exact' })
+    .from('link')
+    .select('*, clicks:click(id)')
     .eq('user_id', user?.id)
     .range(from, to)
+
   if (error) {
     console.log(error)
     throw createError({
@@ -56,16 +57,10 @@ export default defineEventHandler(async (event) => {
     })
   }
   result.count = count || 0
-  for await (const item of data) {
-    const { count: clickCount, error: urlClicksError } = await client
-      .from('link_click')
-      .select('id')
-      .eq('link_id', item.link!.id)
 
-    if (clickCount) {
-      item.link!.clicks = clickCount || 0
-    }
-    result.data.push(item.link)
+  for (const link of data) {
+    // @ts-ignore
+    result.data.push({ ...link, clicks: link.clicks?.length || 0 })
   }
 
   return result
