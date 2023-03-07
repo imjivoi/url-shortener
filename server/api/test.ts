@@ -1,11 +1,17 @@
 import { geolocation } from '@vercel/edge'
 
 export default defineEventHandler((event) => {
-  const geo = process.env.NODE_ENV === 'production' ? geolocation(event.node.req) : {}
+  try {
+    const geo = process.env.NODE_ENV === 'production' ? geolocation(event.node.req) : {}
 
-  console.log(getHeader(event, 'user-agent'))
+    console.log(getHeader(event, 'user-agent'))
 
-  return {
-    geo,
+    return {
+      geo,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
   }
 })
