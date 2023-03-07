@@ -35,7 +35,6 @@
     "@nuxtjs/supabase": "^0.3.0",
     "@pinia/nuxt": "^0.4.6",
     "@supabase/supabase-js": "^2.5.0",
-    "@vercel/edge": "^0.3.1",
     "@vuelidate/core": "^2.0.0",
     "@vuelidate/validators": "^2.0.0",
     "equal-vue": "^0.92.0",

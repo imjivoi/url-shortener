@@ -1,15 +1,12 @@
 // import { geolocation } from '@vercel/edge'
 
 export default defineEventHandler((event) => {
-  try {
-    // const geo = process.env.NODE_ENV === 'production' ? geolocation(event.node.req) : {}
-    // console.log(getHeader(event, 'user-agent'))
-    // return {
-    //   geo,
-    // }
-  } catch (error) {
-    return {
-      error: error?.message,
-    }
+  const cityHeader = event.req.headers['x-vercel-ip-city'] as string
+  const city = cityHeader ? decodeURIComponent(cityHeader) : '-'
+  const ipHeader = event.req.headers['x-forwarded-for'] as string
+  const ip = ipHeader ? ipHeader.split(',')[0] : '-'
+  return {
+    city,
+    ip,
   }
 })
