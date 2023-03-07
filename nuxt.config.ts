@@ -47,4 +47,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vue-toastification', 'equal-vue'],
   },
+  nitro: {
+    preset: 'vercel-edge',
+  },
 })
