@@ -44,4 +44,7 @@ export default defineNuxtConfig({
   ],
   colorMode,
   i18n,
+  build: {
+    transpile: ['vue-toastification'],
+  },
 })

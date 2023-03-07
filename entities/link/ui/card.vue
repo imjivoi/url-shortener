@@ -32,9 +32,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useClipboard } from '@vueuse/core'
-import { useToast } from 'vue-toastification'
-
 import { LinkType } from 'shared/types'
 
 interface Props {
@@ -44,6 +41,4 @@ interface Props {
 defineProps<Props>()
 
 const emits = defineEmits(['copy', 'delete'])
-
-
 </script>
