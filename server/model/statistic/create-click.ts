@@ -1,3 +1,4 @@
+import { geolocation } from '@vercel/edge'
 import { H3Event } from 'h3'
 
 import { supabaseClient } from 'server/supabase'
@@ -7,9 +8,9 @@ export const createClick = async (event: H3Event, linkId: string) => {
 
   const { req } = event.node
 
-  const geo = req.geo || {}
-  const ua = req.headers['user-agent']
-  const referer = req.headers.referer
+  const geo = process.env.NODE_ENV === 'production' ? geolocation(req) : {}
+  const ua = getHeader(event, 'user-agent')
+  const referer = getHeader(event, 'referer')
 
   const { error } = await client.from('click').insert([
     {

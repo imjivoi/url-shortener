@@ -1,1 +1,3 @@
-export default defineEventHandler((event) => event.context)
+export default defineEventHandler((event) => {
+  return event.node.req
+})
