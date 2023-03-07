@@ -1,33 +1,7 @@
 <template>
   <header>
-    <div class="navbar container mx-auto">
-      <div class="navbar-start">
-        <div class="dropdown">
-          <label tabindex="0" class="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
-            </svg>
-          </label>
-          <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-            <li>
-              <nuxt-link to="/">{{ $t('home') }}</nuxt-link>
-            </li>
-            <li v-if="user">
-              <nuxt-link to="/dashboard">{{ $t('dashboard') }}</nuxt-link>
-            </li>
-            <!-- <li>
-              <nuxt-link :to="localePath('blog')">{{ $t('blog') }}</nuxt-link>
-            </li> -->
-          </ul>
-        </div>
-        <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
-      </div>
+    <div class="container mx-auto flex justify-between items-center h-[48px] px-10">
+      <div class="">logo</div>
       <!-- <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
           <li>
@@ -38,12 +12,38 @@
           </li>
         </ul>
       </div> -->
-      <div class="navbar-end">
-        <div class="flex gap-2">
+      <div>
+        <!-- <div class="flex gap-2">
           <select v-model="currentLocale" class="select">
             <option v-for="(locale, idx) in locales" :key="idx">{{ locale.code }}</option>
           </select>
           <shared-ui-color-toggle />
+        </div> -->
+        <div v-if="user">
+          <it-dropdown clickable>
+            <it-button size="small" round variant="text">
+              <template #icon>
+                <it-avatar size="30px" />
+              </template>
+              <span class="text-blue-600 font-medium">{{ user.email }}</span>
+            </it-button>
+            <template #menu>
+              <it-dropdown-menu class="w-full">
+                <it-dropdown-item @click="$router.push('/dashboard')">
+                  <template #icon>
+                    <Icon name="material-symbols:space-dashboard-outline-rounded" />
+                  </template>
+                  Dashboard
+                </it-dropdown-item>
+                <it-dropdown-item>
+                  <template #icon>
+                    <Icon name="material-symbols:logout-rounded" />
+                  </template>
+                  Logout
+                </it-dropdown-item>
+              </it-dropdown-menu>
+            </template>
+          </it-dropdown>
         </div>
       </div>
     </div>
@@ -53,6 +53,16 @@
 const localePath = useLocalePath()
 
 const user = useSupabaseUser()
+const supabase = useSupabaseClient()
 
 const { locale: currentLocale, locales } = useI18n()
+
+const logout = async () => {
+  try {
+    const { error } = await supabase.auth.signOut()
+    if (!error) {
+      navigateTo('/')
+    }
+  } catch (error) {}
+}
 </script>

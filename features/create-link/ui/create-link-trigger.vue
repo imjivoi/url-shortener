@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-primary shadow-sm shadow-primary" @click="openModal">Add link</button>
+  <it-button variant="primary" round class="mx-auto" @click="openModal">Add link</it-button>
 </template>
 <script lang="ts" setup>
 import CreateLinkModal from './create-link-modal.vue'

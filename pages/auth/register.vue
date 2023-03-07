@@ -4,48 +4,37 @@
       <h2 class="card-title mb-5">Sign up</h2>
       <form class="space-y-6" @submit.prevent>
         <div>
-          <label for="email" class="block mb-2 text-sm font-medium">Your email</label>
-          <input
-            id="email"
+          <it-input
             v-model="email"
-            name="email"
-            class="input input-primary input-bordered w-full"
             placeholder="your@email.com"
+            label-top="Your email"
+            :status="$v.email.$error && 'danger'"
           />
-          <label v-if="$v.email.$error" class="label">
-            <span v-for="(error, idx) in $v.email.$errors" :key="idx" class="label-text-alt text-error">
+          <label v-if="$v.email.$error" class="text-sm">
+            <span v-for="(error, idx) in $v.email.$errors" :key="idx" class="text-red-500">
               {{ error.$message }}
             </span>
           </label>
         </div>
         <div>
-          <label for="password" class="block mb-2 text-sm font-medium">Your password</label>
-          <input
-            id="password"
+          <it-input
             v-model="password"
-            type="password"
-            name="password"
             placeholder="••••••••"
-            class="input input-primary input-bordered w-full"
+            label-top="Your password"
+            :status="$v.password.$error && 'danger'"
           />
-          <label v-if="$v.password.$error" class="label">
-            <span v-for="(error, idx) in $v.password.$errors" :key="idx" class="label-text-alt text-error">
+          <label v-if="$v.password.$error" class="text-sm">
+            <span v-for="(error, idx) in $v.password.$errors" :key="idx" class="text-red-500">
               {{ error.$message }}
             </span>
           </label>
         </div>
-        <button
-          class="btn btn-primary btn-block rounded-full"
-          :class="{
-            loading: isLoading,
-          }"
-          @click="register"
-        >
+        <it-button variant="primary" size="big" class="!rounded-full w-full" :loading="isLoading" @click="register">
           Sign up
-        </button>
+        </it-button>
         <div class="text-sm font-medium">
           Already registered?
-          <nuxt-link to="/auth/login" class="text-primary hover:underline">Sign in</nuxt-link>
+          <nuxt-link to="/auth/login" class="text-blue-600 hover:underline">Sign in</nuxt-link>
         </div>
       </form>
     </div>

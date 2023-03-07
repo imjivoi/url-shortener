@@ -8,16 +8,7 @@ export default <Partial<Config>>{
     './features/**/*.vue',
     './entities/**/*.vue',
     './widgets/**/*.vue',
+    './node_modules/equal-vue/dist/theme/*.{js,ts,json}',
   ],
-  daisyui: {
-    styled: true,
-    themes: ['light', 'dark'],
-    base: true,
-    utils: true,
-    logs: true,
-    rtl: false,
-    prefix: '',
-  },
-
-  plugins: [require('daisyui')],
+  darkMode: 'class',
 }

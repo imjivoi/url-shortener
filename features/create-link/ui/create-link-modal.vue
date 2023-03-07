@@ -3,79 +3,57 @@
     <template #title>New link</template>
     <form class="flex flex-col gap-2" @submit.prevent>
       <div>
-        <label class="label">
-          <span class="label-text">Link alias</span>
-        </label>
-
-        <div class="relative flex items-center gap-2">
-          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            {{ config.public.DOMAIN_URL }}/
-          </div>
-          <input
+        <div class="relative flex items-end gap-2">
+          <it-input
             v-model="alias"
-            type="text"
-            class="input input-primary input-bordered w-full pl-44 font-bold placeholder:font-normal"
-            :class="{
-              'input-error': aliasError || $v.alias.$error,
-            }"
+            :prefix="config.public.DOMAIN_URL + '/'"
+            label-top="Alias"
             placeholder="my-alias"
+            :variant="(aliasError || $v.alias.$error) && 'danger'"
           />
-          <button class="btn btn-ghost btn-sm" @click="generateAlias">Generate</button>
+
+          <it-button variant="primary-text" @click="generateAlias">Generate</it-button>
         </div>
-        <label v-if="aliasError || $v.alias.$error" class="label">
-          <span v-if="aliasError" class="label-text-alt text-error">{{ aliasError }}</span>
+        <label v-if="aliasError || $v.alias.$error" class="text-sm">
+          <span v-if="aliasError" class="text-red-500">{{ aliasError }}</span>
           <template v-if="$v.alias.$error">
-            <span v-for="(error, idx) in $v.alias.$errors" :key="idx" class="label-text-alt text-error">
+            <span v-for="(error, idx) in $v.alias.$errors" :key="idx" class="text-red-500">
               {{ error.$message }}
             </span>
           </template>
         </label>
       </div>
       <div>
-        <label class="label">
-          <span class="label-text">Title</span>
-        </label>
-        <input
+        <it-input
           v-model="title"
-          type="text"
+          label-top="Title"
+          :variant="$v.title.$error && 'danger'"
           placeholder="My facebook profile"
-          class="input input-primary input-bordered w-full"
         />
-        <label v-if="$v.title.$error" class="label">
-          <span v-for="(error, idx) in $v.title.$errors" :key="idx" class="label-text-alt text-error">
+        <label v-if="$v.title.$error" class="text-sm">
+          <span v-for="(error, idx) in $v.title.$errors" :key="idx" class="text-red-500">
             {{ error.$message }}
           </span>
         </label>
       </div>
       <div>
-        <label class="label">
-          <span class="label-text">Url</span>
-        </label>
-        <input
+        <it-input
           v-model="url"
-          type="text"
-          placeholder="https://facebook.com/profile/blabla"
-          class="input input-primary input-bordered w-full"
+          label-top="Url"
+          :variant="$v.url.$error && 'danger'"
+          placeholder="https://facebook.com/profile/myprofile"
         />
-        <label v-if="$v.url.$error" class="label">
-          <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="label-text-alt text-error">
+        <label v-if="$v.url.$error" class="text-sm">
+          <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="text-red-500">
             {{ error.$message }}
           </span>
         </label>
       </div>
     </form>
     <template #footer>
-      <div class="modal-action">
-        <button
-          class="btn btn-primary"
-          :class="{
-            loading: isLoading,
-          }"
-          @click="create"
-        >
-          Create
-        </button>
-        <button class="btn btn-ghost" @click="close">Cancel</button>
+      <div class="flex justify-center gap-4">
+        <it-button variant="primary" :loading="isLoading" @click="create">Create</it-button>
+        <it-button @click="close">Cancel</it-button>
       </div>
     </template>
   </shared-ui-modal>

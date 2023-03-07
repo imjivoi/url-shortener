@@ -1,51 +1,40 @@
 <template>
-  <div class="card w-full mx-auto max-w-sm rounded-2xl bg-base-100 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title mb-5">Sign in</h2>
+  <div class="w-full mx-auto max-w-sm rounded-2xl bg-base-100 shadow-xl">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">Sign in</h2>
       <form class="space-y-6" @submit.prevent>
         <div>
-          <label for="email" class="block mb-2 text-sm font-medium">Your email</label>
-          <input
-            id="email"
+          <it-input
             v-model="email"
-            name="email"
-            class="input input-primary input-bordered w-full"
             placeholder="your@email.com"
+            label-top="Your email"
+            :status="$v.email.$error && 'danger'"
           />
-          <label v-if="$v.email.$error" class="label">
-            <span v-for="(error, idx) in $v.email.$errors" :key="idx" class="label-text-alt text-error">
+          <label v-if="$v.email.$error" class="text-sm">
+            <span v-for="(error, idx) in $v.email.$errors" :key="idx" class="text-red-500">
               {{ error.$message }}
             </span>
           </label>
         </div>
         <div>
-          <label for="password" class="block mb-2 text-sm font-medium">Your password</label>
-          <input
-            id="password"
+          <it-input
             v-model="password"
-            type="password"
-            name="password"
             placeholder="••••••••"
-            class="input input-primary input-bordered w-full"
+            label-top="Your password"
+            :status="$v.password.$error && 'danger'"
           />
-          <label v-if="$v.password.$error" class="label">
-            <span v-for="(error, idx) in $v.password.$errors" :key="idx" class="label-text-alt text-error">
+          <label v-if="$v.password.$error" class="text-sm">
+            <span v-for="(error, idx) in $v.password.$errors" :key="idx" class="text-red-500">
               {{ error.$message }}
             </span>
           </label>
         </div>
-        <button
-          class="btn btn-primary btn-block rounded-full"
-          :class="{
-            loading: isLoading,
-          }"
-          @click="login"
-        >
+        <it-button :loading="isLoading" variant="primary" size="big" class="!rounded-full w-full" @click="login">
           Sign in
-        </button>
+        </it-button>
         <div class="text-sm font-medium">
           Not registered?
-          <nuxt-link to="/auth/register" class="text-primary hover:underline">Create account</nuxt-link>
+          <nuxt-link to="/auth/register" class="text-blue-600 hover:underline">Create account</nuxt-link>
         </div>
       </form>
     </div>
