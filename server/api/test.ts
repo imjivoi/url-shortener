@@ -1,3 +1,3 @@
 export default defineEventHandler((event) => {
-  return event.node.req
+  console.log(getHeader(event, 'user-agent'))
 })

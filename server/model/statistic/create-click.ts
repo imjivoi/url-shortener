@@ -7,19 +7,25 @@ export const createClick = async (event: H3Event, linkId: string) => {
   const client = supabaseClient(event)
 
   const { req } = event.node
-
-  const geo = process.env.NODE_ENV === 'production' ? geolocation(req) : {}
-  const ua = getHeader(event, 'user-agent')
-  const referer = getHeader(event, 'referer')
+  let geo = {}
+  let ua = {}
+  let referer = ''
+  try {
+    geo = process.env.NODE_ENV === 'production' ? geolocation(req) : {}
+    ua = getHeader(event, 'user-agent')
+    referer = getHeader(event, 'referer')
+  } catch (error) {
+    console.log(error)
+  }
 
   const { error } = await client.from('click').insert([
     {
       link_id: linkId,
-      country: geo.country || 'Unknown',
-      city: geo.city || 'Unknown',
-      region: geo.region || 'Unknown',
-      latitude: geo.latitude || 'Unknown',
-      longitude: geo.longitude || 'Unknown',
+      country: geo?.country || 'Unknown',
+      city: geo?.city || 'Unknown',
+      region: geo?.region || 'Unknown',
+      latitude: geo?.latitude || 'Unknown',
+      longitude: geo?.longitude || 'Unknown',
       ua: ua?.ua || 'Unknown',
       browser: ua?.browser?.name || 'Unknown',
       browser_version: ua?.browser?.version || 'Unknown',
