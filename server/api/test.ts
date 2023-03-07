@@ -11,7 +11,7 @@ export default defineEventHandler((event) => {
     }
   } catch (error) {
     return {
-      error,
+      error: error?.message,
     }
   }
 })
