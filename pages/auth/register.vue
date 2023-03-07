@@ -1,7 +1,7 @@
 <template>
-  <div class="card w-full mx-auto max-w-sm rounded-2xl bg-base-100 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title mb-5">Sign up</h2>
+  <div class="w-full mx-auto max-w-sm rounded-2xl bg-base-100 shadow-xl">
+    <div class="p-5">
+      <h2 class="text-2xl font-bold mb-5">Sign up</h2>
       <form class="space-y-6" @submit.prevent>
         <div>
           <it-input
