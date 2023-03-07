@@ -1,32 +1,49 @@
 <template>
-  <div class="card w-full mx-auto max-w-sm rounded-2xl bg-base-100 shadow-xl sm:p-6 md:p-8">
+  <div class="card w-full mx-auto max-w-sm rounded-2xl bg-base-100 shadow-xl">
     <div class="card-body">
-      <h3 class="card-title">Sign in to our platform</h3>
+      <h2 class="card-title mb-5">Sign in</h2>
       <form class="space-y-6" @submit.prevent>
         <div>
           <label for="email" class="block mb-2 text-sm font-medium">Your email</label>
           <input
             id="email"
-            type="email"
+            v-model="email"
             name="email"
-            class="input input-primary input-bordered"
-            placeholder="name@company.com"
-            required
+            class="input input-primary input-bordered w-full"
+            placeholder="your@email.com"
           />
+          <label v-if="$v.email.$error" class="label">
+            <span v-for="(error, idx) in $v.email.$errors" :key="idx" class="label-text-alt text-error">
+              {{ error.$message }}
+            </span>
+          </label>
         </div>
         <div>
           <label for="password" class="block mb-2 text-sm font-medium">Your password</label>
           <input
             id="password"
+            v-model="password"
             type="password"
             name="password"
             placeholder="••••••••"
-            class="input input-primary input-bordered"
-            required
+            class="input input-primary input-bordered w-full"
           />
+          <label v-if="$v.password.$error" class="label">
+            <span v-for="(error, idx) in $v.password.$errors" :key="idx" class="label-text-alt text-error">
+              {{ error.$message }}
+            </span>
+          </label>
         </div>
-        <button type="submit" class="btn btn-primary btn-full" @click="login">Login to your account</button>
-        <div class="text-sm font-medium ">
+        <button
+          class="btn btn-primary btn-block rounded-full"
+          :class="{
+            loading: isLoading,
+          }"
+          @click="login"
+        >
+          Sign in
+        </button>
+        <div class="text-sm font-medium">
           Not registered?
           <nuxt-link to="/auth/register" class="text-primary hover:underline">Create account</nuxt-link>
         </div>
@@ -35,20 +52,52 @@
   </div>
 </template>
 <script lang="ts" setup>
+import useVuelidate from '@vuelidate/core'
+import { required, email as isEmal, minLength } from '@vuelidate/validators'
+import { useToast } from 'vue-toastification'
+
 const supabase = useSupabaseClient()
+const toast = useToast()
 
 const email = ref('')
 const password = ref('')
 const isLoading = ref(false)
 
+const rules = {
+  email: { required, isEmal },
+  password: { required, minlength: minLength(6) },
+}
+
+const $v = useVuelidate(rules, { email, password })
+
 const login = async () => {
+  const isValid = await $v.value.$validate()
+  if (!isValid) return
   isLoading.value = true
   try {
-    await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
+    const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
+    if (error) {
+      switch (error.status) {
+        case 400:
+          toast.error('User does not exist. Check your email and password')
+          break
+
+        default:
+          toast.error('Something went wrong')
+
+          break
+      }
+
+      return
+    }
     await navigateTo('/dashboard')
   } catch (error) {
   } finally {
     isLoading.value = false
   }
 }
+
+watch([email, password], () => {
+  $v.value.$reset()
+})
 </script>

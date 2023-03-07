@@ -1,5 +1,5 @@
 <template>
-  <header class="shadow-md bg-base-100">
+  <header>
     <div class="navbar container mx-auto">
       <div class="navbar-start">
         <div class="dropdown">
@@ -28,7 +28,7 @@
         </div>
         <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
       </div>
-      <div class="navbar-center hidden lg:flex">
+      <!-- <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
           <li>
             <nuxt-link to="/">{{ $t('home') }}</nuxt-link>
@@ -36,19 +36,15 @@
           <li v-if="user">
             <nuxt-link to="/dashboard">{{ $t('dashboard') }}</nuxt-link>
           </li>
-          <!-- <li>
-            <nuxt-link :to="localePath('blog')">{{ $t('blog') }}</nuxt-link>
-          </li> -->
         </ul>
-      </div>
+      </div> -->
       <div class="navbar-end">
         <div class="flex gap-2">
           <select v-model="currentLocale" class="select">
             <option v-for="(locale, idx) in locales" :key="idx">{{ locale.code }}</option>
           </select>
+          <shared-ui-color-toggle />
         </div>
-
-        <shared-ui-color-toggle />
       </div>
     </div>
   </header>
