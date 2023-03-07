@@ -1,6 +1,13 @@
 export default defineNuxtRouteMiddleware(async ({ params }) => {
+  const vercelHeaders = [
+    'x-vercel-ip-country',
+    'x-vercel-ip-country-region',
+    'x-vercel-ip-city',
+    'x-vercel-ip-latitude',
+    'x-vercel-ip-longitude',
+  ]
   try {
-    const headers = useRequestHeaders(['cookie']) as Record<string, string>
+    const headers = useRequestHeaders(['cookie', 'x-forwarded-for', ...vercelHeaders]) as Record<string, string>
     const response = await $fetch(`/api/links/alias/${params.alias}`, {
       method: 'GET',
       headers,

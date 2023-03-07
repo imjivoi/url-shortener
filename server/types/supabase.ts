@@ -24,6 +24,7 @@ export interface Database {
           engine: string | null
           engine_version: string | null
           id: string
+          ip: string | null
           latitude: string | null
           link_id: string
           longitude: string | null
@@ -32,7 +33,7 @@ export interface Database {
           referer: string | null
           referer_url: string | null
           region: string | null
-          ui: string | null
+          ua: string | null
         }
         Insert: {
           bot?: boolean | null
@@ -48,6 +49,7 @@ export interface Database {
           engine?: string | null
           engine_version?: string | null
           id?: string
+          ip?: string | null
           latitude?: string | null
           link_id: string
           longitude?: string | null
@@ -56,7 +58,7 @@ export interface Database {
           referer?: string | null
           referer_url?: string | null
           region?: string | null
-          ui?: string | null
+          ua?: string | null
         }
         Update: {
           bot?: boolean | null
@@ -72,6 +74,7 @@ export interface Database {
           engine?: string | null
           engine_version?: string | null
           id?: string
+          ip?: string | null
           latitude?: string | null
           link_id?: string
           longitude?: string | null
@@ -80,7 +83,7 @@ export interface Database {
           referer?: string | null
           referer_url?: string | null
           region?: string | null
-          ui?: string | null
+          ua?: string | null
         }
       }
       link: {

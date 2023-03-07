@@ -33,6 +33,7 @@ create table click (
   cpu_architecture text,
   bot boolean,
   referer text,
-  referer_url text
+  referer_url text,
+  ip text
 );
 

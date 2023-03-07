@@ -1,6 +1,6 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
-// import { createClick } from 'server/model'
+import { createClick } from 'server/model'
 import { supabaseClient } from 'server/supabase'
 
 export default defineEventHandler(async (event) => {
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
   const { data, error } = await client.from('link').select('original_url, id').eq('alias', params.data.alias).single()
   if (data?.original_url) {
-    // await createClick(event, data.id)
+    await createClick(event, data.id)
   }
   return data
 })

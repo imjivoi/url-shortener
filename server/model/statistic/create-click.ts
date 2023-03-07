@@ -1,45 +1,53 @@
-// import { geolocation } from '@vercel/edge'
 import { H3Event } from 'h3'
 
+import { getDomainWithoutWWW, getUserAgentData } from 'server/lib'
 import { supabaseClient } from 'server/supabase'
 
 export const createClick = async (event: H3Event, linkId: string) => {
-  // const client = supabaseClient(event)
+  const client = supabaseClient(event)
+  const { headers } = event.node.req
 
-  // const { req } = event.node
-  // let geo = {}
-  // let ua = {}
-  // let referer = ''
-  // try {
-  //   geo = process.env.NODE_ENV === 'production' ? geolocation(req) : {}
-  //   ua = getHeader(event, 'user-agent')
-  //   referer = getHeader(event, 'referer')
-  //   const { error } = await client.from('click').insert([
-  //     {
-  //       link_id: linkId,
-  //       country: geo?.country || 'Unknown',
-  //       city: geo?.city || 'Unknown',
-  //       region: geo?.region || 'Unknown',
-  //       latitude: geo?.latitude || 'Unknown',
-  //       longitude: geo?.longitude || 'Unknown',
-  //       ua: ua?.ua || 'Unknown',
-  //       browser: ua?.browser?.name || 'Unknown',
-  //       browser_version: ua?.browser?.version || 'Unknown',
-  //       engine: ua?.engine?.name || 'Unknown',
-  //       engine_version: ua?.engine?.version || 'Unknown',
-  //       os: ua?.os?.name || 'Unknown',
-  //       os_version: ua?.os?.version || 'Unknown',
-  //       device: ua?.device?.type ? ua?.device?.type : 'Desktop',
-  //       device_vendor: ua?.device?.vendor || 'Unknown',
-  //       device_model: ua?.device?.model || 'Unknown',
-  //       cpu_architecture: ua?.cpu?.architecture || 'Unknown',
-  //       bot: ua?.isBot,
-  //       referer: referer || '(direct)',
-  //       referer_url: referer || '(direct)',
-  //     },
-  //   ])
-  // } catch (error) {
-  //   console.log(error)
-  //   return error
-  // }
+  const cityHeader = headers['x-vercel-ip-city'] as string
+  const city = cityHeader ? decodeURIComponent(cityHeader) : ''
+
+  const countryHeader = headers['x-vercel-ip-country'] as string
+  const country = countryHeader ? decodeURIComponent(countryHeader) : ''
+
+  const regionHeader = headers['x-vercel-ip-country-region'] as string
+  const region = countryHeader ? decodeURIComponent(regionHeader) : ''
+
+  const latitudeHeader = headers['x-vercel-ip-latitude'] as string
+  const latitude = latitudeHeader ? decodeURIComponent(latitudeHeader) : ''
+
+  const longitudeHeader = headers['x-vercel-ip-longitude'] as string
+  const longitude = longitudeHeader ? decodeURIComponent(longitudeHeader) : ''
+
+  const ipHeader = headers['x-forwarded-for'] as string
+  const ip = ipHeader ? ipHeader.split(',')[0] : ''
+
+  const userAgentHeader = headers['user-agent'] as string
+  const userAgentData = getUserAgentData(userAgentHeader)
+
+  const referer = headers.referer as string
+  const referer_url = getDomainWithoutWWW(referer)
+
+  try {
+    const { error } = await client.from('click').insert([
+      {
+        link_id: linkId,
+        country,
+        city,
+        region,
+        latitude,
+        longitude,
+        referer: referer || '(direct)',
+        referer_url: referer_url || '(direct)',
+        ip,
+        ...userAgentData,
+      },
+    ])
+  } catch (error) {
+    console.log(error)
+    return error
+  }
 }
