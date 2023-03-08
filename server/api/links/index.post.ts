@@ -1,5 +1,6 @@
 import { useSafeValidatedBody } from 'h3-zod'
 
+import { getAccount } from 'server/model'
 import { supabaseClient } from 'server/supabase'
 import { CreateUrlSchema } from 'shared/types'
 
@@ -24,7 +25,7 @@ export default defineEventHandler(async (event) => {
   const { original_url, title, alias } = body.data
 
   const { data, error } = await client
-    .from('link')
+    .from('links')
     .insert([
       {
         title,

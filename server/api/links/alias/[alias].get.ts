@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { data, error } = await client.from('link').select('original_url, id').eq('alias', params.data.alias).single()
+  const { data, error } = await client.from('links').select('original_url, id').eq('alias', params.data.alias).single()
   if (data?.original_url) {
     await createClick(event, data.id)
   }

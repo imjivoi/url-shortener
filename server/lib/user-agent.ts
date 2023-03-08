@@ -28,7 +28,7 @@ export const getUserAgentData = (userAgent: string) => {
     engine_version: result.engine.version || '',
     os: result.os.name || '',
     os_version: result.os.version || '',
-    device: result.device.type || (!isMobileOrTablet(userAgent) && 'desktop') || '',
+    device: result.device.type || (userAgent && !isMobileOrTablet(userAgent) && 'desktop') || '',
     device_vendor: result.device.vendor || '',
     device_model: result.device.model || '',
     cpu_architecture: result.cpu.architecture || '',

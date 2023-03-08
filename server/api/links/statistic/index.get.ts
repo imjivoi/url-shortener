@@ -12,7 +12,10 @@ export default defineEventHandler(async (event) => {
     clicks: 0,
   }
 
-  const { count: linkCount, error } = await client.from('link').select('id', { count: 'exact' }).eq('user_id', user?.id)
+  const { count: linkCount, error } = await client
+    .from('links')
+    .select('id', { count: 'exact' })
+    .eq('user_id', user?.id)
   if (error) {
     console.log(error)
     throw createError({
@@ -24,9 +27,9 @@ export default defineEventHandler(async (event) => {
   result.links = linkCount || 0
 
   const { count: clickCount, error: clickCountError } = await client
-    .from('click')
-    .select('link!inner(user_id)', { count: 'exact' })
-    .eq('link.user_id', user?.id)
+    .from('clicks')
+    .select('links!inner(user_id)', { count: 'exact' })
+    .eq('links.user_id', user?.id)
   console.log(clickCountError)
   result.clicks = clickCount || 0
   return result

@@ -9,7 +9,27 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      click: {
+      accounts: {
+        Row: {
+          clicks_limit: number | null
+          created_at: string | null
+          id: string
+          links_limit: number | null
+        }
+        Insert: {
+          clicks_limit?: number | null
+          created_at?: string | null
+          id: string
+          links_limit?: number | null
+        }
+        Update: {
+          clicks_limit?: number | null
+          created_at?: string | null
+          id?: string
+          links_limit?: number | null
+        }
+      }
+      clicks: {
         Row: {
           bot: boolean | null
           browser: string | null
@@ -86,7 +106,7 @@ export interface Database {
           ua?: string | null
         }
       }
-      link: {
+      links: {
         Row: {
           alias: string | null
           created_at: string

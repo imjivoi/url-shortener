@@ -28,8 +28,8 @@ export const createClick = async (event: H3Event, linkId: string) => {
   const userAgentHeader = headers['user-agent'] as string
   const userAgentData = getUserAgentData(userAgentHeader)
 
-  const referer = headers.referer as string
-  const referer_url = getDomainWithoutWWW(referer)
+  const referer_url = headers.referer as string
+  const referer = getDomainWithoutWWW(referer_url)
 
   try {
     const { error } = await client.from('click').insert([

@@ -44,8 +44,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const { data, error, count } = await client
-    .from('link')
-    .select('*, clicks:click(id)')
+    .from('links')
+    .select('*, clicks:clicks(id)')
     .eq('user_id', user?.id)
     .range(from, to)
 
