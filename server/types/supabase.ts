@@ -108,31 +108,31 @@ export interface Database {
       }
       links: {
         Row: {
-          alias: string | null
+          alias: string
           created_at: string
           id: string
-          original_url: string | null
-          redirect_url: string | null
+          original_url: string
+          redirect_url: string
           title: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
-          alias?: string | null
+          alias: string
           created_at?: string
           id?: string
-          original_url?: string | null
-          redirect_url?: string | null
+          original_url: string
+          redirect_url: string
           title?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
-          alias?: string | null
+          alias?: string
           created_at?: string
           id?: string
-          original_url?: string | null
-          redirect_url?: string | null
+          original_url?: string
+          redirect_url?: string
           title?: string | null
           updated_at?: string
           user_id?: string

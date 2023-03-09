@@ -10,8 +10,11 @@ export type LinkType = {
   id: string
   original_url: string
   redirect_url: string
-  title: string
-  clicks: number
+  title: string | null
+  clicks?: number
+  user_id?: string
+  created_at: string
+  updated_at: string
 }
 
 export type TotalLinkStatisticType = {

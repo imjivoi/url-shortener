@@ -7,8 +7,13 @@ import { CreateUrlSchema } from 'shared/types'
 import { serverSupabaseUser } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
   const user = await serverSupabaseUser(event)
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+    })
+  }
+  const config = useRuntimeConfig()
   const client = supabaseClient(event)
 
   const body = await useSafeValidatedBody(event, CreateUrlSchema)

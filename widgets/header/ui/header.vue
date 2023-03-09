@@ -29,13 +29,13 @@
             </it-button>
             <template #menu>
               <it-dropdown-menu class="w-full">
-                <it-dropdown-item @click="$router.push('/dashboard')">
+                <it-dropdown-item class="cursor-pointer" @click="$router.push('/dashboard')">
                   <template #icon>
                     <Icon name="material-symbols:space-dashboard-outline-rounded" />
                   </template>
                   Dashboard
                 </it-dropdown-item>
-                <it-dropdown-item>
+                <it-dropdown-item class="cursor-pointer">
                   <template #icon>
                     <Icon name="material-symbols:logout-rounded" />
                   </template>

@@ -1,29 +1,35 @@
 import { z, useSafeValidatedQuery } from 'h3-zod'
 
-import { supabaseClient } from 'server/supabase'
 import { LinkType } from 'shared/types'
+
+import { getLinksByUserId } from '../../model'
 
 import { serverSupabaseUser } from '#supabase/server'
 
 const getPagination = (page: number, size: number) => {
-  const limit = size ? +size : 3
+  const limit = size || 10
   const from = page ? page * limit : 0
-  const to = page ? from + size : size
+  const to = page ? from + size - 1 : size - 1
 
   return { from, to }
 }
 
 export default defineEventHandler(async (event) => {
   const user = await serverSupabaseUser(event)
-  const client = supabaseClient(event)
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+    })
+  }
   const query = useSafeValidatedQuery(
     event,
     z.object({
       page: z
         .number()
+        .or(z.string().regex(/\d+/).transform(Number))
         .default(0)
-        .transform((value) => (value === 1 ? value - 1 : value)),
-      size: z.number().default(12),
+        .transform((value) => value - 1),
+      size: z.number().default(10),
     }),
   )
 
@@ -43,11 +49,7 @@ export default defineEventHandler(async (event) => {
     page: page + 1,
   }
 
-  const { data, error, count } = await client
-    .from('links')
-    .select('*, clicks:clicks(id)')
-    .eq('user_id', user?.id)
-    .range(from, to)
+  const { data, error, count } = await getLinksByUserId(event, user.id, { from, to })
 
   if (error) {
     console.log(error)

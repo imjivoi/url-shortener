@@ -1,10 +1,7 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
-import { supabaseClient } from 'server/supabase'
-
+import { deleteLink } from 'server/model'
 export default defineEventHandler(async (event) => {
-  const client = supabaseClient(event)
-
   const params = useSafeValidatedParams(
     event,
     z.object({
@@ -21,9 +18,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { error } = await client.from('links').delete().eq('id', params.data.id)
+  const { error } = await deleteLink(event, params.data.id)
   console.log(error)
-
   if (error) {
     throw createError({ statusCode: 500 })
   }

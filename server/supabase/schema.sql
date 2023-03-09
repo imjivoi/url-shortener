@@ -13,7 +13,7 @@ create table link (
 drop table if exists public.click;
 create table click (
   id uuid not null primary key DEFAULT uuid_generate_v4(),
-  link_id uuid references public.link on delete cascade not null,
+  link_id uuid references public.link on delete set null,
   created_at timestamp with time zone default timezone('utc' :: text, now()) not null,
   country text,
   city text,

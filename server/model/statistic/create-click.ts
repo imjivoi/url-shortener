@@ -32,7 +32,7 @@ export const createClick = async (event: H3Event, linkId: string) => {
   const referer = getDomainWithoutWWW(referer_url)
 
   try {
-    const { error } = await client.from('click').insert([
+    const { error } = await client.from('clicks').insert([
       {
         link_id: linkId,
         country,

@@ -1,13 +1,12 @@
 import { z, zh } from 'h3-zod'
 
-import { supabaseClient } from 'server/supabase'
+import { getByLinkId } from 'server/model'
 
 export default defineEventHandler(async (event) => {
-  const client = supabaseClient(event)
   const params = zh.useSafeValidatedParams(
     event,
     z.object({
-      id: z.string().uuid(),
+      linkId: z.string().uuid(),
     }),
   )
 
@@ -20,5 +19,15 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // const {data,error} = await client.from('url_visit').select('')
+  const { data, error } = await getByLinkId(event, params.data.linkId)
+
+  if (error) {
+    console.log(error)
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Internal server error',
+    })
+  }
+
+  return data
 })

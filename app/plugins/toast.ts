@@ -4,6 +4,7 @@ const options: PluginOptions = {
   timeout: 2000,
   hideProgressBar: true,
   maxToasts: 10,
+  transition: 'Vue-Toastification__fade',
 }
 
 export default defineNuxtPlugin((nuxtApp) => {

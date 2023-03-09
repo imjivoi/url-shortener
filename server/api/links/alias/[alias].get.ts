@@ -1,10 +1,8 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
-import { createClick } from 'server/model'
-import { supabaseClient } from 'server/supabase'
+import { createClick, getlinkByAlias } from 'server/model'
 
 export default defineEventHandler(async (event) => {
-  const client = supabaseClient(event)
   const params = useSafeValidatedParams(
     event,
     z.object({
@@ -20,9 +18,9 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { data, error } = await client.from('links').select('original_url, id').eq('alias', params.data.alias).single()
-  if (data?.original_url) {
-    await createClick(event, data.id)
+  const link = await getlinkByAlias(event, params.data.alias)
+  if (link?.original_url) {
+    await createClick(event, link.id)
   }
-  return data
+  return link
 })

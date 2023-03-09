@@ -1,18 +1,25 @@
 <template>
   <shared-ui-modal @update:model-value="close">
+    <it-loading-bar global infinite />
     <template #title>New link</template>
     <form class="flex flex-col gap-2" @submit.prevent>
       <div>
         <div class="relative flex items-end gap-2">
           <it-input
             v-model="alias"
+            class="input"
             :prefix="config.public.DOMAIN_URL + '/'"
-            label-top="Alias"
-            placeholder="my-alias"
+            label-top="Short url"
+            placeholder="my-link"
             :variant="(aliasError || $v.alias.$error) && 'danger'"
           />
 
-          <it-button variant="primary-text" @click="generateAlias">Generate</it-button>
+          <it-button class="hidden sm:flex" outlined variant="primary" @click="generateAlias">Generate</it-button>
+          <it-button class="sm:hidden rounded-full" round outlined variant="primary" @click="generateAlias">
+            <template #icon>
+              <Icon name="material-symbols:auto-mode-rounded" />
+            </template>
+          </it-button>
         </div>
         <label v-if="aliasError || $v.alias.$error" class="text-sm">
           <span v-if="aliasError" class="text-red-500">{{ aliasError }}</span>

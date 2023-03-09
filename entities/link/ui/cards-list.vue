@@ -3,7 +3,6 @@
     <card-skeleton v-for="i in 4" :key="i" />
   </div>
   <div v-else-if="links?.length">
-    <h2 class="mb-2 text-2xl font-bold text-center">Links</h2>
     <div class="flex flex-col gap-4">
       <card
         v-for="link in links"
@@ -16,7 +15,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useToast } from 'vue-toastification'
+import { useNotification } from 'equal-vue'
+import { POSITION, useToast } from 'vue-toastification'
 
 import { LinkType } from 'shared/types'
 
@@ -31,6 +31,7 @@ interface Props {
 defineProps<Props>()
 const refreshData = inject('refreshData') as () => void
 
+const notification = useNotification()
 const toast = useToast()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 
@@ -44,12 +45,12 @@ const deleteLink = async (id: string) => {
     refreshData()
     toast.success('Successfully deleted')
   } catch (error) {
-    console.log(error)
+    toast.error('Something went wrong')
   }
 }
 
 const copyLink = async (value: string) => {
   await copy(value)
-  toast.success('Link copied')
+  toast.success('Link copied', { position: POSITION.TOP_CENTER })
 }
 </script>

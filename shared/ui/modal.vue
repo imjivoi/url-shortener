@@ -1,7 +1,7 @@
 <template>
   <vue-final-modal
     classes="modal-container pt-16  "
-    content-class="modal-box w-full max-w-full sm:max-w-[600px] mx-auto bg-white py-6 px-8"
+    content-class="modal-box w-full max-w-full sm:max-w-[600px] mx-auto bg-white py-6 px-4 sm:px-8 overflow-hidden"
     :lock-scroll="true"
     overlay-transition="vfm-fade"
     content-transition="vfm-fade"
