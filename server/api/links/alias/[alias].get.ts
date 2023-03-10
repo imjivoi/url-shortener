@@ -1,6 +1,7 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
 import { createClick, getlinkByAlias } from 'server/model'
+import { AccountType } from 'shared/types'
 
 export default defineEventHandler(async (event) => {
   const params = useSafeValidatedParams(
@@ -20,7 +21,11 @@ export default defineEventHandler(async (event) => {
 
   const link = await getlinkByAlias(event, params.data.alias)
   if (link?.original_url) {
-    await createClick(event, link.id)
+    const account = event.context.account as AccountType
+    if (!account.clicks_limit_exceeded) {
+      createClick(event, link.id)
+      return link
+    }
   }
-  return link
+  return {}
 })

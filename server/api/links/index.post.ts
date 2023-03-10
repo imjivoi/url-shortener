@@ -1,6 +1,6 @@
 import { useSafeValidatedBody } from 'h3-zod'
 
-import { getAccount } from 'server/model'
+import { createLink, getAccount, getLinksByUserId, updateAccount } from 'server/model'
 import { supabaseClient } from 'server/supabase'
 import { CreateUrlSchema } from 'shared/types'
 
@@ -14,7 +14,6 @@ export default defineEventHandler(async (event) => {
     })
   }
   const config = useRuntimeConfig()
-  const client = supabaseClient(event)
 
   const body = await useSafeValidatedBody(event, CreateUrlSchema)
 
@@ -27,21 +26,22 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const { data: account } = await getAccount(event, user.id)
+  if (account?.links_limit_exceeded) {
+    throw createError({
+      statusCode: 405,
+      statusMessage: 'Links limit exceeded',
+    })
+  }
+
   const { original_url, title, alias } = body.data
 
-  const { data, error } = await client
-    .from('links')
-    .insert([
-      {
-        title,
-        original_url,
-        redirect_url: config.public.DOMAIN_URL + '/' + alias,
-        alias,
-        user_id: user!.id,
-      },
-    ])
-    .select('*')
-    .single()
+  const { data, error } = await createLink(event, user.id, {
+    title,
+    original_url,
+    redirect_url: config.public.DOMAIN_URL + '/' + alias,
+    alias,
+  })
 
   return data
 })

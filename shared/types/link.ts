@@ -15,6 +15,7 @@ export type LinkType = {
   user_id?: string
   created_at: string
   updated_at: string
+  alias: string
 }
 
 export type TotalLinkStatisticType = {

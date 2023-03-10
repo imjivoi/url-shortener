@@ -1,10 +1,4 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json }
-  | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json } | Json[]
 
 export interface Database {
   public: {
@@ -12,21 +6,30 @@ export interface Database {
       accounts: {
         Row: {
           clicks_limit: number | null
+          clicks_limit_exceeded: boolean | null
           created_at: string | null
           id: string
           links_limit: number | null
+          links_limit_exceeded: boolean | null
+          updated_at: string | null
         }
         Insert: {
           clicks_limit?: number | null
+          clicks_limit_exceeded?: boolean | null
           created_at?: string | null
           id: string
           links_limit?: number | null
+          links_limit_exceeded?: boolean | null
+          updated_at?: string | null
         }
         Update: {
           clicks_limit?: number | null
+          clicks_limit_exceeded?: boolean | null
           created_at?: string | null
           id?: string
           links_limit?: number | null
+          links_limit_exceeded?: boolean | null
+          updated_at?: string | null
         }
       }
       clicks: {
@@ -46,7 +49,7 @@ export interface Database {
           id: string
           ip: string | null
           latitude: string | null
-          link_id: string
+          link_id: string | null
           longitude: string | null
           os: string | null
           os_version: string | null
@@ -71,7 +74,7 @@ export interface Database {
           id?: string
           ip?: string | null
           latitude?: string | null
-          link_id: string
+          link_id?: string | null
           longitude?: string | null
           os?: string | null
           os_version?: string | null
@@ -96,7 +99,7 @@ export interface Database {
           id?: string
           ip?: string | null
           latitude?: string | null
-          link_id?: string
+          link_id?: string | null
           longitude?: string | null
           os?: string | null
           os_version?: string | null

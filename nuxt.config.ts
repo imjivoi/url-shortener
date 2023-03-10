@@ -12,9 +12,8 @@ export default defineNuxtConfig({
         },
       ],
     },
-    
   },
-  
+
   runtimeConfig: {
     public: {
       DOMAIN_URL: process.env.DOMAIN_URL,
@@ -70,6 +69,11 @@ export default defineNuxtConfig({
         password: '',
         db: 0, // Defaults to 0
         tls: {}, // tls/ssl
+        ttl: 600,
+      },
+      cache: {
+        driver: 'redis',
+        maxAge: 300,
       },
     },
   },

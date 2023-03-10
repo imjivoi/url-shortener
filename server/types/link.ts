@@ -12,6 +12,7 @@ export type LinkType = {
   redirect_url: string
   title: string
   clicks: number
+  alias: string
 }
 
 export type TotalLinkStatisticType = {
