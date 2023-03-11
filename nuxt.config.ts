@@ -1,6 +1,8 @@
+import { z } from 'zod'
+
 import { fileURLToPath, URL } from 'url'
 
-import { i18n, colorMode } from './lib'
+import { i18n, colorMode, envValidationModule } from './lib'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -40,6 +42,21 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/color-mode',
     'nuxt-security',
+    [
+      // @ts-ignore
+      envValidationModule,
+      {
+        scheme: z.object({
+          SUPABASE_URL: z.string(),
+          SUPABASE_KEY: z.string(),
+          SUPABASE_PROJECT_ID: z.string(),
+          SUPABASE_ACCESS_TOKEN: z.string(),
+          DOMAIN_URL: z.string(),
+          SUPABASE_SERVICE_KEY: z.string(),
+          CRON_KEY: z.string(),
+        }),
+      },
+    ],
   ],
   colorMode,
   i18n,
