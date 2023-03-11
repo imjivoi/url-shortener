@@ -1,26 +1,22 @@
 <template>
   <div class="text-center">
-    <entity-statistic-total :statistic="statisticData" :loading="pendingStatisticData" class="mb-10" />
+    <entities-statistic-total :statistic="statisticData" :loading="pendingStatisticData" class="mb-10" />
     <div class="mb-10">
       <div v-if="linksData?.data" class="flex items-center gap-6">
         <h2 class="text-2xl font-bold text-left">Links</h2>
-        <feature-create-link-trigger @success="refreshData" />
+        <features-create-link-trigger @success="refreshData" />
       </div>
     </div>
-    <entity-links-list :links="linksData?.data || null" :loading="pendingLinksData" />
+    <entities-link-cards-list :links="linksData?.data || null" :loading="pendingLinksData" />
     <div class="mt-16">
-      <feature-create-link-trigger v-if="!linksData?.data" @success="refreshData" />
+      <features-create-link-trigger v-if="!linksData?.data" @success="refreshData" />
     </div>
-    <shared-ui-pagination v-if="!pendingLinksData && linksData.count > 10" class="mx-auto" :total="linksData?.count" />
+    <shared-pagination v-if="!pendingLinksData && linksData?.count > 10" class="mx-auto" :total="linksData?.count" />
   </div>
 </template>
 <script lang="ts" setup>
-import { EntityLinksList } from 'entities/link'
-import { EntityStatisticTotal } from 'entities/statistic'
-import { FeatureCreateLinkTrigger } from 'features/create-link'
-
 const router = useRouter()
-const route = useRoute()
+const route = useRoute('dashboard')
 
 const page = computed({
   get() {
@@ -31,19 +27,21 @@ const page = computed({
   },
 })
 
-const headers = useRequestHeaders(['cookie']) as Record<string, string>
 const {
   data: linksData,
   pending: pendingLinksData,
   refresh: refreshLinksData,
 } = useLazyAsyncData(
+  'links',
   async () => {
     try {
-      const data = await $fetch(`/api/links?page=${page.value}`, { headers })
+      const data = await $fetch(`/api/links?page=${page.value}`, {
+        headers: useRequestHeaders(['cookie']) as Record<string, string>,
+      })
       return data
     } catch (error: any) {
       if (isNuxtError(error) && error.statusCode === 401) {
-        return navigateTo('/')
+        return router.push('/')
       }
     }
   },
@@ -55,7 +53,18 @@ const {
   data: statisticData,
   pending: pendingStatisticData,
   refresh: refreshStatisticData,
-} = useLazyFetch('/api/links/statistic', { headers })
+} = useLazyAsyncData('statistic', async () => {
+  try {
+    const data = await $fetch('/api/links/statistic', {
+      headers: useRequestHeaders(['cookie']) as Record<string, string>,
+    })
+    return data
+  } catch (error: any) {
+    if (isNuxtError(error) && error.statusCode === 401) {
+      return router.push('/')
+    }
+  }
+})
 
 const refreshData = () => {
   page.value = 1

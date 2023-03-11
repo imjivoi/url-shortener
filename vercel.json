@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/check-account-limits?key=hBMhsA9Xb046Z5H",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/check-link-activity?key=hBMhsA9Xb046Z5H",
+      "schedule": "0 5 * * *"
+    }
+  ]
+}

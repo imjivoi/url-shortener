@@ -1,6 +1,6 @@
 import { z, useSafeValidatedQuery } from 'h3-zod'
 
-import { LinkType } from 'shared/types'
+import { LinkType } from 'types'
 
 import { getLinksByUserId } from '../../model'
 

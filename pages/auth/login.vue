@@ -20,6 +20,7 @@
           <it-input
             v-model="password"
             placeholder="••••••••"
+            type="password"
             label-top="Your password"
             :status="$v.password.$error && 'danger'"
           />

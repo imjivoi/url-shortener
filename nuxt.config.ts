@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'url'
 
-import { i18n, colorMode } from './shared/lib'
+import { i18n, colorMode } from './lib'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -15,31 +15,18 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    cronKey: process.env.CRON_KEY,
     public: {
       DOMAIN_URL: process.env.DOMAIN_URL,
     },
   },
   alias: {
     '@': fileURLToPath(new URL('./', import.meta.url)),
-    shared: fileURLToPath(new URL('./shared', import.meta.url)),
-    app: fileURLToPath(new URL('./app', import.meta.url)),
-    features: fileURLToPath(new URL('./features', import.meta.url)),
-    entities: fileURLToPath(new URL('./entities', import.meta.url)),
-    assets: fileURLToPath(new URL('./app/assets', import.meta.url)),
+    assets: fileURLToPath(new URL('./assets', import.meta.url)),
     server: fileURLToPath(new URL('./server', import.meta.url)),
-    widgets: fileURLToPath(new URL('./widgets', import.meta.url)),
+    types: fileURLToPath(new URL('./types', import.meta.url)),
   },
-  imports: { dirs: ['shared/ui', 'shared/composables'] },
-  dir: {
-    layouts: './shared/layouts',
-    middleware: './app/middleware',
-    public: './app/public',
-    plugins: './app/plugins',
-  },
-  components: {
-    dirs: [{ path: './shared/ui', prefix: 'shared-ui' }],
-  },
-  css: ['~/app/styles/index.scss'],
+  css: ['~/assets/styles/index.scss'],
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-svgo',
@@ -52,29 +39,52 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@nuxtjs/i18n',
     '@nuxtjs/color-mode',
+    'nuxt-security',
   ],
   colorMode,
   i18n,
+  security: {
+    rateLimiter: {
+      value: {
+        tokensPerInterval: 150,
+        interval: 'hour',
+        fireImmediately: true,
+      },
+      route: '/api/links',
+    },
+  },
   build: {
     transpile: ['vue-toastification', 'equal-vue'],
   },
   nitro: {
     storage: {
-      redis: {
-        driver: 'redis',
-        /* redis connector options */
-        port: 6379, // Redis port
-        host: '127.0.0.1', // Redis host
-        username: '', // needs Redis >= 6
-        password: '',
-        db: 0, // Defaults to 0
-        tls: {}, // tls/ssl
-        ttl: 600,
-      },
+      // redis: {
+      //   driver: 'redis',
+      //   /* redis connector options */
+      //   port: 6379, // Redis port
+      //   host: '127.0.0.1', // Redis host
+      //   username: '', // needs Redis >= 6
+      //   password: '',
+      //   db: 0, // Defaults to 0
+      //   tls: {}, // tls/ssl
+      //   ttl: 600,
+      // },
       cache: {
         driver: 'redis',
-        maxAge: 300,
+        port: 6379, // Redis port
+        host: '127.0.0.1', // Redis host
+        db: 0, // Defaults to 0
+        tls: {}, // tls/ssl
+        maxAge: 60 * 5,
       },
+    },
+  },
+  routeRules: {
+    '/dashboard': {
+      ssr: false,
+    },
+    '/dashboard/**': {
+      ssr: false,
     },
   },
 })

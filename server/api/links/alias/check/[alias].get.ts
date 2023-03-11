@@ -1,6 +1,6 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
-import { createClick, getCachedAccount, getCachedLinkByAlias } from 'server/model'
+import { getCachedLinkByAlias } from 'server/model'
 
 export default defineEventHandler(async (event) => {
   const params = useSafeValidatedParams(
@@ -19,12 +19,12 @@ export default defineEventHandler(async (event) => {
   }
 
   const link = await getCachedLinkByAlias(event, params.data.alias)
-  if (link?.original_url) {
-    const account = await getCachedAccount(event, link.user_id)
-    if (!account?.clicks_limit_exceeded) {
-      createClick(event, link.id)
-      return link
+  if (link) {
+    return {
+      exists: true,
     }
   }
-  return {}
+  return {
+    exists: false,
+  }
 })

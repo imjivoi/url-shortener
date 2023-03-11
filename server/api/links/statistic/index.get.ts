@@ -6,6 +6,11 @@ import { serverSupabaseUser } from '#supabase/server'
 export default defineEventHandler(async (event) => {
   const client = supabaseClient(event)
   const user = await serverSupabaseUser(event)
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+    })
+  }
 
   const result: TotalLinkStatisticType = {
     links: 0,
@@ -17,7 +22,6 @@ export default defineEventHandler(async (event) => {
     .select('id', { count: 'exact' })
     .eq('user_id', user?.id)
   if (error) {
-    console.log(error)
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error',
@@ -30,7 +34,7 @@ export default defineEventHandler(async (event) => {
     .from('clicks')
     .select('links!inner(user_id)', { count: 'exact' })
     .eq('links.user_id', user?.id)
-  console.log(clickCountError)
+
   result.clicks = clickCount || 0
   return result
 })

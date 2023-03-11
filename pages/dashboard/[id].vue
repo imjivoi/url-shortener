@@ -15,7 +15,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { EntityLinkInfo } from 'entities/link'
 const route = useRoute('dashboard-id')
 
 const { pending: pendingLinkData, data: linkData } = useLazyAsyncData(async () => {
