@@ -15,7 +15,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useNotification } from 'equal-vue'
+import { useMessage } from 'naive-ui'
 import { POSITION, useToast } from 'vue-toastification'
 
 import { LinkType } from 'types'
@@ -31,8 +31,7 @@ interface Props {
 defineProps<Props>()
 const refreshData = inject('refreshData') as () => void
 
-const notification = useNotification()
-const toast = useToast()
+const message = useMessage()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 
 const { copy } = useClipboard()
@@ -43,14 +42,14 @@ const deleteLink = async (id: string) => {
   try {
     await $fetch(`/api/links/${id}`, { method: 'DELETE', headers })
     refreshData()
-    toast.success('Successfully deleted')
+    message.success('Successfully deleted')
   } catch (error) {
-    toast.error('Something went wrong')
+    message.error('Something went wrong')
   }
 }
 
 const copyLink = async (value: string) => {
   await copy(value)
-  toast.success('Link copied', { position: POSITION.TOP_CENTER })
+  message.success('Link copied')
 }
 </script>

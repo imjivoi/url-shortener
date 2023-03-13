@@ -1,14 +1,16 @@
 <template>
-  <div class="w-full mx-auto max-w-sm rounded-2xl bg-base-100 shadow-xl">
+  <div class="w-full mx-auto max-w-sm rounded-2xl bg-white shadow-xl">
     <div class="p-5">
       <h2 class="text-2xl font-bold mb-5">Sign in</h2>
       <form class="space-y-6" @submit.prevent>
         <div>
-          <it-input
-            v-model="email"
+          <label class="mb-2 text-xs">Your email</label>
+
+          <n-input
+            v-model:value="email"
+            class="mt-2"
             placeholder="your@email.com"
-            label-top="Your email"
-            :status="$v.email.$error && 'danger'"
+            :status="$v.email.$error && 'error'"
           />
           <label v-if="$v.email.$error" class="text-sm">
             <span v-for="(error, idx) in $v.email.$errors" :key="idx" class="text-red-500">
@@ -17,12 +19,14 @@
           </label>
         </div>
         <div>
-          <it-input
-            v-model="password"
+          <label class="mb-2 text-xs">Your password</label>
+
+          <n-input
+            v-model:value="password"
+            class="mt-2"
             placeholder="••••••••"
             type="password"
-            label-top="Your password"
-            :status="$v.password.$error && 'danger'"
+            :status="$v.password.$error && 'error'"
           />
           <label v-if="$v.password.$error" class="text-sm">
             <span v-for="(error, idx) in $v.password.$errors" :key="idx" class="text-red-500">
@@ -30,12 +34,12 @@
             </span>
           </label>
         </div>
-        <it-button :loading="isLoading" variant="primary" size="big" class="!rounded-full w-full" @click="login">
+        <n-button :loading="isLoading" type="primary" size="large" class="!rounded-full w-full" @click="login">
           Sign in
-        </it-button>
+        </n-button>
         <div class="text-sm font-medium">
           Not registered?
-          <nuxt-link to="/auth/register" class="text-blue-600 hover:underline">Create account</nuxt-link>
+          <nuxt-link to="/auth/register" class="!text-blue-600 hover:underline">Create account</nuxt-link>
         </div>
       </form>
     </div>
@@ -44,10 +48,11 @@
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core'
 import { required, email as isEmal, minLength } from '@vuelidate/validators'
+import { NInput, useMessage, NButton } from 'naive-ui'
 import { useToast } from 'vue-toastification'
 
 const supabase = useSupabaseClient()
-const toast = useToast()
+const toast = useMessage()
 
 const email = ref('')
 const password = ref('')

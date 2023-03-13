@@ -12,11 +12,13 @@
     </div>
 
     <div class="flex justify-center">
-      <it-button size="big" variant="primary" @click="routeTo">Get started</it-button>
+      <!-- <it-button size="big" variant="primary" @click="routeTo">Get started</it-button> -->
+      <n-button size="large" round type="primary" @click="routeTo">Get started</n-button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { NButton } from 'naive-ui'
 const user = useSupabaseUser()
 const router = useRouter()
 

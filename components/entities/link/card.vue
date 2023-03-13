@@ -35,21 +35,21 @@
           </span>
           <Icon size="15px" name="ion:stats-chart-outline" />
         </div>
-        <div class="flex justify-between sm:justify-start flex-row gap-2 text-gray-500 mt-5 sm:mt-0">
-          <it-button size="small" outlined round variant="primary" @click="$router.push('/dashboard/' + link.id)">
+        <div class="flex justify-between items-center sm:justify-start flex-row gap-6 text-gray-500 mt-5 sm:mt-0">
+          <n-button size="small" ghost round type="primary" @click="$router.push('/dashboard/' + link.id)">
             Stats
-          </it-button>
-          <div class="flex flex-row gap-2">
-            <it-button class="hover:text-blue-600 rounded-full" round variant="text" @click="$emit('copy')">
+          </n-button>
+          <div class="flex flex-row gap-4">
+            <n-button class="hover:text-blue-600" circle text @click="$emit('copy')">
               <template #icon>
                 <Icon size="15px" name="material-symbols:content-copy-outline" />
               </template>
-            </it-button>
-            <it-button class="hover:text-red-500 rounded-full" round variant="text" @click="$emit('delete')">
+            </n-button>
+            <n-button class="!hover:text-red-500" circle text type="error" @click="$emit('delete')">
               <template #icon>
                 <Icon size="15px" name="material-symbols:delete-outline" />
               </template>
-            </it-button>
+            </n-button>
           </div>
         </div>
       </div>
@@ -57,6 +57,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { NButton } from 'naive-ui'
+
 import { LinkType } from 'types'
 
 interface Props {

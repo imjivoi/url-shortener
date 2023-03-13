@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
       dateRange: z
         .enum(['today', 'week', 'month', 'year'])
         .transform((value) => value.toLowerCase())
-        .default('today'),
+        .default('month'),
     }),
   )
 
@@ -40,9 +40,15 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { data, error } = await getByLinkId(event, params.data.linkId, {
-    ...(!!query.data.dateRange && { dateRange: query.data.dateRange }),
-  })
+  const { data, error } = await getByLinkId(
+    event,
+    params.data.linkId,
+    // @ts-ignore
+
+    {
+      ...(!!query.data.dateRange && { dateRange: query.data.dateRange }),
+    },
+  )
 
   if (error) {
     console.log(error)
@@ -52,7 +58,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return prepare(data, query.data.dateRange as DateRangetype)
+  return data?.length ? prepare(data, query.data.dateRange as DateRangetype) : null
 })
 
 function prepare(data: StatisticType[], dateRange: DateRangetype) {
@@ -62,6 +68,8 @@ function prepare(data: StatisticType[], dateRange: DateRangetype) {
   const os: Record<string, number> = {}
   const browser: Record<string, number> = {}
   const country: Record<string, number> = {}
+  const city: Record<string, number> = {}
+  const bot: Record<string, number> = {}
 
   for (const item of data) {
     const key = config.checkFunction(item.created_at)
@@ -82,6 +90,13 @@ function prepare(data: StatisticType[], dateRange: DateRangetype) {
     if (item.country) {
       country[item.country] = country[item.country] + 1 || 1
     }
+    if (item.city) {
+      city[item.city] = city[item.city] + 1 || 1
+    }
+
+    if (item.bot) {
+      bot.bot = bot.bot + 1 || 1
+    }
   }
-  return { items: Array.from(items), os, device, browser, country }
+  return { items: Array.from(items), os, device, browser, country, city, bot }
 }

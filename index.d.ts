@@ -5,5 +5,12 @@ declare module 'nuxt/schema' {
     }
   }
 }
+
+declare module '*.svg' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent
+  export default component
+}
+
 // It is always important to ensure you import/export something when augmenting a type
 export {}

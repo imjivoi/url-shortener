@@ -2,13 +2,16 @@ import { z } from 'zod'
 
 import { fileURLToPath, URL } from 'url'
 
-import { i18n, colorMode, envValidationModule } from './lib'
+import { i18n, colorMode } from './lib'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
     head: {
       title: 'Simple url shortener',
       meta: [
+        {
+          name: 'naive-ui-style',
+        },
         {
           name: 'description',
           content:
@@ -56,21 +59,6 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/color-mode',
     'nuxt-security',
-    [
-      // @ts-ignore
-      envValidationModule,
-      {
-        scheme: z.object({
-          SUPABASE_URL: z.string(),
-          SUPABASE_KEY: z.string(),
-          SUPABASE_PROJECT_ID: z.string(),
-          SUPABASE_ACCESS_TOKEN: z.string(),
-          DOMAIN_URL: z.string(),
-          SUPABASE_SERVICE_KEY: z.string(),
-          CRON_KEY: z.string(),
-        }),
-      },
-    ],
   ],
   colorMode,
   i18n,
@@ -84,8 +72,20 @@ export default defineNuxtConfig({
       route: '/api/links',
     },
   },
+  tailwindcss: {
+    configPath: './tailwind.config.ts',
+    cssPath: '~/assets/styles/tailwind.css',
+  },
   build: {
-    transpile: ['vue-toastification', 'equal-vue'],
+    transpile:
+      process.env.NODE_ENV === 'production'
+        ? ['naive-ui', 'vueuc', '@css-render/vue3-ssr', '@juggle/resize-observer']
+        : ['@juggle/resize-observer'],
+  },
+  vite: {
+    optimizeDeps: {
+      include: process.env.NODE_ENV === 'development' ? ['naive-ui', 'vueuc', 'date-fns-tz/esm/formatInTimeZone'] : [],
+    },
   },
   nitro: {
     storage: {
@@ -108,6 +108,19 @@ export default defineNuxtConfig({
         tls: {}, // tls/ssl
         maxAge: 60 * 5,
       },
+    },
+  },
+  hooks: {
+    'build:before': () => {
+      z.object({
+        SUPABASE_URL: z.string(),
+        SUPABASE_KEY: z.string(),
+        SUPABASE_PROJECT_ID: z.string(),
+        SUPABASE_ACCESS_TOKEN: z.string(),
+        DOMAIN_URL: z.string(),
+        SUPABASE_SERVICE_KEY: z.string(),
+        CRON_KEY: z.string(),
+      }).parse(process.env)
     },
   },
   routeRules: {

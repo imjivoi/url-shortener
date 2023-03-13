@@ -14,12 +14,10 @@
           </a>
         </div>
 
-        <div class="rounded-xl p-3 bg-yellow-100 hover:shadow hover:shadow-yellow-500/50 transition-all duration-300">
-          <a
-            :href="link?.original_url"
-            target="_blank"
-            class="text-xl text-yellow-500 w-full flex justify-between items-center"
-          >
+        <div
+          class="rounded-xl p-3 bg-yellow-100 text-yellow-500 hover:shadow hover:shadow-yellow-500/50 transition-all duration-300"
+        >
+          <a :href="link?.original_url" target="_blank" class="text-xl w-full flex justify-between items-center">
             <span class="truncate">
               {{ link?.original_url }}
             </span>

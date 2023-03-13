@@ -17,6 +17,8 @@
       :os="statistic?.os"
       :browser="statistic?.browser"
       :country="statistic?.country"
+      :city="statistic?.city"
+      :bot="statistic?.bot"
     />
   </div>
 </template>
@@ -48,7 +50,7 @@ const { pending: pendingStatistic, data: statistic } = useLazyAsyncData(
           ...(route.query.dateRange && { dateRange: (route.query.dateRange as string).toLowerCase() }),
         },
       })
-      return { ...data, items: new Map(data.items) }
+      return { ...data, items: data && new Map(data.items) }
     } catch (error) {}
   },
   {

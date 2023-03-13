@@ -1,7 +1,9 @@
 <template>
-  <it-button variant="primary" round @click="openModal">Add link</it-button>
+  <n-button type="primary" round @click="openModal">Add link</n-button>
 </template>
 <script lang="ts" setup>
+import { NButton } from 'naive-ui'
+
 import CreateLinkModal from './modal.vue'
 
 const emits = defineEmits(['success'])

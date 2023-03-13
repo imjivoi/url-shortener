@@ -2,7 +2,6 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["@nuxtjs/supabase", "@nuxt/types"],
-    "paths": {}
+    "types": ["@nuxtjs/supabase", "@nuxt/types", "naive-ui/volar"]
   }
 }

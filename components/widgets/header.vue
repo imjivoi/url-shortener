@@ -22,36 +22,22 @@
           <shared-ui-color-toggle />
         </div> -->
         <div v-if="user">
-          <it-dropdown clickable>
-            <it-button size="small" round variant="text">
-              <template #icon>
-                <it-avatar size="30px" />
-              </template>
-              <span class="text-blue-600 font-medium">{{ user.email }}</span>
-            </it-button>
-            <template #menu>
-              <it-dropdown-menu class="w-full">
-                <it-dropdown-item class="cursor-pointer" @click="$router.push('/dashboard')">
-                  <template #icon>
-                    <Icon name="material-symbols:space-dashboard-outline-rounded" />
-                  </template>
-                  Dashboard
-                </it-dropdown-item>
-                <it-dropdown-item class="cursor-pointer" @click="logout">
-                  <template #icon>
-                    <Icon name="material-symbols:logout-rounded" />
-                  </template>
-                  Logout
-                </it-dropdown-item>
-              </it-dropdown-menu>
-            </template>
-          </it-dropdown>
+          <n-dropdown trigger="click" :options="options" @select="handleSelect">
+            <n-button round>
+              {{ user.email }}
+            </n-button>
+          </n-dropdown>
         </div>
       </div>
     </div>
   </header>
 </template>
 <script lang="ts" setup>
+import { LogOut as LogoutIcon } from '@vicons/ionicons5'
+import { NDropdown, NButton, NIcon } from 'naive-ui'
+
+import DashboardIcon from 'assets/icons/dashboard.svg'
+
 const localePath = useLocalePath()
 
 const user = useSupabaseUser()
@@ -59,6 +45,33 @@ const supabase = useSupabaseClient()
 const router = useRouter()
 
 const { locale: currentLocale, locales } = useI18n()
+const renderIcon = (icon: Component) => {
+  return () => {
+    return h(NIcon, null, {
+      default: () => h(icon),
+    })
+  }
+}
+
+const options = [
+  {
+    label: 'Dashboard',
+    key: 'dashboard',
+    icon: renderIcon(DashboardIcon),
+  },
+  {
+    label: 'Logout',
+    key: 'logout',
+    icon: renderIcon(LogoutIcon),
+  },
+]
+
+const handleSelect = (val: 'dashboard' | 'logout') => {
+  if (val === 'dashboard') {
+    return router.push('/dashboard')
+  }
+  logout()
+}
 
 const logout = async () => {
   try {

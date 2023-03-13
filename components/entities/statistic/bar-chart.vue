@@ -26,7 +26,7 @@ const { options } = toRefs(props)
 const option = computed(() => ({
   title: {
     text: 'Clicks',
-    left: 'center',
+    left: 'left',
   },
   tooltip: {
     show: false,
@@ -53,9 +53,9 @@ const option = computed(() => ({
     {
       name: 'Clicks',
       type: 'bar',
-      showBackground: true,
+      showBackground: false,
       backgroundStyle: {
-        color: 'rgba(180, 180, 180, 0.2)',
+        // color: 'rgba(180, 180, 180, 0.2)',
       },
       data: Array.from(options.value).map(([_, value]) => (value?.length ? value.length : 0)),
       emphasis: {
