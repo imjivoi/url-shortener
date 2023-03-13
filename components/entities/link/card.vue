@@ -26,14 +26,19 @@
       <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
         <div class="hidden sm:flex items-center gap-1 text-gray-500">
           <span>
-            {{ link.clicks || 0 }}
+            {{
+              Intl.NumberFormat('en-US', {
+                notation: 'compact',
+                maximumFractionDigits: 1,
+              }).format(link?.clicks || 0)
+            }}
           </span>
           <Icon size="15px" name="ion:stats-chart-outline" />
         </div>
         <div class="flex justify-between sm:justify-start flex-row gap-2 text-gray-500 mt-5 sm:mt-0">
-          <!-- <it-button size="small" outlined round variant="primary" @click="$router.push('/dashboard/' + link.id)">
+          <it-button size="small" outlined round variant="primary" @click="$router.push('/dashboard/' + link.id)">
             Stats
-          </it-button> -->
+          </it-button>
           <div class="flex flex-row gap-2">
             <it-button class="hover:text-blue-600 rounded-full" round variant="text" @click="$emit('copy')">
               <template #icon>

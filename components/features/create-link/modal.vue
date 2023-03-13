@@ -130,7 +130,7 @@ const resetErrors = () => {
 }
 
 const generateAlias = () => {
-  alias.value = nanoid(10)
+  alias.value = nanoid(4)
 }
 
 const checkAlias = async () => {

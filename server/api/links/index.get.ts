@@ -62,7 +62,7 @@ export default defineEventHandler(async (event) => {
 
   for (const link of data) {
     // @ts-ignore
-    result.data.push({ ...link, clicks: link.clicks?.length || 0 })
+    result.data.push({ ...link, clicks: link.clicks[0].count || 0 })
   }
 
   return result

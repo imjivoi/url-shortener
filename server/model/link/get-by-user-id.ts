@@ -19,7 +19,7 @@ export const getLinksByUserId = async (event: H3Event, userId: string, options?:
 
   return await client
     .from('links')
-    .select('*, clicks(id)', { count: 'exact', head })
+    .select('*, clicks(count)', { count: 'exact', head })
     .eq('user_id', userId)
     .order('created_at', { ascending: order === 'ASC' })
     .range(from, to)

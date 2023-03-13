@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/named
 import { UAParser } from 'ua-parser-js'
 
+import capitalize from 'utils/capitalize'
+
 const REGEX_MOBILE_OR_TABLET1 =
   /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|FBAN|FBAV|fennec|hiptop|iemobile|ip(hone|od)|Instagram|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i
 // eslint-disable-next-line
@@ -22,16 +24,19 @@ export const getUserAgentData = (userAgent: string) => {
 
   return {
     ua: result.ua,
-    browser: result.browser.name || '',
-    browser_version: result.browser.version || '',
-    engine: result.engine.name || '',
-    engine_version: result.engine.version || '',
-    os: result.os.name || '',
-    os_version: result.os.version || '',
-    device: result.device.type || (userAgent && !isMobileOrTablet(userAgent) && 'desktop') || '',
-    device_vendor: result.device.vendor || '',
-    device_model: result.device.model || '',
-    cpu_architecture: result.cpu.architecture || '',
+    browser: (result.browser.name && capitalize(result.browser.name)) || 'Unknown',
+    browser_version: result.browser.version || 'Unknown',
+    engine: result.engine.name || 'Unknown',
+    engine_version: result.engine.version || 'Unknown',
+    os: (result.os.name && capitalize(result.os.name)) || 'Unknown',
+    os_version: result.os.version || 'Unknown',
+    device:
+      (result.device.type && capitalize(result.device.type)) ||
+      (userAgent && !isMobileOrTablet(userAgent) && 'Desktop') ||
+      'Unknown',
+    device_vendor: result.device.vendor || 'Unknown',
+    device_model: result.device.model || 'Unknown',
+    cpu_architecture: result.cpu.architecture || 'Unknown',
     bot: isCrawler(userAgent),
   }
 }

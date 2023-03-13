@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="mb-2 text-2xl font-bold">Statistic</h2>
+    <!-- <h2 class="mb-2 text-2xl font-bold">Statistic</h2> -->
     <div class="px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-sm md:px-24 lg:px-8 lg:py-12">
       <div v-if="loading" class="grid grid-cols-2 row-gap-8">
         <div class="text-center md:border-r">

@@ -1,7 +1,9 @@
 <template>
   <header>
     <div class="container mx-auto flex justify-between items-center h-[48px] px-10">
-      <div class="">logo</div>
+      <div class="">
+        <nuxt-link to="/">Linqi</nuxt-link>
+      </div>
       <!-- <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
           <li>

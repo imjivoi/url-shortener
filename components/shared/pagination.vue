@@ -43,12 +43,13 @@
 </template>
 <script lang="ts" setup>
 interface Props {
-  total: number
+  total?: number
   size?: number
   perPageArray?: number[]
 }
 const props = withDefaults(defineProps<Props>(), {
   size: 10,
+  total: 0,
   perPageArray: () => [10, 20, 40, 80],
 })
 const maxVisibleButtons = ref(3)
@@ -58,7 +59,7 @@ const router = useRouter()
 
 const currentPage = computed({
   get() {
-    return parseInt(route.query?.page) || 1
+    return parseInt(route.query?.page as string) || 1
   },
   set(val) {
     router.push({

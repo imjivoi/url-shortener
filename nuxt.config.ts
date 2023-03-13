@@ -7,6 +7,19 @@ import { i18n, colorMode, envValidationModule } from './lib'
 export default defineNuxtConfig({
   app: {
     head: {
+      title: 'Simple url shortener',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
+        },
+        {
+          name: 'keywords',
+          content: 'url link shortener short url free analytics sharing',
+        },
+      ],
+
       link: [
         {
           href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap',
@@ -27,6 +40,7 @@ export default defineNuxtConfig({
     assets: fileURLToPath(new URL('./assets', import.meta.url)),
     server: fileURLToPath(new URL('./server', import.meta.url)),
     types: fileURLToPath(new URL('./types', import.meta.url)),
+    utils: fileURLToPath(new URL('./utils', import.meta.url)),
   },
   css: ['~/assets/styles/index.scss'],
   modules: [
