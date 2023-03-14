@@ -120,7 +120,7 @@ export default defineNuxtConfig({
       // },
       cache: {
         driver: 'redis',
-        maxAge: 60 * 5,
+        ttl: 60 * 5,
         tls: true,
         ...redisConfig,
       },
