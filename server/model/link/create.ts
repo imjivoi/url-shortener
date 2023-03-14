@@ -10,4 +10,5 @@ export const createLink = async (event: H3Event, userId: string, data: Omit<Link
     .from('links')
     .insert([{ ...data, user_id: userId }])
     .select()
+    .single()
 }

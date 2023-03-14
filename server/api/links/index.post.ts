@@ -1,7 +1,7 @@
 import { useSafeValidatedBody } from 'h3-zod'
 import { nanoid } from 'nanoid'
 
-import { createLink, getCachedAccount, parseMeta } from 'server/model'
+import { createLink, getAccount, parseMeta } from 'server/model'
 import { CreateUrlSchema } from 'types'
 
 import { serverSupabaseUser } from '#supabase/server'
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const account = await getCachedAccount(event, user.id)
+  const account = await getAccount(event, user.id)
 
   if (account?.links_limit_exceeded) {
     throw createError({
@@ -57,6 +57,15 @@ export default defineEventHandler(async (event) => {
     redirect_url: config.public.DOMAIN_URL + '/' + alias,
     alias,
   })
+
+  if (error || !data) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Server error',
+    })
+  }
+
+  await useStorage().setItem(`link:${data.alias}`, data)
 
   return data
 })

@@ -1,4 +1,4 @@
-import { useSafeValidatedParams, z } from 'h3-zod'
+import { useSafeValidatedQuery, z } from 'h3-zod'
 
 import { deleteLink } from 'server/model'
 
@@ -10,10 +10,11 @@ export default defineEventHandler(async (event) => {
       statusCode: 401,
     })
   }
-  const params = useSafeValidatedParams(
+  const params = useSafeValidatedQuery(
     event,
     z.object({
       id: z.string().uuid(),
+      alias: z.string(),
     }),
   )
 
@@ -27,9 +28,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const { error } = await deleteLink(event, params.data.id)
-  console.log(error)
   if (error) {
     throw createError({ statusCode: 500 })
   }
-  return ''
+  await useStorage().removeItem(`link:${params.data.alias}`)
+
+  return true
 })

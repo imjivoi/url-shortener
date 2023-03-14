@@ -1,6 +1,6 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
-import { getCachedLinkByAlias } from 'server/model'
+import { getLinkByAlias } from 'server/model'
 
 export default defineEventHandler(async (event) => {
   const params = useSafeValidatedParams(
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const link = await getCachedLinkByAlias(event, params.data.alias)
+  const link = await getLinkByAlias(event, params.data.alias)
   if (link) {
     return {
       exists: true,

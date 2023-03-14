@@ -9,7 +9,7 @@
         :key="link.id"
         :link="link"
         @copy="copyLink(link.redirect_url)"
-        @delete="deleteLink(link.id)"
+        @delete="deleteLink(link)"
         @edit="openEditModal(link)"
       />
     </div>
@@ -37,11 +37,18 @@ const headers = useRequestHeaders(['cookie']) as Record<string, string>
 const { copy } = useClipboard()
 const modal = useModal()
 
-const deleteLink = async (id: string) => {
+const deleteLink = async (link: LinkType) => {
   const isConfirmed = confirm('Do you realy want to delete this link?')
   if (!isConfirmed) return
   try {
-    await $fetch(`/api/links/${id}`, { method: 'DELETE', headers })
+    await $fetch(`/api/links/`, {
+      method: 'DELETE',
+      headers,
+      query: {
+        id: link.id,
+        alias: link.alias,
+      },
+    })
     refreshData()
     message.success('Successfully deleted')
   } catch (error) {
