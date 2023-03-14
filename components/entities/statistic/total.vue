@@ -6,15 +6,15 @@
         <div class="text-center md:border-r">
           <div role="status" class="space-y-2.5 animate-pulse max-w-lg">
             <div class="flex flex-col items-center w-full space-x-2">
-              <div class="h-[60px] bg-gray-300 rounded-full w-[60px] mb-5"></div>
-              <div class="h-2.5 bg-gray-300 rounded-full w-24"></div>
+              <div class="h-[48px] bg-gray-300 rounded-full w-[48px] mb-5"></div>
+              <div class="h-[12px] bg-gray-300 rounded-full w-24"></div>
             </div>
           </div>
         </div>
         <div role="status" class="space-y-2.5 animate-pulse max-w-lg">
           <div class="flex flex-col items-center w-full space-x-2">
-            <div class="h-[60px] bg-gray-300 rounded-full w-[60px] mb-5"></div>
-            <div class="h-2.5 bg-gray-300 rounded-full w-24"></div>
+            <div class="h-[48px] bg-gray-300 rounded-full w-[48px] mb-5"></div>
+            <div class="h-[12px] bg-gray-300 rounded-full w-24"></div>
           </div>
         </div>
       </div>

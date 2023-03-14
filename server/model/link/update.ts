@@ -4,7 +4,13 @@ import { supabaseClient } from 'server/supabase'
 import { UpdateLinktype } from 'types'
 
 export const updateLink = async (event: H3Event, linkId: string, data: UpdateLinktype) => {
+  const config = useRuntimeConfig()
   const client = supabaseClient(event)
 
-  return await client.from('links').update(data).eq('id', linkId).select().single()
+  return await client
+    .from('links')
+    .update({ ...data, ...(data.alias && { redirect_url: config.public.DOMAIN_URL + '/' + data.alias }) })
+    .eq('id', linkId)
+    .select()
+    .single()
 }

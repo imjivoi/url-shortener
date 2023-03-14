@@ -6,7 +6,12 @@
         <div>
           <label class="mb-2 text-xs">Your email</label>
 
-          <n-input v-model="email" class="mt-2" placeholder="your@email.com" :status="$v.password.$error && 'error'" />
+          <n-input
+            v-model:value="email"
+            class="mt-2"
+            placeholder="your@email.com"
+            :status="$v.password.$error && 'error'"
+          />
           <label v-if="$v.email.$error" class="text-sm">
             <span v-for="(error, idx) in $v.email.$errors" :key="idx" class="text-red-500">
               {{ error.$message }}
@@ -16,7 +21,14 @@
         <div>
           <label class="mb-2 text-xs">Your password</label>
 
-          <n-input v-model="password" class="mt-2" placeholder="••••••••" :status="$v.password.$error && 'error'" />
+          <n-input
+            v-model:value="password"
+            type="password"
+            show-password-on="mousedown"
+            class="mt-2"
+            placeholder="••••••••"
+            :status="$v.password.$error && 'error'"
+          />
           <label v-if="$v.password.$error" class="text-sm">
             <span v-for="(error, idx) in $v.password.$errors" :key="idx" class="text-red-500">
               {{ error.$message }}
@@ -63,7 +75,7 @@ const register = async () => {
     if (error) {
       switch (error.status) {
         case 400:
-          toast.error('User does not exist. Check your email and password')
+          toast.error('User already exists')
           break
 
         default:
@@ -74,7 +86,9 @@ const register = async () => {
 
       return
     }
-    return navigateTo('/dashboard')
+    setTimeout(() => {
+      return navigateTo('/dashboard')
+    }, 2000)
   } catch (error) {
   } finally {
     isLoading.value = false

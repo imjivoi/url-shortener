@@ -28,6 +28,10 @@ export default defineNuxtConfig({
           href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap',
           rel: 'stylesheet',
         },
+        {
+          href: 'https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap',
+          rel: 'stylesheet',
+        },
       ],
     },
   },
@@ -115,8 +119,8 @@ export default defineNuxtConfig({
       z.object({
         SUPABASE_URL: z.string(),
         SUPABASE_KEY: z.string(),
-        SUPABASE_PROJECT_ID: z.string(),
-        SUPABASE_ACCESS_TOKEN: z.string(),
+        // SUPABASE_PROJECT_ID: z.string(),
+        // SUPABASE_ACCESS_TOKEN: z.string(),
         DOMAIN_URL: z.string(),
         SUPABASE_SERVICE_KEY: z.string(),
         CRON_KEY: z.string(),

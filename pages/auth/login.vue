@@ -26,6 +26,7 @@
             class="mt-2"
             placeholder="••••••••"
             type="password"
+            show-password-on="mousedown"
             :status="$v.password.$error && 'error'"
           />
           <label v-if="$v.password.$error" class="text-sm">
@@ -49,7 +50,6 @@
 import useVuelidate from '@vuelidate/core'
 import { required, email as isEmal, minLength } from '@vuelidate/validators'
 import { NInput, useMessage, NButton } from 'naive-ui'
-import { useToast } from 'vue-toastification'
 
 const supabase = useSupabaseClient()
 const toast = useMessage()
@@ -79,13 +79,14 @@ const login = async () => {
 
         default:
           toast.error('Something went wrong')
-
           break
       }
 
       return
     }
-    await navigateTo('/dashboard')
+    setTimeout(() => {
+      return navigateTo('/dashboard')
+    }, 2000)
   } catch (error) {
   } finally {
     isLoading.value = false

@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
   let original_url, title, alias
   ;({ original_url, title, alias } = body.data)
 
-  if (!title) {
+  if (title !== '') {
     try {
       const meta = await parseMeta(original_url)
       title = meta.og?.site_name || meta?.meta?.title

@@ -58,7 +58,6 @@
     "ua-parser-js": "^1.0.34",
     "vue-echarts": "^6.5.4",
     "vue-final-modal": "3",
-    "vue-toastification": "^2.0.0-rc.5",
     "zod": "^3.20.2"
   }
 }

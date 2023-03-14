@@ -43,6 +43,7 @@ export default defineEventHandler(async (event) => {
   const { data, error } = await updateLink(event, params.data.id, body.data)
 
   if (error) {
+    console.log(error)
     throw createError({ statusCode: 500 })
   }
 

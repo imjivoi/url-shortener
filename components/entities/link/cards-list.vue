@@ -10,14 +10,15 @@
         :link="link"
         @copy="copyLink(link.redirect_url)"
         @delete="deleteLink(link.id)"
+        @edit="openEditModal(link)"
       />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { useMessage } from 'naive-ui'
-import { POSITION, useToast } from 'vue-toastification'
 
+import { FeaturesUpdateLinkModal } from '#components'
 import { LinkType } from 'types'
 
 import CardSkeleton from './card-skeleton.vue'
@@ -33,8 +34,8 @@ const refreshData = inject('refreshData') as () => void
 
 const message = useMessage()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
-
 const { copy } = useClipboard()
+const modal = useModal()
 
 const deleteLink = async (id: string) => {
   const isConfirmed = confirm('Do you realy want to delete this link?')
@@ -51,5 +52,18 @@ const deleteLink = async (id: string) => {
 const copyLink = async (value: string) => {
   await copy(value)
   message.success('Link copied')
+}
+
+const openEditModal = (linkData: LinkType) => {
+  modal.open({
+    component: FeaturesUpdateLinkModal,
+    bind: {
+      link: linkData,
+      onSuccess: () => {
+        refreshData()
+        message.success('Link successfully updated')
+      },
+    },
+  })
 }
 </script>

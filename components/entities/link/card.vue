@@ -45,11 +45,24 @@
                 <Icon size="15px" name="material-symbols:content-copy-outline" />
               </template>
             </n-button>
-            <n-button class="!hover:text-red-500" circle text type="error" @click="$emit('delete')">
+            <!-- <n-button class="!hover:text-red-500" circle text type="error" @click="$emit('delete')">
               <template #icon>
                 <Icon size="15px" name="material-symbols:delete-outline" />
               </template>
-            </n-button>
+            </n-button> -->
+            <n-dropdown
+              size="huge"
+              :options="options"
+              trigger="click"
+              :render-label="renderLabel"
+              @select="handleSelect"
+            >
+              <n-button text>
+                <template #icon>
+                  <Icon name="mdi:dots-vertical" />
+                </template>
+              </n-button>
+            </n-dropdown>
           </div>
         </div>
       </div>
@@ -57,7 +70,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { NButton } from 'naive-ui'
+import { NButton, NDropdown } from 'naive-ui'
 
 import { LinkType } from 'types'
 
@@ -67,5 +80,31 @@ interface Props {
 
 defineProps<Props>()
 
-const emits = defineEmits(['copy', 'delete'])
+const emits = defineEmits(['copy', 'delete', 'edit'])
+
+const options = [
+  {
+    label: 'Edit',
+    key: 'edit',
+  },
+  {
+    label: 'Delete',
+    key: 'delete',
+  },
+]
+
+function renderLabel(val) {
+  if (val.key === 'edit') return val.label
+  return h(
+    'span',
+    { class: 'text-red-500' },
+    {
+      default: () => val.label,
+    },
+  )
+}
+
+function handleSelect(val: 'delete' | 'edit') {
+  emits(val)
+}
 </script>

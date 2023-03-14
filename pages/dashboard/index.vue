@@ -1,16 +1,21 @@
 <template>
-  <div class="text-center">
-    <h1 class="text-3xl font-bold">Dashboard</h1>
-    <entities-statistic-total :statistic="statisticData" :loading="pendingStatisticData" class="mb-10" />
-    <div class="mb-10">
-      <div v-if="linksData?.data" class="flex justify-between items-center gap-6">
+  <div class="text-center transition-all duration-300">
+    <div>
+      <h1 class="text-3xl font-bold">Dashboard</h1>
+      <entities-statistic-total :statistic="statisticData" :loading="pendingStatisticData" class="mb-10" />
+    </div>
+    <div v-if="linksData?.data?.length" class="mb-10">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
         <h2 class="text-2xl font-bold text-left">Links</h2>
-        <features-create-link-trigger @success="refreshData" />
+        <features-create-link-trigger
+          class="bg-gradient-to-r from-yellow-100 via-red-50 to-purple-100 rounded-xl shadow shadow-yellow-400/50"
+          @success="refreshData"
+        />
       </div>
     </div>
     <entities-link-cards-list :links="linksData?.data || null" :loading="pendingLinksData" />
-    <div class="mt-16">
-      <features-create-link-trigger v-if="!linksData?.data" @success="refreshData" />
+    <div v-if="!pendingLinksData && !linksData?.data?.length" class="mt-16">
+      <features-create-link-trigger class="shadow-gradient" @success="refreshData" />
     </div>
     <shared-pagination
       v-if="!pendingLinksData && linksData && linksData?.count > 10"

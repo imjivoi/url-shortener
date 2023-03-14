@@ -1,6 +1,6 @@
 <template>
   <shared-modal @update:model-value="close">
-    <template #title>New link</template>
+    <template #title>Update link</template>
     <form class="flex flex-col gap-2" @submit.prevent>
       <div>
         <div class="relative flex items-end justify-between gap-2">
@@ -69,7 +69,7 @@
     </form>
     <template #footer>
       <div class="flex justify-center gap-4">
-        <n-button type="primary" :loading="isLoading" @click="create">Create</n-button>
+        <n-button type="primary" :loading="isLoading" @click="create">Update</n-button>
         <n-button @click="close">Cancel</n-button>
       </div>
     </template>
@@ -82,24 +82,28 @@ import { minLength, maxLength, required, url as isUrl } from '@vuelidate/validat
 import { NInput, NButton, useMessage } from 'naive-ui'
 import { nanoid } from 'nanoid'
 
+import { LinkType } from 'types'
+
 interface Props {
   onSuccess: () => void
+  link: Partial<LinkType>
 }
 
-const props = defineProps<Props>()
+const { link, onSuccess } = defineProps<Props>()
 const config = useRuntimeConfig()
 const emits = defineEmits(['success', 'update:modelValue'])
 const toast = useMessage()
 
-const title = ref('')
-const url = ref('')
-const alias = ref('')
+const title = ref(link.title || '')
+const url = ref(link.original_url || '')
+const alias = ref(link.alias || '')
+
 const aliasError = ref('')
 
 const isLoading = ref(false)
 
 const rules = {
-  title: { minLength: minLength(3), maxLength: maxLength(20), required },
+  title: { minLength: minLength(3), maxLength: maxLength(20) },
   url: { isUrl, required },
   alias: { minLength: minLength(3), maxLength: maxLength(20), required },
 }
@@ -112,8 +116,8 @@ const create = async () => {
   if (!isValid) return
   isLoading.value = true
   try {
-    await $fetch('/api/links', {
-      method: 'POST',
+    await $fetch(`/api/links/${link.id}`, {
+      method: 'PUT',
       body: {
         title: title.value,
         original_url: url.value,
@@ -122,7 +126,7 @@ const create = async () => {
       headers,
     })
     close()
-    props.onSuccess()
+    onSuccess()
   } catch (error: any) {
     if (error.statusCode === 403) {
       toast.error(error?.statusMessage || 'You reached links limit')
