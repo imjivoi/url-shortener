@@ -4,8 +4,8 @@
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
+      <ModalsContainer />
     </NMessageProvider>
-    <ModalsContainer />
   </NConfigProvider>
 </template>
 <script setup>

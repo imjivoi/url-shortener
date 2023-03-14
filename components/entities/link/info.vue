@@ -46,7 +46,6 @@ import { LinkType } from 'types'
 
 interface Props {
   link?: LinkType | null
-  loading: boolean
 }
 
 defineProps<Props>()

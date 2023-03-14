@@ -1,8 +1,10 @@
-import { useSafeValidatedParams, z } from 'h3-zod'
+import { useSafeValidatedParams, z, useSafeValidatedBody } from 'h3-zod'
 
-import { deleteLink } from 'server/model'
+import { updateLink } from 'server/model'
+import { UpdateLinkScheme } from 'types'
 
 import { serverSupabaseUser } from '#supabase/server'
+
 export default defineEventHandler(async (event) => {
   const user = await serverSupabaseUser(event)
   if (!user) {
@@ -10,6 +12,7 @@ export default defineEventHandler(async (event) => {
       statusCode: 401,
     })
   }
+
   const params = useSafeValidatedParams(
     event,
     z.object({
@@ -26,10 +29,22 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { error } = await deleteLink(event, params.data.id)
-  console.log(error)
+  const body = await useSafeValidatedBody(event, UpdateLinkScheme)
+
+  if (!body.success) {
+    const formattedErrors = body.error.format()
+    throw createError({
+      message: 'Validation Error',
+      statusCode: 400,
+      data: formattedErrors,
+    })
+  }
+
+  const { data, error } = await updateLink(event, params.data.id, body.data)
+
   if (error) {
     throw createError({ statusCode: 500 })
   }
-  return ''
+
+  return data
 })

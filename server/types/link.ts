@@ -10,7 +10,7 @@ export type LinkType = {
   id: string
   original_url: string
   redirect_url: string
-  title: string
+  title?: string | null
   clicks: number
   alias: string
 }

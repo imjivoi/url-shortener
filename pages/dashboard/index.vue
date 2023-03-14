@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold">Dashboard</h1>
     <entities-statistic-total :statistic="statisticData" :loading="pendingStatisticData" class="mb-10" />
     <div class="mb-10">
-      <div v-if="linksData?.data" class="flex items-center gap-6">
+      <div v-if="linksData?.data" class="flex justify-between items-center gap-6">
         <h2 class="text-2xl font-bold text-left">Links</h2>
         <features-create-link-trigger @success="refreshData" />
       </div>

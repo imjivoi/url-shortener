@@ -48,6 +48,7 @@
     "date-fns": "^2.29.3",
     "echarts": "^5.4.1",
     "h3-zod": "^0.3.10",
+    "html-metadata-parser": "^2.0.4",
     "maska": "^2.1.7",
     "nanoid": "^4.0.1",
     "nuxt-icon": "^0.2.6",

@@ -10,8 +10,11 @@
     <h1 class="text-3xl font-bold text-center mx-auto">Statistic</h1>
   </div>
   <div>
-    <entities-link-info class="mb-5" :link="linkData" :loading="pendingLinkData" />
+    <entities-link-info-skeleton v-if="pendingLinkData" />
+    <entities-link-info v-else class="mb-5" :link="linkData" />
+    <entities-statistic-details-skeleton v-if="pendingStatistic" />
     <entities-statistic-details
+      v-else
       :statistic="statistic?.items"
       :devices="statistic?.device"
       :os="statistic?.os"

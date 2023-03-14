@@ -1,6 +1,7 @@
 import { useSafeValidatedBody } from 'h3-zod'
+import { nanoid } from 'nanoid'
 
-import { createLink, getCachedAccount } from 'server/model'
+import { createLink, getCachedAccount, parseMeta } from 'server/model'
 import { CreateUrlSchema } from 'types'
 
 import { serverSupabaseUser } from '#supabase/server'
@@ -33,8 +34,22 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Links limit exceeded',
     })
   }
+  let original_url, title, alias
+  ;({ original_url, title, alias } = body.data)
 
-  const { original_url, title, alias } = body.data
+  if (!title) {
+    try {
+      const meta = await parseMeta(original_url)
+      title = meta.og?.site_name || meta?.meta?.title
+    } catch (error) {
+      console.log(error)
+      title = null
+    }
+  }
+
+  if (!alias) {
+    alias = nanoid(5)
+  }
 
   const { data, error } = await createLink(event, user.id, {
     title,
