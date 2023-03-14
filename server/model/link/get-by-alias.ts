@@ -11,6 +11,6 @@ export const getCachedLinkByAlias = cachedFunction(
   },
   {
     name: 'alias',
-    getKey: (alias: string) => alias,
+    getKey: ({ alias }) => alias,
   },
 )

@@ -13,6 +13,6 @@ export const getCachedAccount = cachedFunction(
   {
     maxAge: 60 * 10,
     name: 'account',
-    getKey: (userId: string) => userId,
+    getKey: ({ id }) => id,
   },
 )
