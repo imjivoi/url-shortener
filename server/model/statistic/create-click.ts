@@ -42,7 +42,6 @@ export const createClick = async (event: H3Event, linkId: string) => {
         longitude,
         referer: referer || '(direct)',
         referer_url: referer_url || '(direct)',
-        ip,
         ...userAgentData,
       },
     ])
