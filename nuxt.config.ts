@@ -8,9 +8,11 @@ const redisConfig = {
   host: '',
   port: '',
   password: '',
+  url: '',
 }
 
 if (process.env.NODE_ENV === 'production') {
+  redisConfig.url = process.env.REDIS_URL as string
   redisConfig.host = process.env.REDIS_HOST as string
   redisConfig.port = process.env.REDIS_PORT as string
   redisConfig.password = process.env.REDIS_PASSWORD as string
