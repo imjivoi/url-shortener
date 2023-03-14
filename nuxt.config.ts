@@ -105,11 +105,7 @@ export default defineNuxtConfig({
       //   ttl: 600,
       // },
       cache: {
-        driver: 'redis',
-        port: 6379, // Redis port
-        host: '127.0.0.1', // Redis host
-        db: 0, // Defaults to 0
-        tls: {}, // tls/ssl
+        driver: 'memory',
         maxAge: 60 * 5,
       },
     },
@@ -124,6 +120,9 @@ export default defineNuxtConfig({
         DOMAIN_URL: z.string(),
         SUPABASE_SERVICE_KEY: z.string(),
         CRON_KEY: z.string(),
+        // REDIS_URL: z.string(),
+        // REDIS_PORT: z.string(),
+        // REDIS_PASSWORD: z.string(),
       }).parse(process.env)
     },
   },
