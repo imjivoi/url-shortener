@@ -3,6 +3,18 @@ import { z } from 'zod'
 import { fileURLToPath, URL } from 'url'
 
 import { i18n, colorMode } from './lib'
+
+const redisConfig = {
+  host: '',
+  port: '',
+  password: '',
+}
+
+if (process.env.NODE_ENV === 'production') {
+  redisConfig.host = process.env.REDIS_HOST as string
+  redisConfig.port = process.env.REDIS_PORT as string
+  redisConfig.password = process.env.REDIS_PASSWORD as string
+}
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -105,8 +117,10 @@ export default defineNuxtConfig({
       //   ttl: 600,
       // },
       cache: {
-        driver: 'memory',
+        driver: 'redis',
         maxAge: 60 * 5,
+        tls: true,
+        // ...redisConfig,
       },
     },
   },
@@ -120,9 +134,9 @@ export default defineNuxtConfig({
         DOMAIN_URL: z.string(),
         SUPABASE_SERVICE_KEY: z.string(),
         CRON_KEY: z.string(),
-        // REDIS_URL: z.string(),
-        // REDIS_PORT: z.string(),
-        // REDIS_PASSWORD: z.string(),
+        REDIS_HOST: z.string(),
+        REDIS_PORT: z.string(),
+        REDIS_PASSWORD: z.string(),
       }).parse(process.env)
     },
   },
