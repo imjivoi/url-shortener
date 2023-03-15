@@ -6,7 +6,6 @@ import { i18n, colorMode } from './lib'
 
 const redisStorage = {
   driver: 'redis',
-  ttl: 60 * 24 * 30,
   tls: true,
   host: process.env.REDIS_HOST as string,
   port: process.env.REDIS_PORT as string,
@@ -104,9 +103,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     storage: {
-      ...(process.env.NODE_ENV === 'production' && {
-        redis: redisStorage,
-      }),
+      redis: redisStorage,
+
       cache: {
         driver: 'lruCache',
         ttl: 60 * 5,

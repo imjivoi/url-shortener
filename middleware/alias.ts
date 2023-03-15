@@ -1,4 +1,6 @@
 export default defineNuxtRouteMiddleware(async ({ params }) => {
+  const start = performance.now()
+
   const vercelHeaders = [
     'x-vercel-ip-country',
     'x-vercel-ip-country-region',
@@ -11,12 +13,19 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
       string,
       string
     >
-    const response = await $fetch(`/api/links/alias/${params.alias}`, {
-      method: 'GET',
-      headers,
-    })
-    if (response?.original_url) {
-      return await navigateTo(response.original_url, {
+    const link = await useStorage().getItem(`redis:${params.alias}`)
+
+    if (link?.original_url) {
+      const end = performance.now()
+      console.log(`Execution time: ${end - start} ms`)
+      $fetch('/api/links/statistic', {
+        method: 'post',
+        body: {
+          alias: params.alias,
+        },
+        headers,
+      })
+      return navigateTo(link.original_url, {
         external: true,
       })
     }

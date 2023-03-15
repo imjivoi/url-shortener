@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  await useStorage().setItem(`redis:${data.alias}`, data)
+  await useStorage().setItem(`redis:${data.alias}`, { original_url: data.original_url })
 
   return data
 })

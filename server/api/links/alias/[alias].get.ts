@@ -26,11 +26,6 @@ export default defineEventHandler(async (event) => {
     }
   }
   if (link?.original_url) {
-    getAccount(event, link.user_id).then((account) => {
-      if (!account?.clicks_limit_exceeded) {
-        createClick(event, link.id)
-      }
-    })
   }
   return link
 })

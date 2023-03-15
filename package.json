@@ -39,6 +39,7 @@
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "2",
     "@nuxtjs/supabase": "^0.3.0",
+    "@nuxtjs/web-vitals": "^0.2.2",
     "@pinia/nuxt": "^0.4.6",
     "@supabase/supabase-js": "^2.10.0",
     "@upstash/redis": "^1.20.1",
