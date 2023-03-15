@@ -1,33 +1,35 @@
 <template>
-  <div class="flex gap-2 items-center p-4 w-full sm:w-auto">
+  <div class="p-4 w-full sm:w-auto">
     <h2 class="text-center font-bold text-xl mb-4 hidden">Paste your url</h2>
-    <div class="relative flex-1 sm:flex-auto">
-      <n-input
-        v-model:value="url"
-        :disabled="isLoading"
-        :status="$v.url.$error ? 'error' : 'success'"
-        round
-        placeholder="Url to short"
+    <form class="flex gap-2 items-center" @submit.prevent>
+      <div class="relative flex-1 sm:flex-auto">
+        <n-input
+          v-model:value="url"
+          :disabled="isLoading"
+          :status="$v.url.$error ? 'error' : 'success'"
+          round
+          placeholder="Url to short"
+          size="large"
+        />
+        <label v-if="$v.url.$error" class="text-xs absolute left-0 top-[100%]">
+          <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="block w-max text-red-500">
+            {{ error.$message }}
+          </span>
+        </label>
+      </div>
+      <n-button
+        attr-type="submit"
+        strong
+        secondary
         size="large"
-      />
-      <label v-if="$v.url.$error" class="text-xs absolute left-0 top-[100%]">
-        <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="block w-max text-red-500">
-          {{ error.$message }}
-        </span>
-      </label>
-    </div>
-    <n-button
-      attr-type="submit"
-      strong
-      secondary
-      size="large"
-      type="primary"
-      :loading="isLoading"
-      round
-      @click="create"
-    >
-      Short
-    </n-button>
+        type="primary"
+        :loading="isLoading"
+        round
+        @click="create"
+      >
+        Short
+      </n-button>
+    </form>
   </div>
 </template>
 <script lang="ts" setup>
@@ -85,6 +87,10 @@ watch(url, () => {
     display: block;
   }
   @apply block max-w-[600px] max-h-[600px] w-full h-full relative mx-auto;
+
+  form {
+    @apply block;
+  }
   .n-button {
     @apply mt-4;
   }

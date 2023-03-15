@@ -35,7 +35,14 @@
             </span>
           </label>
         </div>
-        <n-button type="primary" size="large" class="!rounded-full w-full" :loading="isLoading" @click="register">
+        <n-button
+          attr-type="submit"
+          type="primary"
+          size="large"
+          class="!rounded-full w-full"
+          :loading="isLoading"
+          @click="register"
+        >
           Sign up
         </n-button>
         <div class="text-sm font-medium">
@@ -88,7 +95,7 @@ const register = async () => {
     }
     setTimeout(() => {
       return navigateTo('/dashboard')
-    }, 2000)
+    }, 1000)
   } catch (error) {
   } finally {
     isLoading.value = false
