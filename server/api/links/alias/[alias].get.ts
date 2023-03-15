@@ -1,8 +1,6 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
-import { createClick, getAccount, getLinkByAlias } from 'server/model'
-
-export default defineEventHandler(async (event) => {
+export default defineEventHandler((event) => {
   const params = useSafeValidatedParams(
     event,
     z.object({
@@ -18,14 +16,5 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  let link = await useStorage().getItem(`redis:${params.data.alias}`)
-  if (!link) {
-    link = await getLinkByAlias(event, params.data.alias)
-    if (link) {
-      await useStorage().setItem(`redis:${params.data.alias}`, link)
-    }
-  }
-  if (link?.original_url) {
-  }
-  return link
+  return useStorage().getItem(`redis:${params.data.alias}`)
 })

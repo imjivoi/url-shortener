@@ -1,7 +1,9 @@
 import { z, useSafeValidatedBody } from 'h3-zod'
 
 import { createClick, getAccount, getLinkByAlias } from 'server/model'
-
+/**
+ * TODO: сделать логгирование
+ */
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(
     event,
@@ -12,11 +14,7 @@ export default defineEventHandler(async (event) => {
 
   if (!body.success) {
     const formattedErrors = body.error.format()
-    throw createError({
-      message: 'Validation Error',
-      statusCode: 400,
-      data: formattedErrors,
-    })
+    return
   }
   const link = await getLinkByAlias(event, body.data.alias)
   if (link) {

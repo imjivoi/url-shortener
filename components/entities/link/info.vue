@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col sm:flex-row gap-5">
-    <div class="bg-white rounded-2xl p-5 basis-1/2 flex flex-col gap-7">
+    <div class="bg-white rounded-2xl p-5 basis-1/2 flex flex-col gap-7 overflow-hidden">
       <h2 class="font-bold text-2xl">{{ link?.title }}</h2>
       <div class="flex flex-col gap-3">
         <div

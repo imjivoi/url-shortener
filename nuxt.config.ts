@@ -49,7 +49,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     cronKey: process.env.CRON_KEY,
     public: {
-      DOMAIN_URL: process.env.DOMAIN_URL,
+      DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.DOMAIN_URL : 'http://localhost:4444',
     },
   },
   alias: {
@@ -110,6 +110,7 @@ export default defineNuxtConfig({
         ttl: 60 * 5,
       },
     },
+    preset: process.env.NODE_ENV === 'production' ? 'vercel' : 'nitro-dev',
   },
   hooks: {
     'build:before': () => {
