@@ -109,6 +109,8 @@ export default defineNuxtConfig({
     storage: {
       redis: {
         driver: 'redis',
+        ttl: 60 * 5,
+        tls: true,
         ...redisConfig,
       },
       cache: {
