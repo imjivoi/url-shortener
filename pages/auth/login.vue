@@ -58,6 +58,10 @@ import useVuelidate from '@vuelidate/core'
 import { required, email as isEmal, minLength } from '@vuelidate/validators'
 import { NInput, useMessage, NButton } from 'naive-ui'
 
+useHead({
+  titleTemplate: (titleChunk: string) => `${titleChunk} | Login`,
+})
+
 const supabase = useSupabaseClient()
 const toast = useMessage()
 

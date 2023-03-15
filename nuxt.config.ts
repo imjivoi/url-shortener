@@ -73,6 +73,8 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/color-mode',
     'nuxt-security',
+    '@nuxtjs/robots',
+    'nuxt-simple-sitemap',
   ],
   colorMode,
   i18n,
@@ -90,12 +92,24 @@ export default defineNuxtConfig({
     configPath: './tailwind.config.ts',
     cssPath: '~/assets/styles/tailwind.css',
   },
+  robots: [
+    { UserAgent: '*' },
+    { BlankLine: true },
+
+    { Sitemap: (req: any) => `https://${req.headers.host}/sitemap.xml` },
+  ],
+  sitemap: {
+    hostname: 'https://liny.app',
+
+    exclude: ['/dashboard', '/dashboard/**', '/auth'],
+  },
   build: {
     transpile:
       process.env.NODE_ENV === 'production'
         ? ['naive-ui', 'vueuc', '@css-render/vue3-ssr', '@juggle/resize-observer']
         : ['@juggle/resize-observer'],
   },
+
   vite: {
     optimizeDeps: {
       include: process.env.NODE_ENV === 'development' ? ['naive-ui', 'vueuc', 'date-fns-tz/esm/formatInTimeZone'] : [],
@@ -136,6 +150,9 @@ export default defineNuxtConfig({
     },
     '/dashboard/**': {
       ssr: false,
+    },
+    '/auth': {
+      redirect: '/auth/login',
     },
   },
 })

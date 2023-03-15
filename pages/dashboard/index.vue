@@ -28,6 +28,7 @@
 definePageMeta({
   scrollToTop: true,
 })
+
 useHead({
   titleTemplate: (titleChunk: string) => `${titleChunk} | Dashboard`,
 })

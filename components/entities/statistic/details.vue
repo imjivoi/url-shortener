@@ -16,7 +16,7 @@
         <client-only>
           <entities-statistic-pie-chart
             v-if="devicesValueItem"
-            class="h-[300px] md:h-[500px]"
+            class="h-[400px] md:h-[500px]"
             :options="devicesValueItem"
             :title="devicesTab"
           />
@@ -31,7 +31,7 @@
         </n-tabs>
         <entities-statistic-pie-chart
           v-if="locationValue"
-          class="h-[300px] md:h-[500px]"
+          class="h-[400px] md:h-[500px]"
           :options="locationValue"
           :title="locationTab"
         />

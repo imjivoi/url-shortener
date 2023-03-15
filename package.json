@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "2",
+    "@nuxtjs/robots": "^3.0.0",
     "@nuxtjs/supabase": "^0.3.0",
     "@nuxtjs/web-vitals": "^0.2.2",
     "@pinia/nuxt": "^0.4.6",
@@ -54,6 +55,7 @@
     "maska": "^2.1.7",
     "nanoid": "^4.0.1",
     "nuxt-icon": "^0.2.6",
+    "nuxt-simple-sitemap": "^1.0.9",
     "nuxt-viewport": "^2.0.3",
     "pinia": "^2.0.29",
     "supabase": "^1.38.7",
