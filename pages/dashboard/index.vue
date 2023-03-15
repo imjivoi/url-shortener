@@ -19,7 +19,7 @@
     </div>
     <shared-pagination
       v-if="!pendingLinksData && linksData && linksData?.count > 10"
-      class="mx-auto"
+      class="mx-auto mt-16"
       :total="linksData?.count"
     />
   </div>
