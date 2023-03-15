@@ -100,7 +100,10 @@ watch(url, () => {
     filter: blur(100px);
     @apply bg-gradient-to-r from-yellow-100 via-red-100 to-purple-100 rounded-full;
     background-size: 200% 200%;
-    animation: gradient 15s ease infinite;
+
+    @media (min-width: 960px) {
+      animation: gradient 15s ease infinite;
+    }
   }
 
   @keyframes gradient {

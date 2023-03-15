@@ -4,19 +4,16 @@ import { fileURLToPath, URL } from 'url'
 
 import { i18n, colorMode } from './lib'
 
-const redisConfig = {
-  host: '',
-  port: '',
-  password: '',
-  url: '',
+const redisStorage = {
+  driver: 'redis',
+  ttl: 60 * 24 * 30,
+  tls: true,
+  host: process.env.REDIS_HOST as string,
+  port: process.env.REDIS_PORT as string,
+  password: process.env.REDIS_PASSWORD as string,
+  url: process.env.REDIS_URL as string,
 }
 
-if (process.env.NODE_ENV === 'production') {
-  redisConfig.url = process.env.REDIS_URL as string
-  redisConfig.host = process.env.REDIS_HOST as string
-  redisConfig.port = process.env.REDIS_PORT as string
-  redisConfig.password = process.env.REDIS_PASSWORD as string
-}
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -107,17 +104,12 @@ export default defineNuxtConfig({
   },
   nitro: {
     storage: {
-      redis: {
-        driver: 'redis',
-        ttl: 60 * 5,
-        tls: true,
-        ...redisConfig,
-      },
+      ...(process.env.NODE_ENV === 'production' && {
+        redis: redisStorage,
+      }),
       cache: {
-        driver: 'redis',
+        driver: 'lruCache',
         ttl: 60 * 5,
-        tls: true,
-        ...redisConfig,
       },
     },
   },
@@ -139,7 +131,9 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/dashboard': {
-      ssr: false,
+      cache: {
+        maxAge: 60 * 5,
+      },
     },
     '/dashboard/**': {
       ssr: false,

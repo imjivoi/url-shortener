@@ -19,10 +19,10 @@ interface Props {
 const props = defineProps<Props>()
 const { options, title } = toRefs(props)
 const option = computed(() => ({
-  title: {
-    text: title?.value && capitalize(title.value),
-    left: 'center',
-  },
+  // title: {
+  //   text: title?.value && capitalize(title.value),
+  //   left: 'center',
+  // },
   tooltip: {
     trigger: 'item',
     formatter: '{a} <br/>{b} : {c} ({d}%)',
