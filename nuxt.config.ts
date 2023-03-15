@@ -92,12 +92,13 @@ export default defineNuxtConfig({
     configPath: './tailwind.config.ts',
     cssPath: '~/assets/styles/tailwind.css',
   },
-  robots: [
-    { UserAgent: '*' },
-    { BlankLine: true },
-
-    { Sitemap: (req: any) => `https://${req.headers.host}/sitemap.xml` },
-  ],
+  robots: {
+    rules: {
+      UserAgent: '*',
+      BlankLine: true,
+      Sitemap: `https://liny.app/sitemap.xml`,
+    },
+  },
   sitemap: {
     hostname: 'https://liny.app',
 
