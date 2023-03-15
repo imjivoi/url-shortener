@@ -15,6 +15,10 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
 
     const link = await $fetch(`/api/links/alias/${params.alias}`)
 
+    if (!link) {
+      throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
+    }
+
     if (link?.original_url) {
       const end = performance.now()
       console.log(`Execution time: ${end - start} ms`)
