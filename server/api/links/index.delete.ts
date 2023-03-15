@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   if (error) {
     throw createError({ statusCode: 500 })
   }
-  await useStorage('redis').removeItem(`${params.data.alias}`)
+  await useStorage().removeItem(`redis:${params.data.alias}`)
 
   return true
 })

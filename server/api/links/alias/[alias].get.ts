@@ -18,11 +18,11 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  let link = await useStorage('redis').getItem(`${params.data.alias}`)
+  let link = await useStorage().getItem(`redis:${params.data.alias}`)
   if (!link) {
     link = await getLinkByAlias(event, params.data.alias)
     if (link) {
-      await useStorage('redis').setItem(`${params.data.alias}`, link)
+      await useStorage().setItem(`redis:${params.data.alias}`, link)
     }
   }
   if (link?.original_url) {

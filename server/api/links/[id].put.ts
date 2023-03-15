@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
     console.log(error)
     throw createError({ statusCode: 500 })
   }
-  await useStorage('redis').setItem(`${data.alias}`, data)
+  await useStorage().setItem(`redis:${data.alias}`, data)
 
   return data
 })
