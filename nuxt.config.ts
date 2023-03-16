@@ -126,7 +126,6 @@ export default defineNuxtConfig({
         ttl: 60 * 5,
       },
     },
-    preset: process.env.NODE_ENV === 'production' ? 'vercel-edge' : 'nitro-dev',
   },
   hooks: {
     'build:before': () => {
