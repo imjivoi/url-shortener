@@ -8,5 +8,8 @@
       "path": "/api/cron/check-link-activity?key=hBMhsA9Xb046Z5H",
       "schedule": "0 5 * * *"
     }
-  ]
+  ],
+  "github": {
+    "silent": true
+  }
 }

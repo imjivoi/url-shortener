@@ -26,16 +26,16 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
       await navigateTo(link.original_url, {
         external: true,
       })
-      await useFetch('/api/links/statistic/create', {
-        method: 'post',
-        body: {
-          alias: params.alias,
-        },
-        headers,
-      })
+      // await useFetch('/api/links/statistic/create', {
+      //   method: 'post',
+      //   body: {
+      //     alias: params.alias,
+      //   },
+      //   headers,
+      // })
     }
   } catch (error) {
     console.log(error)
-    navigateTo('/')
+    return navigateTo('/')
   }
 })
