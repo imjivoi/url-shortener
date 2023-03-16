@@ -1,5 +1,9 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
+export const config = {
+  runtime: 'edge',
+}
+
 export default defineEventHandler((event) => {
   const params = useSafeValidatedParams(
     event,
