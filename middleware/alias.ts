@@ -14,21 +14,23 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     >
 
     const link = await $fetch(`/api/links/alias/${params.alias}`)
-
     if (!link) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
     if (link?.original_url) {
-      await $fetch('/api/links/statistic/create', {
-        body: {
-          alias: params.alias,
-        },
-        headers,
-      })
-      return navigateTo(link.original_url, {
+      await navigateTo(link.original_url, {
         external: true,
       })
+      try {
+        await $fetch('/api/links/statistic/create', {
+          method: 'post',
+          body: {
+            alias: params.alias,
+          },
+          headers,
+        })
+      } catch (e) {}
       // const end = performance.now()
 
       // console.log(`Execution time: ${end - start} ms`)
