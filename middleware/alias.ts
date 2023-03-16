@@ -20,19 +20,18 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     }
 
     if (link?.original_url) {
-      const end = performance.now()
-      console.log(`Execution time: ${end - start} ms`)
-
-      await navigateTo(link.original_url, {
+      await $fetch('/api/links/statistic/create', {
+        body: {
+          alias: params.alias,
+        },
+        headers,
+      })
+      return navigateTo(link.original_url, {
         external: true,
       })
-      // await useFetch('/api/links/statistic/create', {
-      //   method: 'post',
-      //   body: {
-      //     alias: params.alias,
-      //   },
-      //   headers,
-      // })
+      // const end = performance.now()
+
+      // console.log(`Execution time: ${end - start} ms`)
     }
   } catch (error) {
     console.log(error)
