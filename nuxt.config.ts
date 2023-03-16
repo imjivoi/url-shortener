@@ -75,6 +75,7 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@nuxtjs/robots',
     'nuxt-simple-sitemap',
+    '@nuxt/content',
   ],
   colorMode,
   i18n,
@@ -125,7 +126,7 @@ export default defineNuxtConfig({
         ttl: 60 * 5,
       },
     },
-    preset: process.env.NODE_ENV === 'production' ? 'vercel' : 'nitro-dev',
+    preset: process.env.NODE_ENV === 'production' ? 'vercel-edge' : 'nitro-dev',
   },
   hooks: {
     'build:before': () => {
@@ -144,11 +145,6 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    '/dashboard': {
-      cache: {
-        maxAge: 60 * 5,
-      },
-    },
     '/dashboard/**': {
       ssr: false,
     },
