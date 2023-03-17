@@ -1,10 +1,8 @@
 import { useSafeValidatedParams, z } from 'h3-zod'
 
-export const config = {
-  runtime: 'edge',
-}
+import { serviceRoleClient } from 'server/supabase'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const params = useSafeValidatedParams(
     event,
     z.object({
@@ -20,5 +18,20 @@ export default defineEventHandler((event) => {
     })
   }
 
-  return useStorage().getItem(`redis:${params.data.alias}`)
+  const client = serviceRoleClient(event)
+
+  const { data, error } = await client
+    .from('links')
+    .select('redirect_url, title, description, image_url')
+    .eq('alias', params.data.alias)
+    .single()
+
+  if (error) {
+    throw createError({
+      statusCode: 501,
+      statusMessage: 'Server error',
+    })
+  }
+
+  return data
 })

@@ -3,6 +3,22 @@
     <template #title>Update link</template>
     <form class="flex flex-col gap-2" @submit.prevent>
       <div>
+        <label class="mb-2 text-xs">Url</label>
+
+        <n-input
+          v-model:value="url"
+          class="mt-2"
+          label-top=""
+          :status="$v.url.$error && 'error'"
+          placeholder="https://facebook.com/profile/myprofile"
+        />
+        <label v-if="$v.url.$error" class="text-sm">
+          <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="text-red-500">
+            {{ error.$message }}
+          </span>
+        </label>
+      </div>
+      <div>
         <div class="relative flex items-end justify-between gap-2">
           <div>
             <label class="text-xs">Short url</label>
@@ -36,7 +52,7 @@
           </template>
         </label>
       </div>
-      <div>
+      <!-- <div>
         <label class="mt-2 text-xs">Title</label>
         <n-input
           v-model:value="title"
@@ -49,23 +65,7 @@
             {{ error.$message }}
           </span>
         </label>
-      </div>
-      <div>
-        <label class="mb-2 text-xs">Url</label>
-
-        <n-input
-          v-model:value="url"
-          class="mt-2"
-          label-top=""
-          :status="$v.url.$error && 'error'"
-          placeholder="https://facebook.com/profile/myprofile"
-        />
-        <label v-if="$v.url.$error" class="text-sm">
-          <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="text-red-500">
-            {{ error.$message }}
-          </span>
-        </label>
-      </div>
+      </div> -->
     </form>
     <template #footer>
       <div class="flex justify-center gap-4">
@@ -80,7 +80,6 @@
 import useVuelidate from '@vuelidate/core'
 import { minLength, maxLength, required, url as isUrl } from '@vuelidate/validators'
 import { NInput, NButton, useMessage } from 'naive-ui'
-import { nanoid } from 'nanoid'
 
 import { LinkType } from 'types'
 
@@ -144,7 +143,7 @@ const resetErrors = () => {
 }
 
 const generateAlias = () => {
-  alias.value = nanoid(4)
+  alias.value = getRandomAlias()
 }
 
 const checkAlias = async () => {

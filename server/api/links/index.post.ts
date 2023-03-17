@@ -34,13 +34,15 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Links limit exceeded',
     })
   }
-  let original_url, title, alias
+  let original_url, title, alias, description, image_url
   ;({ original_url, title, alias } = body.data)
 
   if (title !== '') {
     try {
       const meta = await parseMeta(original_url)
-      title = meta.og?.site_name || meta?.meta?.title
+      title = meta?.meta?.title || meta.og?.title
+      description = meta.og?.description || meta.meta?.description
+      image_url = meta.og?.image || meta.meta?.image
     } catch (error) {
       console.log(error)
       title = null
@@ -51,11 +53,14 @@ export default defineEventHandler(async (event) => {
     alias = nanoid(5)
   }
 
-  const { data, error } = await createLink(event, user.id, {
+  const { data, error } = await createLink(event, {
     title,
     original_url,
     redirect_url: config.public.DOMAIN_URL + '/' + alias,
     alias,
+    description,
+    image_url,
+    user_id: user.id,
   })
 
   if (error || !data) {

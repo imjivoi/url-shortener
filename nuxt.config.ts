@@ -88,6 +88,10 @@ export default defineNuxtConfig({
       },
       route: '/api/links',
     },
+    headers: {
+      contentSecurityPolicy: false,
+      crossOriginEmbedderPolicy: false,
+    },
   },
   tailwindcss: {
     configPath: './tailwind.config.ts',
@@ -103,7 +107,7 @@ export default defineNuxtConfig({
   sitemap: {
     hostname: 'https://liny.app',
 
-    exclude: ['/dashboard', '/dashboard/**', '/auth'],
+    exclude: ['/dashboard', '/dashboard/**', '/auth', '/blog'],
   },
   build: {
     transpile:

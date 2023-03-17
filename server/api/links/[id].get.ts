@@ -40,4 +40,3 @@ export default defineEventHandler(async (event) => {
 
   return { ...data, clicks: data.clicks && Array.isArray(data.clicks) && data.clicks[0].count }
 })
-

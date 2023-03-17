@@ -14,7 +14,7 @@ const REGEX_CRAWLER =
 function isMobileOrTablet(a: string): boolean {
   return REGEX_MOBILE_OR_TABLET1.test(a) || REGEX_MOBILE_OR_TABLET2.test(a.slice(0, 4))
 }
-function isCrawler(a: string) {
+export function isCrawler(a: string) {
   return REGEX_CRAWLER.test(a)
 }
 

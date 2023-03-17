@@ -1,5 +1,7 @@
+import { isCrawler } from 'server/lib'
+
 export default defineNuxtRouteMiddleware(async ({ params }) => {
-  const start = performance.now()
+  if (!process.server) return
   const vercelHeaders = [
     'x-vercel-ip-country',
     'x-vercel-ip-country-region',
@@ -13,12 +15,13 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
       string
     >
 
-    const link = await $fetch(`/api/links/alias/${params.alias}`)
-    if (!link) {
+    const link = await $fetch<{ original_url: string }>(`/api/storage/${params.alias}`)
+
+    if (!link || !link.original_url) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
-    if (link?.original_url) {
+    if (!isCrawler(headers['user-agent'])) {
       await navigateTo(link.original_url, {
         external: true,
       })
@@ -31,9 +34,6 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
           headers,
         })
       } catch (e) {}
-      // const end = performance.now()
-
-      // console.log(`Execution time: ${end - start} ms`)
     }
   } catch (error) {
     console.log(error)
