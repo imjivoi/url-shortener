@@ -23,5 +23,15 @@ export default defineEventHandler(async (event) => {
       const ids = links.map((link) => link.id)
       await client.from('links').delete().in('id', ids)
     }
-  } catch (error) {}
+
+    return {
+      success: true,
+    }
+  } catch (error) {
+    console.log(error)
+    throw createError({
+      statusCode: 500,  
+      statusMessage: error?.message || error.data?.message,
+    })
+  }
 })

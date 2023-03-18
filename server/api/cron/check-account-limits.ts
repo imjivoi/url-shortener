@@ -31,8 +31,10 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error) {
     console.log(error)
-    return {
-      success: false,
-    }
+
+    throw createError({
+      statusCode: 500,
+      statusMessage: error?.message || error.data?.message,
+    })
   }
 })
