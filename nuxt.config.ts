@@ -155,8 +155,5 @@ export default defineNuxtConfig({
     '/dashboard/**': {
       ssr: false,
     },
-    '/auth': {
-      redirect: '/auth/login',
-    },
   },
 })
