@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { fileURLToPath, URL } from 'url'
 
-import { i18n, colorMode } from './lib'
+import { colorMode } from './lib'
 
 const redisStorage = {
   driver: 'redis',
@@ -66,7 +66,6 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxtjs/supabase',
     '@pinia/nuxt',
-    'nuxt-typed-router',
     '@vueuse/nuxt',
     'nuxt-viewport',
     '@nuxtjs/device',
@@ -78,7 +77,9 @@ export default defineNuxtConfig({
     '@nuxt/content',
   ],
   colorMode,
-  i18n,
+  i18n: {
+    vueI18n: './lib/i18n',
+  },
   security: {
     rateLimiter: {
       value: {

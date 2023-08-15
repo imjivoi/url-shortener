@@ -16,12 +16,17 @@ export default defineEventHandler(async (event) => {
   try {
     const { data: links } = await client
       .from('links')
-      .select('created_at, clicks!innder(created_at), id')
+      .select('created_at, clicks!inner(created_at), alias, id')
       .lt('clicks.created_at', priorDate)
+
+    console.log(links)
 
     if (links?.length) {
       const ids = links.map((link) => link.id)
       await client.from('links').delete().in('id', ids)
+      for await (const link of links) {
+        await useStorage().removeItem(`redis:${link.alias}`)
+      }
     }
 
     return {
@@ -30,7 +35,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.log(error)
     throw createError({
-      statusCode: 500,  
+      statusCode: 500,
       statusMessage: error?.message || error.data?.message,
     })
   }
