@@ -19,8 +19,6 @@ export default defineEventHandler(async (event) => {
       .select('created_at, clicks!inner(created_at), alias, id')
       .lt('clicks.created_at', priorDate)
 
-    console.log(links)
-
     if (links?.length) {
       const ids = links.map((link) => link.id)
       await client.from('links').delete().in('id', ids)
