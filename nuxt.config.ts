@@ -75,7 +75,8 @@ export default defineNuxtConfig({
     '@nuxtjs/robots',
     'nuxt-simple-sitemap',
     '@nuxt/content',
-    '@zadigetvoltaire/nuxt-gtm',
+    // '@zadigetvoltaire/nuxt-gtm',
+    'nuxt-gtag',
   ],
   colorMode,
   i18n: {
@@ -111,8 +112,8 @@ export default defineNuxtConfig({
 
     exclude: ['/dashboard', '/dashboard/**', '/auth', '/blog'],
   },
-  gtm: {
-    id: 'GTM-NP8V7HNF',
+  gtag: {
+    id: 'G-1BZVZS70WX',
   },
   build: {
     transpile:

@@ -30,6 +30,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "naive-ui": "^2.34.4",
     "nuxt": "^3.6.5",
+    "nuxt-gtag": "^0.6.1",
     "nuxt-security": "^0.12.0",
     "nuxt-svgo": "^1.2.1",
     "prettier": "^2.8.8",
