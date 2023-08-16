@@ -75,6 +75,7 @@ export default defineNuxtConfig({
     '@nuxtjs/robots',
     'nuxt-simple-sitemap',
     '@nuxt/content',
+    '@zadigetvoltaire/nuxt-gtm',
   ],
   colorMode,
   i18n: {
@@ -109,6 +110,9 @@ export default defineNuxtConfig({
     hostname: 'https://liny.app',
 
     exclude: ['/dashboard', '/dashboard/**', '/auth', '/blog'],
+  },
+  gtm: {
+    id: 'GTM-NP8V7HNF',
   },
   build: {
     transpile:
