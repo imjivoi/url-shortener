@@ -23,6 +23,6 @@ const routeTo = () => {
   if (user.value) {
     return router.push({ name: 'dashboard' })
   }
-  router.push({ name: 'auth-register' })
+  router.push({ name: 'auth' })
 }
 </script>
