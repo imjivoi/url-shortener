@@ -112,9 +112,11 @@ export default defineNuxtConfig({
 
     exclude: ['/dashboard', '/dashboard/**', '/auth', '/blog'],
   },
-  gtag: {
-    id: 'G-1BZVZS70WX',
-  },
+  ...(process.env.NODE_ENV === 'production' && {
+    gtag: {
+      id: 'G-1BZVZS70WX',
+    },
+  }),
   build: {
     transpile:
       process.env.NODE_ENV === 'production'
@@ -159,6 +161,17 @@ export default defineNuxtConfig({
     },
     '/dashboard/**': {
       ssr: false,
+    },
+    '/supabase/**': {
+      proxy: {
+        to: 'http://localhost:54323',
+        // headers: {
+        //   'Access-Control-Allow-Origin': '*',
+        //   'Access-Control-Allow-Headers': '*',
+        //   'access-control-allow-methods': '*',
+        // },
+      },
+      cors: false,
     },
   },
 })

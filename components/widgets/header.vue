@@ -23,7 +23,7 @@
         </div> -->
         <div v-if="user">
           <n-dropdown trigger="click" :options="options" @select="handleSelect">
-            <n-button round>
+            <n-button quaternary type="primary" round>
               {{ user.email }}
             </n-button>
           </n-dropdown>

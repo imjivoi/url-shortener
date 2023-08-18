@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full mx-auto max-w-sm rounded-2xl bg-white shadow-xl">
+  <div class="w-full mx-auto max-w-sm rounded-2xl overflow-hidden relative">
     <div class="p-5">
       <h2 class="text-2xl font-bold text-center mb-5">Get magic link</h2>
       <template v-if="success">
-        <p class="text-center">Magic link was successfully sent!🎉🎉🎉</p>
+        <p class="text-center">Magic link was sent successfully!🎉🎉🎉</p>
       </template>
       <template v-else>
         <form class="space-y-6" @submit.prevent>
@@ -35,6 +35,7 @@
         </form>
       </template>
     </div>
+    <div class="bg-card"></div>
   </div>
 </template>
 <script lang="ts" setup>

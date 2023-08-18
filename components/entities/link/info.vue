@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col sm:flex-row gap-5">
-    <div class="bg-white rounded-2xl p-5 basis-1/2 flex flex-col gap-7 overflow-hidden">
+    <div class="rounded-2xl p-5 basis-1/2 flex flex-col gap-7 overflow-hidden relative">
+      <div class="bg-card"></div>
       <h2 class="font-bold text-2xl">{{ link?.title }}</h2>
       <div class="flex flex-col gap-3">
         <div
@@ -26,7 +27,8 @@
         </div>
       </div>
     </div>
-    <div class="bg-white rounded-2xl p-5 basis-1/2">
+    <div class="rounded-2xl p-5 basis-1/2 overflow-hidden relative">
+      <div class="bg-card"></div>
       <h2 class="font-bold text-2xl">Total clicks</h2>
       <div class="flex items-center justify-center h-full">
         <span class="text-6xl font-bold text-gray-500 text-center truncate">

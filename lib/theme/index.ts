@@ -2,10 +2,10 @@ import { GlobalThemeOverrides } from 'naive-ui'
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
-    primaryColor: '#4361ee',
-    primaryColorHover: '#3f37c9',
-    primaryColorPressed: '#3f37c9',
-    borderRadius: '5px',
+    primaryColor: '#ef476f',
+    primaryColorHover: '#f45e7d',
+    primaryColorPressed: '#d03d60',
+    borderRadius: '10px',
   },
 }
 

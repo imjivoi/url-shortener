@@ -1,11 +1,12 @@
 html {
-  min-height: 100%;
-  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
 }
 body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
   @apply text-slate-900;
+
 }
 
 #__nuxt {

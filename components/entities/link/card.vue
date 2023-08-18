@@ -1,9 +1,10 @@
 <template>
-  <div class="w-full bg-gray-100 shadow-sm overflow-hidden rounded-xl">
+  <div class="w-full shadow-sm overflow-hidden rounded-xl relative">
+    <div class="bg-card"></div>
     <div class="py-2 px-4 sm:py-5 flex flex-col sm:flex-row sm:gap-1 justify-between sm:items-center">
       <div class="basis-1/2 overflow-hidden">
         <div class="flex gap-4">
-          <h2 class="text-lg font-bold text-left">
+          <h2 class="text-lg font-bold text-left truncate">
             {{ link.title }}
           </h2>
           <div class="flex items-center gap-1 sm:hidden text-gray-500">
