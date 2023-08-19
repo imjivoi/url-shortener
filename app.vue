@@ -17,7 +17,7 @@ import { themeOverrides } from '@/lib'
 </script>
 <style lang="scss" scoped>
 .background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
