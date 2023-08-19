@@ -34,6 +34,40 @@ export default defineNuxtConfig({
           name: 'keywords',
           content: 'url link shortener short url free analytics sharing',
         },
+        {
+          key: 'og:title',
+          property: 'og:title',
+          name: 'og:title',
+          content: 'Simple url shortener',
+        },
+        {
+          key: 'og:description',
+          property: 'og:description',
+          name: 'og:description',
+          content:
+            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
+        },
+        {
+          key: 'og:image',
+          property: 'og:image',
+          name: 'og:image',
+          content: '/og-image.png',
+        },
+        {
+          key: 'og:site',
+          property: 'og:site',
+          content: 'https://liny.app',
+        },
+        {
+          key: 'og:site_name',
+          property: 'og:site_name',
+          content: 'liny.app',
+        },
+        {
+          key: 'og:type',
+          property: 'og:type',
+          content: 'website',
+        },
       ],
 
       link: [
@@ -135,7 +169,6 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       redis: redisStorage,
-
       cache: {
         driver: 'lruCache',
         ttl: 60 * 5,
