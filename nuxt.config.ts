@@ -18,6 +18,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Simple url shortener',
+      htmlAttrs: {
+        lang: 'en',
+      },
       meta: [
         {
           name: 'naive-ui-style',
