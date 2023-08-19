@@ -8,6 +8,7 @@
       <ModalsContainer />
     </NMessageProvider>
   </NConfigProvider>
+  <NuxtLoadingIndicator />
 </template>
 <script setup>
 import { NConfigProvider, NMessageProvider } from 'naive-ui'

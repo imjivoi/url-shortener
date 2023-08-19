@@ -3,13 +3,15 @@
     <n-select v-model:value="dateRangeValue" :options="dateRangeOptions" size="large" />
   </div>
   <div v-if="statistic">
-    <div class="bg-white rounded-2xl p-5 mb-5">
+    <div class="rounded-2xl p-5 mb-5 relative">
+      <div class="bg-card"></div>
       <client-only>
         <entities-statistic-bar-chart v-if="statistic" class="h-[300px] md:h-[500px]" :options="statistic" />
       </client-only>
     </div>
     <div class="flex flex-col md:flex-row gap-5">
-      <div class="bg-white rounded-2xl p-5 basis-1/2">
+      <div class="rounded-2xl p-5 basis-1/2 relative">
+        <div class="bg-card"></div>
         <n-tabs v-model:value="devicesTab" type="segment" class="mb-2">
           <n-tab v-for="(item, idx) in ['Devices', 'OS', 'Browser', 'Bot']" :key="idx" :name="item" :tab="item"></n-tab>
         </n-tabs>
@@ -25,7 +27,8 @@
           </div>
         </client-only>
       </div>
-      <div class="bg-white rounded-2xl p-5 basis-1/2">
+      <div class="rounded-2xl p-5 basis-1/2 relative">
+        <div class="bg-card"></div>
         <n-tabs v-model:value="locationTab" type="segment" class="mb-2">
           <n-tab v-for="(item, idx) in ['City', 'Country']" :key="idx" :name="item" :tab="item"></n-tab>
         </n-tabs>
