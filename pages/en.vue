@@ -21,17 +21,6 @@
 <script lang="ts" setup>
 import { NButton } from 'naive-ui'
 
-definePageMeta({
-  title: 'Simple url shortener',
-  middleware: 'handle-locale',
-})
-
-useHead({
-  htmlAttrs: {
-    lang: 'en',
-  },
-})
-
 const user = useSupabaseUser()
 const router = useRouter()
 

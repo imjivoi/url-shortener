@@ -25,10 +25,6 @@
 <script lang="ts" setup>
 import { NButton } from 'naive-ui'
 
-definePageMeta({
-  middleware: 'handle-locale',
-})
-
 const user = useSupabaseUser()
 const router = useRouter()
 

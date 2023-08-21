@@ -16,36 +16,32 @@ const redisStorage = {
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Simple url shortener',
-      htmlAttrs: {
-        lang: 'es',
-      },
       meta: [
         {
           name: 'naive-ui-style',
         },
-        {
-          name: 'description',
-          content:
-            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
-        },
-        {
-          name: 'keywords',
-          content: 'url link shortener short url free analytics sharing',
-        },
-        {
-          key: 'og:title',
-          property: 'og:title',
-          name: 'og:title',
-          content: 'Simple url shortener',
-        },
-        {
-          key: 'og:description',
-          property: 'og:description',
-          name: 'og:description',
-          content:
-            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
-        },
+        // {
+        //   name: 'description',
+        //   content:
+        //     'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
+        // },
+        // {
+        //   name: 'keywords',
+        //   content: 'url link shortener short url free analytics sharing',
+        // },
+        // {
+        //   key: 'og:title',
+        //   property: 'og:title',
+        //   name: 'og:title',
+        //   content: 'Simple url shortener',
+        // },
+        // {
+        //   key: 'og:description',
+        //   property: 'og:description',
+        //   name: 'og:description',
+        //   content:
+        //     'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
+        // },
         {
           key: 'og:image',
           property: 'og:image',
@@ -131,12 +127,12 @@ export default defineNuxtConfig({
     locales: [
       {
         code: 'en',
-        iso: 'en-US',
+        iso: 'en',
         name: 'English',
       },
       {
         code: 'es',
-        iso: 'es-ES',
+        iso: 'es',
         name: 'Español',
       },
     ],
@@ -214,12 +210,6 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    dashboard: {
-      ssr: false,
-    },
-    '/dashboard/**': {
-      ssr: false,
-    },
     '/supabase/**': {
       proxy: {
         to: 'http://localhost:54323',

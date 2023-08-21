@@ -17,9 +17,20 @@ import { ModalsContainer } from 'vue-final-modal'
 import { themeOverrides } from '@/lib'
 
 const { t } = useI18n()
+
+const i18nHead = useLocaleHead({
+  addSeoAttributes: {
+    canonicalQueries: ['foo'],
+  },
+})
 useHead({
   title: t('head.title'),
+  htmlAttrs: {
+    lang: i18nHead.value.htmlAttrs.lang,
+  },
+  link: [...(i18nHead.value.link || [])],
   meta: [
+    ...(i18nHead.value.meta || []),
     {
       name: 'description',
       content: t('head.description'),
