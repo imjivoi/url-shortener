@@ -1,7 +1,55 @@
 export default {
-  remove: 'remove',
   welcome: 'welcome',
   language: 'language',
   home: 'home',
-  dashboard: 'dashboard',
+  dashboard: 'Dashboard',
+  links: 'links',
+  clicks: 'clicks',
+  stats: 'stats',
+  statistic: 'statistic',
+  all_links: 'all links',
+  total_clicks: 'total clicks',
+  edit: 'Edit',
+  delete: 'Delete',
+  url_to_short: 'url to short',
+  today: 'Today',
+  week: 'Week',
+  month: 'Month',
+  year: 'Year',
+  update_link: 'Update link',
+  short_url: 'Short url',
+  logout: 'Logout',
+  authorization: 'Authorization',
+  input: {
+    placeholder: {
+      paste_your_url: 'Paste your url',
+    },
+  },
+  button: {
+    short: 'Short',
+    generate: 'Generate',
+    update: 'Update',
+    cancel: 'Cancel',
+    send: 'Send',
+  },
+  confirm: {
+    remove_link: 'Do you realy want to delete this link?',
+  },
+  messages: {
+    successfully_deleted: 'Successfully deleted',
+    link_copied: 'Link copied',
+    link_updated: 'Link successfully updated',
+    something_went_wrong: 'Something went wrong',
+  },
+  auth: {
+    get_magic_link: 'get magic link',
+    magic_link_sent: 'magic link was sent successfully!🎉🎉🎉',
+    your_email: 'your email',
+  },
+  head: {
+    title: 'Simple url shortener',
+    description:
+      'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
+      keywords: 'url link shortener short url free analytics sharing',
+  },
 }

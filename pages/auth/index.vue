@@ -1,19 +1,19 @@
 <template>
   <div class="w-full mx-auto max-w-sm rounded-2xl overflow-hidden relative">
     <div class="p-5">
-      <h2 class="text-2xl font-bold text-center mb-5">Get magic link</h2>
+      <h2 class="text-2xl font-bold text-center mb-5 first-letter:uppercase">{{ $t('auth.get_magic_link') }}</h2>
       <template v-if="success">
-        <p class="text-center">Magic link was sent successfully!🎉🎉🎉</p>
+        <p class="text-center first-letter:uppercase">{{ $t('auth.magic_link_sent') }}</p>
       </template>
       <template v-else>
         <form class="space-y-6" @submit.prevent>
           <div>
-            <label class="mb-2 text-xs">Your email</label>
+            <label class="mb-2 text-xs first-letter:uppercase">{{ $t('auth.your_email') }}</label>
 
             <n-input
               v-model:value="email"
               class="mt-2"
-              placeholder="your@email.com"
+              placeholder="12345@email.com"
               :status="$v.email.$error ? 'error' : 'success'"
             />
             <label v-if="$v.email.$error" class="text-sm">
@@ -30,7 +30,7 @@
             class="!rounded-full w-full"
             @click="login"
           >
-            Send
+            {{ $t('button.send') }}
           </n-button>
         </form>
       </template>
@@ -43,8 +43,10 @@ import useVuelidate from '@vuelidate/core'
 import { required, email as isEmal, minLength } from '@vuelidate/validators'
 import { NInput, useMessage, NButton } from 'naive-ui'
 
+const { t } = useI18n()
+
 useHead({
-  titleTemplate: (titleChunk: string) => `${titleChunk} | Authorization`,
+  titleTemplate: (titleChunk: string) => `${titleChunk} | ${t('authorization')}`,
 })
 
 const supabase = useSupabaseClient()
@@ -70,7 +72,7 @@ const login = async () => {
     if (error) {
       switch (error.status) {
         default:
-          toast.error('Something went wrong')
+          toast.error(t('messages.something_went_wrong'))
           break
       }
       return

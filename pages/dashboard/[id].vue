@@ -5,9 +5,9 @@
       to="/dashboard"
     >
       <Icon name="ic:baseline-arrow-back" />
-      <span>All links</span>
+      <span class="first-letter:uppercase">{{ $t('all_links') }}</span>
     </nuxt-link>
-    <h1 class="text-3xl font-bold text-center mx-auto">Statistic</h1>
+    <h1 class="text-3xl font-bold text-center mx-auto first-letter:uppercase">{{ $t('statistic') }}</h1>
   </div>
   <div>
     <entities-link-info-skeleton v-if="pendingLinkData" />

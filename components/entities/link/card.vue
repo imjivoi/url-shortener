@@ -83,13 +83,15 @@ defineProps<Props>()
 
 const emits = defineEmits(['copy', 'delete', 'edit'])
 
+const { t } = useI18n()
+
 const options = [
   {
-    label: 'Edit',
+    label: t('edit'),
     key: 'edit',
   },
   {
-    label: 'Delete',
+    label: t('delete'),
     key: 'delete',
   },
 ]

@@ -74,40 +74,43 @@ const props = withDefaults(defineProps<Props>(), {
   bot: null,
 })
 const { statistic } = toRefs(props)
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const devicesTab = ref<'Devices' | 'OS' | 'Browser' | 'Bot'>('Devices')
 const devicesValueItem = computed(() => {
+  // @ts-ignore
   const value = props[devicesTab.value.toLowerCase()]
   return Object.keys(value).length && value
 })
 const locationTab = ref<'Country' | 'City'>('Country')
 const locationValue = computed(() => {
+  // @ts-ignore
   const value = props[locationTab.value.toLowerCase()]
   return Object.keys(value).length && value
 })
 const dateRangeOptions = [
   {
-    label: 'Today',
+    label: t('today'),
     value: 'today',
   },
   {
-    label: 'Week',
+    label: t('week'),
     value: 'week',
   },
   {
-    label: 'Month',
+    label: t('month'),
     value: 'month',
   },
   {
-    label: 'Year',
+    label: t('year'),
     value: 'year',
   },
 ]
 
 const dateRangeValue = computed({
   get() {
-    return (route.query.dateRange as string) || 'Month'
+    return (route.query.dateRange as string) || t('month')
   },
   set(value: string) {
     router.push({ name: 'dashboard-id', query: { ...route.query, dateRange: value } })

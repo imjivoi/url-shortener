@@ -1,6 +1,8 @@
 <template>
   <div class="p-4 w-full sm:w-auto">
-    <h2 class="text-center font-bold text-xl mb-4 hidden">Paste your url</h2>
+    <h2 class="text-center font-bold text-xl mb-4 hidden first-letter:uppercase">
+      {{ $t('input.placeholder.paste_your_url') }}
+    </h2>
     <form class="flex gap-2 items-center" @submit.prevent>
       <div class="relative flex-1 sm:flex-auto">
         <n-input
@@ -8,7 +10,7 @@
           :disabled="isLoading"
           :status="$v.url.$error ? 'error' : 'success'"
           round
-          placeholder="Url to short"
+          :placeholder="$t('input.placeholder.paste_your_url')"
           size="large"
         />
         <label v-if="$v.url.$error" class="text-xs absolute left-0 top-[100%]">
@@ -27,7 +29,7 @@
         round
         @click="create"
       >
-        Short
+        {{ $t('button.short') }}
       </n-button>
     </form>
   </div>

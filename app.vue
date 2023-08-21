@@ -15,6 +15,33 @@ import { NConfigProvider, NMessageProvider } from 'naive-ui'
 import { ModalsContainer } from 'vue-final-modal'
 
 import { themeOverrides } from '@/lib'
+
+const { t } = useI18n()
+useHead({
+  title: t('head.title'),
+  meta: [
+    {
+      name: 'description',
+      content: t('head.description'),
+    },
+    {
+      name: 'keywords',
+      content: t('head.keywords'),
+    },
+    {
+      hid: 'og:title',
+      name: 'og:title',
+      property: 'og:title',
+      content: t('head.title'),
+    },
+    {
+      hid: 'og:description',
+      name: 'og:description',
+      property: 'og:description',
+      content: t('head.description'),
+    },
+  ],
+})
 </script>
 <style lang="scss" scoped>
 .background {

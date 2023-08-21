@@ -2,7 +2,7 @@
   <header>
     <div class="container mx-auto flex justify-between items-center h-[48px] px-10">
       <div class="logo text-xl">
-        <nuxt-link to="/">liny</nuxt-link>
+        <nuxt-link :to="getHomeLink()">liny</nuxt-link>
       </div>
       <!-- <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
@@ -21,12 +21,13 @@
           </select>
           <shared-ui-color-toggle />
         </div> -->
-        <div v-if="user">
+        <div v-if="user" class="flex gap-4">
           <n-dropdown trigger="click" :options="options" @select="handleSelect">
             <n-button quaternary type="primary" round>
               {{ user.email }}
             </n-button>
           </n-dropdown>
+          <features-select-lang v-if="['dashboard', 'dashboard-id'].includes($route.name as string)" />
         </div>
       </div>
     </div>
@@ -38,13 +39,11 @@ import { NDropdown, NButton, NIcon } from 'naive-ui'
 
 import DashboardIcon from 'assets/icons/dashboard.svg'
 
-const localePath = useLocalePath()
+const { locale, defaultLocale, t } = useI18n()
 
 const user = useSupabaseUser()
 const supabase = useSupabaseClient()
-const router = useRouter()
 
-const { locale: currentLocale, locales } = useI18n()
 const renderIcon = (icon: Component) => {
   return () => {
     return h(NIcon, null, {
@@ -53,14 +52,22 @@ const renderIcon = (icon: Component) => {
   }
 }
 
+// ** Hardcode */
+function getHomeLink() {
+  if (locale.value !== defaultLocale) {
+    return `/${locale.value}`
+  }
+  return '/'
+}
+
 const options = [
   {
-    label: 'Dashboard',
+    label: t('dashboard'),
     key: 'dashboard',
     icon: renderIcon(DashboardIcon),
   },
   {
-    label: 'Logout',
+    label: t('logout'),
     key: 'logout',
     icon: renderIcon(LogoutIcon),
   },
@@ -68,7 +75,7 @@ const options = [
 
 const handleSelect = (val: 'dashboard' | 'logout') => {
   if (val === 'dashboard') {
-    return router.push('/dashboard')
+    return navigateTo('/dashboard')
   }
   logout()
 }
@@ -77,7 +84,7 @@ const logout = async () => {
   try {
     const { error } = await supabase.auth.signOut()
     if (!error) {
-      router.push('/')
+      navigateTo('/')
     }
   } catch (error) {}
 }

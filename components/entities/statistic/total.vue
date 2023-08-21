@@ -21,11 +21,11 @@
       <div v-else class="grid grid-cols-2 row-gap-8">
         <div class="text-center md:border-r">
           <h6 class="text-4xl font-bold lg:text-5xl xl:text-6xl">{{ statistic?.links }}</h6>
-          <p class="text-sm font-medium tracking-widest text-gray-800 uppercase lg:text-base">Links</p>
+          <p class="text-sm font-medium tracking-widest text-gray-800 uppercase lg:text-base">{{ $t('links') }}</p>
         </div>
         <div class="text-center">
           <h6 class="text-4xl font-bold lg:text-5xl xl:text-6xl">{{ statistic?.clicks }}</h6>
-          <p class="text-sm font-medium tracking-widest text-gray-800 uppercase lg:text-base">Clicks</p>
+          <p class="text-sm font-medium tracking-widest text-gray-800 uppercase lg:text-base">{{ $t('clicks') }}</p>
         </div>
       </div>
     </div>

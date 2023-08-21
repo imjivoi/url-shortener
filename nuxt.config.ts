@@ -3,7 +3,6 @@ import { z } from 'zod'
 import { fileURLToPath, URL } from 'url'
 
 import { colorMode } from './lib'
-
 const redisStorage = {
   driver: 'redis',
   tls: true,
@@ -19,7 +18,7 @@ export default defineNuxtConfig({
     head: {
       title: 'Simple url shortener',
       htmlAttrs: {
-        lang: 'en',
+        lang: 'es',
       },
       meta: [
         {
@@ -117,7 +116,30 @@ export default defineNuxtConfig({
   ],
   colorMode,
   i18n: {
-    vueI18n: './lib/i18n',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+      alwaysRedirect: true,
+    },
+    // vueI18n: './i18n.config.ts',
+    strategy: 'no_prefix',
+    defaultLocale: 'es',
+    pages: {
+      dashboard: false,
+    },
+    locales: [
+      {
+        code: 'en',
+        iso: 'en-US',
+        name: 'English',
+      },
+      {
+        code: 'es',
+        iso: 'es-ES',
+        name: 'Español',
+      },
+    ],
   },
   security: {
     rateLimiter: {

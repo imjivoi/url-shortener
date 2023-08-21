@@ -32,13 +32,14 @@ interface Props {
 defineProps<Props>()
 const refreshData = inject('refreshData') as () => void
 
+const { t } = useI18n()
 const message = useMessage()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 const { copy } = useClipboard()
 const modal = useModal()
 
 const deleteLink = async (link: LinkType) => {
-  const isConfirmed = confirm('Do you realy want to delete this link?')
+  const isConfirmed = confirm(t('confirm.remove_link'))
   if (!isConfirmed) return
   try {
     await $fetch(`/api/links/`, {
@@ -50,15 +51,15 @@ const deleteLink = async (link: LinkType) => {
       },
     })
     refreshData()
-    message.success('Successfully deleted')
+    message.success(t('messages.successfully_deleted'))
   } catch (error) {
-    message.error('Something went wrong')
+    message.error(t('messages.something_went_wrong'))
   }
 }
 
 const copyLink = async (value: string) => {
   await copy(value)
-  message.success('Link copied')
+  message.success(t('messages.link_copied'))
 }
 
 const openEditModal = (linkData: LinkType) => {
@@ -68,7 +69,7 @@ const openEditModal = (linkData: LinkType) => {
       link: linkData,
       onSuccess: () => {
         refreshData()
-        message.success('Link successfully updated')
+        message.success(t('messages.link_updated'))
       },
     },
   })
