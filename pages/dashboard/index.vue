@@ -7,15 +7,12 @@
     <div v-if="linksData?.data?.length" class="mb-10">
       <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
         <h2 class="text-2xl font-bold text-left first-letter:uppercase">{{ $t('links') }}</h2>
-        <features-create-link-trigger
-          class="bg-gradient-to-r from-yellow-100 via-red-50 to-purple-100 rounded-xl shadow shadow-yellow-400/50"
-          @success="refreshData"
-        />
+        <features-create-link-trigger @success="refreshData" />
       </div>
     </div>
     <entities-link-cards-list :links="linksData?.data || null" :loading="pendingLinksData" />
     <div v-if="!pendingLinksData && !linksData?.data?.length" class="mt-16">
-      <features-create-link-trigger class="shadow-gradient" @success="refreshData" />
+      <features-create-link-trigger @success="refreshData" />
     </div>
     <shared-pagination
       v-if="!pendingLinksData && linksData && linksData?.count > 10"

@@ -1,10 +1,9 @@
 <template>
   <div class="flex mb-5 mt-10 sm:max-w-[150px]">
-    <n-select v-model:value="dateRangeValue" :options="dateRangeOptions" size="large" />
+    <u-select v-model="dateRangeValue" :options="dateRangeOptions" placeholder="Select range" />
   </div>
   <div v-if="statistic">
     <div class="rounded-2xl p-5 mb-5 relative">
-      <div class="bg-card"></div>
       <client-only>
         <entities-statistic-bar-chart v-if="statistic" class="h-[300px] md:h-[500px]" :options="statistic" />
       </client-only>
@@ -12,45 +11,36 @@
     <div class="flex flex-col md:flex-row gap-5">
       <div class="rounded-2xl p-5 basis-1/2 relative">
         <div class="bg-card"></div>
-        <n-tabs v-model:value="devicesTab" type="segment" class="mb-2">
-          <n-tab v-for="(item, idx) in ['Devices', 'OS', 'Browser', 'Bot']" :key="idx" :name="item" :tab="item"></n-tab>
-        </n-tabs>
+        <u-tabs v-model="devicesTabIdx" :items="devicesTabs" class="mb-2"></u-tabs>
         <client-only>
           <entities-statistic-pie-chart
             v-if="devicesValueItem"
             class="h-[400px] md:h-[500px]"
             :options="devicesValueItem"
-            :title="devicesTab"
+            :title="devicesTabs[devicesTabIdx].label"
           />
-          <div v-else class="flex items-center justify-center h-[300px] md:h-[500px]">
-            <n-empty size="huge" description="No data"></n-empty>
-          </div>
+          <div v-else class="flex items-center justify-center h-[300px] md:h-[500px]">Nothig found</div>
         </client-only>
       </div>
       <div class="rounded-2xl p-5 basis-1/2 relative">
         <div class="bg-card"></div>
-        <n-tabs v-model:value="locationTab" type="segment" class="mb-2">
-          <n-tab v-for="(item, idx) in ['City', 'Country']" :key="idx" :name="item" :tab="item"></n-tab>
-        </n-tabs>
+        <u-tabs v-model="locationTabIdx" :items="locationTabs" class="mb-2"></u-tabs>
         <entities-statistic-pie-chart
           v-if="locationValue"
           class="h-[400px] md:h-[500px]"
           :options="locationValue"
-          :title="locationTab"
+          :title="locationTabs[locationTabIdx].label"
         />
-        <div v-else class="flex items-center justify-center h-[300px] md:h-[500px]">
-          <n-empty size="huge" description="No data"></n-empty>
-        </div>
+        <div v-else class="flex items-center justify-center h-[300px] md:h-[500px]">Nothig found</div>
       </div>
     </div>
   </div>
-  <div v-else><n-empty size="huge" description="No data"></n-empty></div>
+  <div v-else>Nothig found</div>
 </template>
 <script setup lang="ts">
-import { NSelect, NEmpty, NTab, NTabs } from 'naive-ui'
 import { THEME_KEY } from 'vue-echarts'
 
-import { StatisticType } from 'types'
+import { type StatisticType } from '../../../types'
 
 provide(THEME_KEY, 'light')
 
@@ -77,16 +67,39 @@ const { statistic } = toRefs(props)
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const devicesTab = ref<'Devices' | 'OS' | 'Browser' | 'Bot'>('Devices')
+
+const devicesTabs = [
+  {
+    label: 'Devices',
+  },
+  {
+    label: 'OS',
+  },
+  {
+    label: 'Browser',
+  },
+  {
+    label: 'Bot',
+  },
+]
+const devicesTabIdx = ref(0)
 const devicesValueItem = computed(() => {
   // @ts-ignore
-  const value = props[devicesTab.value.toLowerCase()]
+  const value = props[devicesTabs[devicesTabIdx.value].label.toLowerCase()]
   return Object.keys(value).length && value
 })
-const locationTab = ref<'Country' | 'City'>('Country')
+const locationTabs = [
+  {
+    label: 'Country',
+  },
+  {
+    label: 'City',
+  },
+]
+const locationTabIdx = ref(0)
 const locationValue = computed(() => {
   // @ts-ignore
-  const value = props[locationTab.value.toLowerCase()]
+  const value = props[locationTabs[locationTabIdx.value].label.toLowerCase()]
   return Object.keys(value).length && value
 })
 const dateRangeOptions = [
@@ -110,7 +123,7 @@ const dateRangeOptions = [
 
 const dateRangeValue = computed({
   get() {
-    return (route.query.dateRange as string) || t('month')
+    return (route.query.dateRange as string) || 'today'
   },
   set(value: string) {
     router.push({ name: 'dashboard-id', query: { ...route.query, dateRange: value } })

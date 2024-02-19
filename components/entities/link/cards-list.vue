@@ -16,60 +16,54 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useMessage } from 'naive-ui'
-
 import { FeaturesUpdateLinkModal } from '#components'
-import { LinkType } from 'types'
 
 import CardSkeleton from './card-skeleton.vue'
 import Card from './card.vue'
 
 interface Props {
-  links: LinkType[] | null
+  links: any[] | null
   loading: boolean
 }
 
 defineProps<Props>()
+
 const refreshData = inject('refreshData') as () => void
 
 const { t } = useI18n()
-const message = useMessage()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 const { copy } = useClipboard()
 const modal = useModal()
+const toast = useToast()
 
-const deleteLink = async (link: LinkType) => {
+const deleteLink = async (link) => {
   const isConfirmed = confirm(t('confirm.remove_link'))
   if (!isConfirmed) return
   try {
-    await $fetch(`/api/links/`, {
+    await $fetch(`/api/links/${link.id}`, {
       method: 'DELETE',
       headers,
-      query: {
-        id: link.id,
-        alias: link.alias,
-      },
     })
     refreshData()
-    message.success(t('messages.successfully_deleted'))
+    // message.success(t('messages.successfully_deleted'))
   } catch (error) {
-    message.error(t('messages.something_went_wrong'))
+    // message.error(t('messages.something_went_wrong'))
   }
 }
 
 const copyLink = async (value: string) => {
   await copy(value)
-  message.success(t('messages.link_copied'))
+  toast.add({ title: t('messages.link_copied') })
 }
 
-const openEditModal = (linkData: LinkType) => {
+const openEditModal = (linkData) => {
   modal.open({
     component: FeaturesUpdateLinkModal,
     bind: {
       link: linkData,
       onSuccess: () => {
         refreshData()
-        message.success(t('messages.link_updated'))
+        // message.success(t('messages.link_updated'))
       },
     },
   })

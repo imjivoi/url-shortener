@@ -1,8 +1,5 @@
-import { z } from 'zod'
-
 import { fileURLToPath, URL } from 'url'
 
-import { colorMode } from './lib'
 const redisStorage = {
   driver: 'redis',
   tls: true,
@@ -18,9 +15,6 @@ export default defineNuxtConfig({
   app: {
     head: {
       meta: [
-        {
-          name: 'naive-ui-style',
-        },
         // {
         //   name: 'description',
         //   content:
@@ -82,36 +76,36 @@ export default defineNuxtConfig({
   runtimeConfig: {
     cronKey: process.env.CRON_KEY,
     public: {
-      DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.DOMAIN_URL : 'http://localhost:4444',
+      DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.DOMAIN_URL : 'http://localhost:3000',
+    },
+    supabase: {
+      url: process.env.SUPABASE_URL,
+      key: process.env.SUPABASE_KEY,
+      serviceRoleKey: process.env.SUPABASE_SERVICE_KEY,
     },
   },
   alias: {
     '@': fileURLToPath(new URL('./', import.meta.url)),
     assets: fileURLToPath(new URL('./assets', import.meta.url)),
-    server: fileURLToPath(new URL('./server', import.meta.url)),
     types: fileURLToPath(new URL('./types', import.meta.url)),
-    utils: fileURLToPath(new URL('./utils', import.meta.url)),
   },
-  css: ['~/assets/styles/index.scss'],
+  css: ['@/assets/styles/index.scss'],
   modules: [
-    '@nuxtjs/tailwindcss',
     'nuxt-svgo',
     'nuxt-icon',
-    '@nuxtjs/supabase',
     '@pinia/nuxt',
     '@vueuse/nuxt',
     'nuxt-viewport',
     '@nuxtjs/device',
     '@nuxtjs/i18n',
-    '@nuxtjs/color-mode',
-    'nuxt-security',
+    // 'nuxt-security',
     '@nuxtjs/robots',
     'nuxt-simple-sitemap',
     '@nuxt/content',
     // '@zadigetvoltaire/nuxt-gtm',
     'nuxt-gtag',
+    '@nuxt/ui',
   ],
-  colorMode,
   i18n: {
     detectBrowserLanguage: {
       useCookie: true,
@@ -121,7 +115,7 @@ export default defineNuxtConfig({
     },
     // vueI18n: './i18n.config.ts',
     strategy: 'no_prefix',
-    defaultLocale: 'es',
+    defaultLocale: 'en',
     pages: {
       dashboard: false,
     },
@@ -131,31 +125,27 @@ export default defineNuxtConfig({
         iso: 'en',
         name: 'English',
       },
-      {
-        code: 'es',
-        iso: 'es',
-        name: 'Español',
-      },
+      // {
+      //   code: 'es',
+      //   iso: 'es',
+      //   name: 'Español',
+      // },
     ],
   },
-  security: {
-    rateLimiter: {
-      value: {
-        tokensPerInterval: 150,
-        interval: 'hour',
-        fireImmediately: true,
-      },
-      route: '/api/links',
-    },
-    headers: {
-      contentSecurityPolicy: false,
-      crossOriginEmbedderPolicy: false,
-    },
-  },
-  tailwindcss: {
-    configPath: './tailwind.config.ts',
-    cssPath: '~/assets/styles/tailwind.css',
-  },
+  // security: {
+  //   rateLimiter: {
+  //     value: {
+  //       tokensPerInterval: 150,
+  //       interval: 'hour',
+  //       fireImmediately: true,
+  //     },
+  //     route: '/api/links',
+  //   },
+  //   headers: {
+  //     contentSecurityPolicy: false,
+  //     crossOriginEmbedderPolicy: false,
+  //   },
+  // },
   robots: {
     rules: {
       UserAgent: '*',
@@ -173,54 +163,40 @@ export default defineNuxtConfig({
       id: 'G-1BZVZS70WX',
     },
   }),
-  build: {
-    transpile:
-      process.env.NODE_ENV === 'production'
-        ? ['naive-ui', 'vueuc', '@css-render/vue3-ssr', '@juggle/resize-observer']
-        : ['@juggle/resize-observer'],
-  },
-
-  vite: {
-    optimizeDeps: {
-      include: process.env.NODE_ENV === 'development' ? ['naive-ui', 'vueuc', 'date-fns-tz/esm/formatInTimeZone'] : [],
-    },
-  },
   nitro: {
     storage: {
       redis: redisStorage,
-      cache: {
-        driver: 'lruCache',
-        ttl: 60 * 5,
+    },
+    devStorage: {
+      redis: {
+        driver: 'fs',
+        base: './.data/db',
       },
+    },
+    experimental: {
+      asyncContext: true,
     },
   },
   hooks: {
-    'build:before': () => {
-      z.object({
-        SUPABASE_URL: z.string(),
-        SUPABASE_KEY: z.string(),
-        // SUPABASE_PROJECT_ID: z.string(),
-        // SUPABASE_ACCESS_TOKEN: z.string(),
-        DOMAIN_URL: z.string(),
-        SUPABASE_SERVICE_KEY: z.string(),
-        CRON_KEY: z.string(),
-        REDIS_HOST: z.string(),
-        REDIS_PORT: z.string(),
-        REDIS_PASSWORD: z.string(),
-      }).parse(process.env)
-    },
+    // 'build:before': () => {
+    //   z.object({
+    //     SUPABASE_URL: z.string(),
+    //     SUPABASE_KEY: z.string(),
+    //     // SUPABASE_PROJECT_ID: z.string(),
+    //     // SUPABASE_ACCESS_TOKEN: z.string(),
+    //     DOMAIN_URL: z.string(),
+    //     SUPABASE_SERVICE_KEY: z.string(),
+    //     CRON_KEY: z.string(),
+    //     REDIS_HOST: z.string(),
+    //     REDIS_PORT: z.string(),
+    //     REDIS_PASSWORD: z.string(),
+    //   }).parse(process.env)
+    // },
   },
-  routeRules: {
-    '/supabase/**': {
-      proxy: {
-        to: 'http://localhost:54323',
-        // headers: {
-        //   'Access-Control-Allow-Origin': '*',
-        //   'Access-Control-Allow-Headers': '*',
-        //   'access-control-allow-methods': '*',
-        // },
-      },
-      cors: false,
-    },
+  colorMode: {
+    preference: 'light',
+  },
+  build: {
+    transpile: [/echarts/, /zrender/],
   },
 })

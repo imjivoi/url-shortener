@@ -1,4 +1,4 @@
-import { isCrawler } from 'server/lib'
+import { isCrawler } from '../server/lib'
 
 export default defineNuxtRouteMiddleware(async ({ params }) => {
   if (!process.server) return
@@ -14,7 +14,6 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
       string,
       string
     >
-
     const link = await $fetch<{ original_url: string }>(`/api/storage/${params.alias}`)
 
     if (!link || !link.original_url) {
@@ -24,16 +23,16 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     if (!isCrawler(headers['user-agent'])) {
       await navigateTo(link.original_url, {
         external: true,
+        redirectCode: 301,
       })
+
       try {
-        await $fetch('/api/links/statistic/create', {
-          method: 'post',
-          body: {
-            alias: params.alias,
-          },
+        await $fetch(`/api/links/alias/${params.alias}/statistic`, {
           headers,
         })
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
     }
   } catch (error) {
     console.log(error)

@@ -1,8 +1,16 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss'
+
 export default <Partial<Config>>{
-  darkMode: 'class',
+  content: [
+		'docs/content/**/*.md'
+	],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        black: {
+          DEFAULT: '#191627',
+        },
+      },
+    },
   },
 }

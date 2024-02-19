@@ -3,9 +3,9 @@
     <template #title>{{ $t('update_link') }}</template>
     <form class="flex flex-col gap-2" @submit.prevent>
       <div>
-        <label class="mb-2 text-xs">Url</label>
+        <label class="mb-2 text-xs">Original url</label>
 
-        <n-input
+        <u-input
           v-model:value="url"
           class="mt-2"
           label-top=""
@@ -19,10 +19,10 @@
         </label>
       </div>
       <div>
-        <div class="relative flex items-end justify-between gap-2">
+        <div class="relative flex items-end gap-2">
           <div>
             <label class="text-xs">{{ $t('short_url') }}</label>
-            <n-input
+            <u-input
               v-model:value="alias"
               class="input mt-2"
               placeholder="my-link"
@@ -33,17 +33,17 @@
                   {{ config.public.DOMAIN_URL + '/' }}
                 </span>
               </template>
-            </n-input>
+            </u-input>
           </div>
 
-          <n-button class="hidden sm:flex flex-1" quaternary type="primary" @click="generateAlias">
+          <u-button class="hidden sm:flex" quaternary type="primary" @click="generateAlias">
             {{ $t('button.generate') }}
-          </n-button>
-          <n-button class="sm:hidden" circle ghost type="primary" @click="generateAlias">
+          </u-button>
+          <u-button class="sm:hidden" circle ghost type="primary" @click="generateAlias">
             <template #icon>
               <Icon name="material-symbols:auto-mode-rounded" />
             </template>
-          </n-button>
+          </u-button>
         </div>
         <label v-if="aliasError || $v.alias.$error" class="text-sm">
           <span v-if="aliasError" class="text-red-500">{{ aliasError }}</span>
@@ -71,8 +71,8 @@
     </form>
     <template #footer>
       <div class="flex justify-center gap-4">
-        <n-button type="primary" :loading="isLoading" @click="create">{{ $t('button.update') }}</n-button>
-        <n-button @click="close">{{ $t('button.cancel') }}</n-button>
+        <u-button :loading="isLoading" @click="create">{{ $t('button.update') }}</u-button>
+        <u-button @click="close" color="white">{{ $t('button.cancel') }}</u-button>
       </div>
     </template>
   </shared-modal>
@@ -81,19 +81,15 @@
 // eslint-disable-next-line import/no-named-as-default
 import useVuelidate from '@vuelidate/core'
 import { minLength, maxLength, required, url as isUrl } from '@vuelidate/validators'
-import { NInput, NButton, useMessage } from 'naive-ui'
-
-import { LinkType } from 'types'
 
 interface Props {
   onSuccess: () => void
-  link: Partial<LinkType>
+  link: any
 }
 
 const { link, onSuccess } = defineProps<Props>()
 const config = useRuntimeConfig()
 const emits = defineEmits(['success', 'update:modelValue'])
-const toast = useMessage()
 
 const title = ref(link.title || '')
 const url = ref(link.original_url || '')
@@ -130,7 +126,7 @@ const create = async () => {
     onSuccess()
   } catch (error: any) {
     if (error.statusCode === 403) {
-      toast.error(error?.statusMessage || 'You reached links limit')
+      // toast.error(error?.statusMessage || 'You reached links limit')
     }
   } finally {
     isLoading.value = false
@@ -150,7 +146,7 @@ const generateAlias = () => {
 
 const checkAlias = async () => {
   try {
-    const response = await $fetch(`/api/links/alias/check/${alias.value}`, { headers })
+    const response = await $fetch(`/api/links/alias/${alias.value}/check`, { headers })
     if (response.exists) {
       aliasError.value = 'Alias already exist'
     }

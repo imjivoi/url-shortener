@@ -10,7 +10,7 @@
           <div>
             <label class="mb-2 text-xs first-letter:uppercase">{{ $t('auth.your_email') }}</label>
 
-            <n-input
+            <u-input
               v-model:value="email"
               class="mt-2"
               placeholder="12345@email.com"
@@ -22,7 +22,7 @@
               </span>
             </label>
           </div>
-          <n-button
+          <u-button
             attr-type="submit"
             :loading="isLoading"
             type="primary"
@@ -31,7 +31,7 @@
             @click="login"
           >
             {{ $t('button.send') }}
-          </n-button>
+          </u-button>
         </form>
       </template>
     </div>
@@ -41,7 +41,6 @@
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core'
 import { required, email as isEmal, minLength } from '@vuelidate/validators'
-import { NInput, useMessage, NButton } from 'naive-ui'
 
 const { t } = useI18n()
 

@@ -1,12 +1,13 @@
-html {
-}
+
 body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
-  min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
-  @apply text-slate-900;
+}
 
+.dark body {
+  @apply bg-black;
 }
 
 #__nuxt {

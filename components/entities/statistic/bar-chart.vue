@@ -7,12 +7,12 @@
  * TODO: доделать тултип
  */
 import { BarChart } from 'echarts/charts'
-import { TitleComponent, TooltipComponent, LegendComponent, GridComponent, TimelineComponent } from 'echarts/components'
+import { TitleComponent, TooltipComponent, LegendComponent, GridComponent, TimelineComponent, } from 'echarts/components'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
 
-import { StatisticType } from 'types'
+import { type StatisticType } from '../../../types'
 
 use([CanvasRenderer, BarChart, TitleComponent, TooltipComponent, LegendComponent, GridComponent, TimelineComponent])
 
@@ -29,7 +29,7 @@ const option = computed(() => ({
     left: 'left',
   },
   tooltip: {
-    show: false,
+    show: true,
     trigger: 'item',
     // formatter: function (params, ticket, callback) {
     //   const details = options.value.get(parseInt(params.name))
@@ -55,7 +55,7 @@ const option = computed(() => ({
       type: 'bar',
       showBackground: false,
       backgroundStyle: {
-        // color: 'rgba(180, 180, 180, 0.2)',
+        color: 'rgba(180, 180, 180, 0.2)',
       },
       data: Array.from(options.value).map(([_, value]) => (value?.length ? value.length : 0)),
       emphasis: {

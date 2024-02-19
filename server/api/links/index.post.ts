@@ -1,13 +1,10 @@
-import { useSafeValidatedBody } from 'h3-zod'
 import { nanoid } from 'nanoid'
 
-import { createLink, getAccount, parseMeta } from 'server/model'
-import { CreateUrlSchema } from 'types'
+import { createLink, getCustomer, parseMeta } from '../../services'
 
-import { serverSupabaseUser } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-  const user = await serverSupabaseUser(event)
+  const user = await useServerSupabaseUser()
   if (!user) {
     throw createError({
       statusCode: 401,
@@ -15,18 +12,9 @@ export default defineEventHandler(async (event) => {
   }
   const config = useRuntimeConfig()
 
-  const body = await useSafeValidatedBody(event, CreateUrlSchema)
+  const body = await readBody(event)
 
-  if (!body.success) {
-    const formattedErrors = body.error.format()
-    throw createError({
-      message: 'Validation Error',
-      statusCode: 400,
-      data: formattedErrors,
-    })
-  }
-
-  const account = await getAccount(event, user.id)
+  const account = await getCustomer(user.id)
 
   if (account?.links_limit_exceeded) {
     throw createError({
@@ -35,7 +23,7 @@ export default defineEventHandler(async (event) => {
     })
   }
   let original_url, title, alias, description, image_url
-  ;({ original_url, title, alias } = body.data)
+  ;({ original_url, title, alias } = body)
 
   if (title !== '') {
     try {
@@ -50,10 +38,10 @@ export default defineEventHandler(async (event) => {
   }
 
   if (!alias) {
-    alias = nanoid(5)
+    alias = nanoid(5).toLowerCase()
   }
 
-  const { data, error } = await createLink(event, {
+  const { data, error } = await createLink({
     title,
     original_url,
     redirect_url: config.public.DOMAIN_URL + '/' + alias,

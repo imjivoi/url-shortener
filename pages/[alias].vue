@@ -10,14 +10,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { LinkType } from 'types'
 
 definePageMeta({
   middleware: 'alias',
 })
 const route = useRoute('alias')
 
-const { pending, data } = await useFetch<Partial<LinkType>>(`/api/links/alias/${route.params.alias}`)
+const { pending, data } = await useFetch(`/api/links/alias/${route.params.alias}`)
 
 useSeoMeta({
   title: data.value?.title,

@@ -44,10 +44,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { LinkType } from 'types'
-
 interface Props {
-  link?: LinkType | null
+  link?: any | null
 }
 
 defineProps<Props>()

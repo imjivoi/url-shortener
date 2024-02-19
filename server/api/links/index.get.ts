@@ -1,12 +1,9 @@
-import { z, useSafeValidatedQuery } from 'h3-zod'
+import * as v from 'valibot'
 
-import { LinkType } from 'types'
-
-import { getLinksByUserId } from '../../model'
-
-import { serverSupabaseUser } from '#supabase/server'
+import { getLinksByUserId } from '../../services'
 
 const getPagination = (page: number, size: number) => {
+  page = page - 1
   const limit = size || 10
   const from = page ? page * limit : 0
   const to = page ? from + size - 1 : size - 1
@@ -14,42 +11,25 @@ const getPagination = (page: number, size: number) => {
   return { from, to }
 }
 
-export default defineEventHandler(async (event) => {
-  const user = await serverSupabaseUser(event)
-  if (!user) {
-    throw createError({
-      statusCode: 401,
-    })
-  }
-  const query = useSafeValidatedQuery(
+export default defineAuthEventHandler(async (event, user) => {
+
+  const { page, size } = await useValidatedQuery(
     event,
-    z.object({
-      page: z
-        .number()
-        .or(z.string().regex(/\d+/).transform(Number))
-        .default(0)
-        .transform((value) => value - 1),
-      size: z.number().default(10),
+    v.objectAsync({
+      page: v.optional(v.coerce(v.number(), Number), 1),
+      size: v.optional(v.coerce(v.number(), Number), 10),
     }),
   )
 
-  if (!query.success) {
-    const formattedErrors = query.error.format()
-    throw createError({
-      message: 'Validation Error',
-      statusCode: 400,
-      data: formattedErrors,
-    })
-  }
-  const { page, size } = query.data
   const { from, to } = getPagination(page, size)
-  const result: { data: LinkType[]; count: number; page: number } = {
+
+  const result: { data: any[]; count: number; page: number } = {
     data: [],
     count: 0,
     page: page + 1,
   }
 
-  const { data, error, count } = await getLinksByUserId(event, user.id, { from, to })
+  const { data, error, count } = await getLinksByUserId(user.id, { from, to })
 
   if (error) {
     console.log(error)

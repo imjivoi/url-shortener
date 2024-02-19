@@ -1,45 +1,39 @@
 <template>
-  <div class="p-4 w-full sm:w-auto">
+  <div class="p-4 w-full sm:w-auto bg-gray-200 dark:bg-gray-800 rounded-xl">
     <h2 class="text-center font-bold text-xl mb-4 hidden first-letter:uppercase">
       {{ $t('input.placeholder.paste_your_url') }}
     </h2>
     <form class="flex gap-2 items-center" @submit.prevent>
       <div class="relative flex-1 sm:flex-auto">
-        <n-input
-          v-model:value="url"
+        <u-input
+          v-model="url"
           :disabled="isLoading"
           :status="$v.url.$error ? 'error' : 'success'"
-          round
           :placeholder="$t('input.placeholder.paste_your_url')"
-          size="large"
         />
-        <label v-if="$v.url.$error" class="text-xs absolute left-0 top-[100%]">
+        <small v-if="$v.url.$error" class="text-xs absolute left-0 top-[100%]">
           <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="block w-max text-red-500">
             {{ error.$message }}
           </span>
-        </label>
+        </small>
       </div>
-      <n-button
-        attr-type="submit"
-        strong
-        secondary
-        size="large"
-        type="primary"
-        :loading="isLoading"
-        round
-        @click="create"
-      >
-        {{ $t('button.short') }}
-      </n-button>
+      <div class="flex gap-2">
+        <u-button :loading="isLoading" @click="create">
+          <icon name="ph:magic-wand-fill" />
+          {{ $t('button.short') }}
+        </u-button>
+        <u-button variant="ghost" @click="openCreateModal">Create</u-button>
+      </div>
     </form>
   </div>
 </template>
 <script lang="ts" setup>
 import useVuelidate from '@vuelidate/core'
 import { required, url as isUrl } from '@vuelidate/validators'
-import { NButton, NInput, useMessage } from 'naive-ui'
 
-const message = useMessage()
+import { FeaturesCreateLinkModal } from '#components'
+
+const modal = useModal()
 
 const url = ref('')
 
@@ -66,64 +60,29 @@ const create = async () => {
       headers: useRequestHeaders(['cookie']) as Record<string, string>,
     })
     emits('success')
-    message.success('Link successfully created')
+    // message.success('Link successfully created')
     url.value = ''
   } catch (error: any) {
     if (error.data?.statusCode === 403) {
-      message.error(error?.data?.statusMessage || error?.data?.message || 'You reached links limit')
+      // message.error(error?.data?.statusMessage || error?.data?.message || 'You reached links limit')
     } else {
-      message.error(error?.data?.statusMessage || error?.data?.message || 'Something went wrong')
+      // message.error(error?.data?.statusMessage || error?.data?.message || 'Something went wrong')
     }
   } finally {
     isLoading.value = false
   }
 }
 
+function openCreateModal() {
+  modal.open({
+    component: FeaturesCreateLinkModal,
+    bind: {
+      defaultUrl: url.value,
+    },
+  })
+}
+
 watch(url, () => {
   $v.value.$reset()
 })
 </script>
-<style scoped lang="scss">
-.shadow-gradient {
-  > h2 {
-    display: block;
-  }
-  @apply block max-w-[600px] max-h-[600px] w-full h-full relative mx-auto;
-
-  form {
-    @apply block;
-  }
-  .n-button {
-    @apply mt-4;
-  }
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150%;
-    height: 400%;
-    z-index: -1;
-    filter: blur(100px);
-    @apply bg-gradient-to-r from-yellow-100 via-red-100 to-purple-100 rounded-full;
-    background-size: 200% 200%;
-
-    @media (min-width: 960px) {
-      animation: gradient 15s ease infinite;
-    }
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-}
-</style>

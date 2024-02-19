@@ -1,12 +1,15 @@
 <template>
   <vue-final-modal
     classes="modal-container pt-16  "
-    content-class="modal-box w-full max-w-full sm:max-w-[600px] mx-auto bg-white py-6 px-4 sm:px-8 overflow-hidden"
+    content-class="modal-box w-full max-w-full sm:max-w-[600px] mx-auto bg-white dark:bg-gray-800 py-6 px-4 sm:px-8 overflow-hidden"
     :lock-scroll="true"
     overlay-transition="vfm-fade"
     content-transition="vfm-fade"
     teleport-to="#__nuxt"
   >
+    <div class="flex justify-end sm:hidden absolute top-2 right-2 w-full">
+      <u-button variant="link" icon="ic:baseline-close" @click="$emit('update:modelValue', false)"></u-button>
+    </div>
     <div class="modal__title text-center font-bold text-2xl">
       <slot name="title"></slot>
     </div>
@@ -29,10 +32,6 @@ import { VueFinalModal } from 'vue-final-modal'
     display: flex;
     justify-content: center;
     overflow-y: auto;
-
-    @media (max-width: 640px) {
-      align-items: end;
-    }
   }
 
   &-box {

@@ -1,5 +1,3 @@
-import { serverSupabaseUser } from '#supabase/server'
-
-export default defineEventHandler((event) => {
-  return serverSupabaseUser(event)
+export default defineAuthEventHandler((_, user) => {
+  return user
 })

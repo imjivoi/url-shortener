@@ -12,7 +12,7 @@ import {
   startOfYear,
 } from 'date-fns'
 
-import { StatisticType } from 'types'
+import type{ StatisticType } from '@/types'
 
 export const months = [
   'January',

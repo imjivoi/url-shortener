@@ -115,15 +115,15 @@ const isShowingSelect = computed(() => {
 })
 </script>
 <style lang="scss" scoped>
-.page {
-  @apply block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white rounded-md hover:bg-blue-100;
+// .page {
+//   @apply block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white rounded-md hover:bg-blue-100;
 
-  &.active {
-    @apply bg-blue-500 text-white;
-  }
+//   &.active {
+//     @apply bg-blue-500 text-white;
+//   }
 
-  &.disabled {
-    @apply bg-gray-200;
-  }
-}
+//   &.disabled {
+//     @apply bg-gray-200;
+//   }
+// }
 </style>
