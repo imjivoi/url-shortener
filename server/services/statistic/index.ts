@@ -1,6 +1,8 @@
 import { getDomainWithoutWWW, getUserAgentData } from '../../lib'
 import { dateRangeConfig } from '../../../utils'
 import type { DateRangetype } from '../../../types'
+import { getLinkByAlias } from '../link'
+import { getCustomerLimits } from '../customer'
 
 export async function createClick(linkId: string) {
   const event = useEvent()
@@ -84,5 +86,18 @@ export async function getTotalStatisticByUserId(userId: string) {
   return {
     links,
     clicks,
+  }
+}
+
+
+export async function createStatistic(alias:string) {
+  const link = await getLinkByAlias(alias)
+
+  if (link) {
+    const limits = await getCustomerLimits(link.user_id)
+
+    if (!limits?.clicks_limit_exceeded) {
+      await createClick(link.id)
+    }
   }
 }
