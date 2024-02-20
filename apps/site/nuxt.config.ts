@@ -191,6 +191,7 @@ export default defineNuxtConfig({
         proxy: API_URL,
       },
     },
+    preset: 'vercel'
   },
   // vite: {
   //   server: {
