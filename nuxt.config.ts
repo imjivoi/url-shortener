@@ -165,9 +165,7 @@ export default defineNuxtConfig({
   }),
   nitro: {
     storage: {
-      redis: {
-        driver: 'vercelKV'
-      },
+      redis: redisStorage,
     },
     devStorage: {
       redis: {
@@ -178,7 +176,7 @@ export default defineNuxtConfig({
     experimental: {
       asyncContext: true,
     },
-    preset: 'vercel'
+    preset: 'vercel',
   },
   hooks: {
     // 'build:before': () => {
