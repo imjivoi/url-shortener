@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "scripts": {
+    "prepare": "nitropack prepare",
+    "dev": "nitropack dev",
+    "build": "nitropack build",
+    "preview": "node .output/server/index.mjs",
+    "sb:init": "pnpm dlx supabase init",
+    "sb:start": "pnpm dlx supabase start",
+    "sb:stop": "pnpm dlx supabase stop",
+    "sb:migration": "pnpm dlx supabase migration new",
+    "sb:migration:up": "pnpm dlx supabase migration up",
+    "sb:types": "pnpm dlx supabase gen types typescript --local > server/db/database.types.ts",
+    "sb:reset": "pnpm dlx supabase db reset && pnpm sb:types"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
+    "nitropack": "latest",
+    "supabase": "^1.145.4"
+  }
+}

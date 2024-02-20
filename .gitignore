@@ -1,11 +1,1 @@
 node_modules
-*.log*
-.nuxt
-.nitro
-.cache
-.output
-.env
-dist
-.vscode
-.vercel
-.data
