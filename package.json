@@ -10,6 +10,7 @@
     "sb:start": "pnpm dlx supabase start",
     "sb:stop": "pnpm dlx supabase stop",
     "sb:migration": "pnpm dlx supabase migration new",
+    "sb:migration:up": "pnpm dlx supabase migration up",
     "sb:types": "pnpm dlx supabase gen types typescript --local > server/db/database.types.ts",
     "sb:reset": "pnpm dlx supabase db reset && pnpm sb:types",
     "lint": "eslint --ext .ts,.js,.vue ."

@@ -176,6 +176,7 @@ export default defineNuxtConfig({
     experimental: {
       asyncContext: true,
     },
+    preset: 'vercel'
   },
   hooks: {
     // 'build:before': () => {

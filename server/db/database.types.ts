@@ -199,6 +199,13 @@ export interface Database {
           title: string | null
           updated_at: string
           user_id: string
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_id: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_source_platform: string | null
+          utm_term: string | null
         }
         Insert: {
           alias: string
@@ -211,6 +218,13 @@ export interface Database {
           title?: string | null
           updated_at?: string
           user_id: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_id?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_source_platform?: string | null
+          utm_term?: string | null
         }
         Update: {
           alias?: string
@@ -223,6 +237,13 @@ export interface Database {
           title?: string | null
           updated_at?: string
           user_id?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_id?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_source_platform?: string | null
+          utm_term?: string | null
         }
         Relationships: [
           {
