@@ -185,13 +185,12 @@ export default defineNuxtConfig({
   //     '/api/**': 'http://localhost:3000/api/**',
   //   }
   // }
-  nitro: {
-    routeRules: {
-      '/api/**': {
-        proxy: API_URL,
-      },
+  
+  routeRules: {
+    '/api/**': {
+      proxy: API_URL,
+      prerender: false
     },
-    preset: 'vercel'
   },
   // vite: {
   //   server: {
