@@ -36,11 +36,11 @@ await useAsyncData(async () => {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
-    if (!isCrawler(headers['user-agent'])) {
-      $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
-        headers,
-      }).catch((e) => console.log(e))
+    $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
+      headers,
+    }).catch((e) => console.log(e))
 
+    if (!isCrawler(headers['user-agent'])) {
       return navigateTo(link.original_url, {
         external: true,
         redirectCode: 301,
