@@ -37,18 +37,14 @@ await useAsyncData(async () => {
     }
 
     if (!isCrawler(headers['user-agent'])) {
-      await navigateTo(link.original_url, {
+      $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
+        headers,
+      }).catch((e) => console.log(e))
+
+      return navigateTo(link.original_url, {
         external: true,
         redirectCode: 301,
       })
-
-      try {
-        await $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
-          headers,
-        })
-      } catch (e) {
-        console.log(e)
-      }
     }
   } catch (error) {
     console.log(error)
