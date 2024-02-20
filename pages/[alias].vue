@@ -10,11 +10,51 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { isCrawler } from '../server/lib'
 
 definePageMeta({
-  middleware: 'alias',
+  // middleware: 'alias',
 })
 const route = useRoute('alias')
+
+await useAsyncData(async () => {
+  const vercelHeaders = [
+    'x-vercel-ip-country',
+    'x-vercel-ip-country-region',
+    'x-vercel-ip-city',
+    'x-vercel-ip-latitude',
+    'x-vercel-ip-longitude',
+  ]
+  try {
+    const headers = useRequestHeaders(['cookie', 'x-forwarded-for', 'user-agent', ...vercelHeaders]) as Record<
+      string,
+      string
+    >
+    const link = await $fetch<{ original_url: string }>(`/api/storage/${route.params.alias}`)
+
+    if (!link || !link.original_url) {
+      throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
+    }
+
+    if (!isCrawler(headers['user-agent'])) {
+      await navigateTo(link.original_url, {
+        external: true,
+        redirectCode: 301,
+      })
+
+      try {
+        await $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
+          headers,
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return navigateTo('/')
+  }
+})
 
 const { pending, data } = await useFetch(`/api/links/alias/${route.params.alias}`)
 

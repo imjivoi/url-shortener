@@ -21,10 +21,7 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     }
 
     if (!isCrawler(headers['user-agent'])) {
-      await navigateTo(link.original_url, {
-        external: true,
-        redirectCode: 301,
-      })
+      await sendRedirect(useNuxtApp().callHook('').ssrContext?.event, link.original_url, 302)
 
       try {
         await $fetch(`/api/links/alias/${params.alias}/statistic`, {
