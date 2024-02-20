@@ -1,5 +1,8 @@
 import { fileURLToPath, URL } from 'url'
 
+
+const API_URL = process.env.NODE_ENV === 'production' ? process.env.API_URL : 'http://localhost:3000/api/**' 
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   spaLoadingTemplate: false,
@@ -185,7 +188,7 @@ export default defineNuxtConfig({
   nitro: {
     routeRules: {
       '/api/**': {
-        proxy: 'http://localhost:3000/api/**',
+        proxy: API_URL,
       },
     },
   },
