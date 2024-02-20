@@ -188,7 +188,7 @@ export default defineNuxtConfig({
   
   routeRules: {
     '/api/**': {
-      proxy: API_URL,
+      proxy: API_URL + '/api/**',
       prerender: false
     },
   },
