@@ -29,7 +29,7 @@
               <div>
                 <label class="text-xs"></label>
                 <u-input
-                  v-model:value="alias"
+                  v-model="alias"
                   class="input mt-2"
                   placeholder="my-link"
                   :status="(aliasError || $v.alias.$error) && 'error'"

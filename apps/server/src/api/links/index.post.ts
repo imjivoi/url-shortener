@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
   const { data, error } = await createLink({
     title,
     original_url,
-    redirect_url: prefix +  config.SHORT_DOMAIN_URL + '/' + alias,
+    redirect_url: prefix +  config.shortDomainUrl + '/' + alias,
     alias,
     description,
     image_url,

@@ -7,7 +7,7 @@ export default eventHandler(async (event) => {
 
   let link = await useStorage().getItem(`redis:${alias}`)
 
-  const { APP_DOMAIN_URL } = useRuntimeConfig()
+  const { appDomainUrl } = useRuntimeConfig()
 
   if (!link) {
     link = await getLinkByAlias(alias)
@@ -18,7 +18,7 @@ export default eventHandler(async (event) => {
     createStatistic(alias).catch(console.error)
 
     if (isCrawler(getHeader(event, 'user-agent'))) {
-      return sendRedirect(event, APP_DOMAIN_URL + '/' + alias, 301)
+      return sendRedirect(event, appDomainUrl + '/' + alias, 301)
     }
 
     return sendRedirect(event, link.original_url, 301)

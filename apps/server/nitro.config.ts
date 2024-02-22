@@ -12,8 +12,8 @@ export default defineNitroConfig({
   srcDir: 'src',
   runtimeConfig: {
     cronKey: process.env.CRON_KEY,
-    APP_DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.APP_DOMAIN_URL : 'localhost:4444',
-    SHORT_DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.SHORT_DOMAIN_URL : 'localhost:3000',
+    appDomainUrl: process.env.NODE_ENV === 'production' ? process.env.APP_DOMAIN_URL : 'localhost:4444',
+    shortDomainUrl: process.env.NODE_ENV === 'production' ? process.env.SHORT_DOMAIN_URL : 'localhost:3000',
     supabase: {
       url: process.env.SUPABASE_URL,
       key: process.env.SUPABASE_KEY,
