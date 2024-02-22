@@ -165,7 +165,7 @@ const { defaultUrl, onSuccess } = defineProps<Props>()
 const config = useRuntimeConfig()
 const emits = defineEmits(['success', 'update:modelValue'])
 
-const domains = [config.public.DOMAIN_URL]
+const domains = [config.public.SHORT_DOMAIN_URL]
 
 const accordionItems = [
   {

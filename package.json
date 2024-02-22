@@ -7,8 +7,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:server": "pnpm --filter '{apps/server}' dev",
-    "dev:site": "pnpm --filter '{apps/site}' dev"
+    "server:dev": "pnpm --filter '{apps/server}' dev",
+    "site:dev": "pnpm --filter '{apps/site}' dev"
   },
   "keywords": [],
   "author": "",
