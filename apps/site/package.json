@@ -48,6 +48,7 @@
     "@vuelidate/validators": "^2.0.3",
     "cron": "^2.4.1",
     "date-fns": "^2.30.0",
+    "defu": "^6.1.4",
     "echarts": "^5.4.3",
     "html-metadata-parser": "^2.0.4",
     "maska": "^2.1.10",

@@ -1,5 +1,5 @@
 import * as v from 'valibot'
-import { requestPasswordRecover } from '../../services/user'
+import { requestPasswordRecover } from '../../../services/user'
 
 export default defineWrappedEventHandler(async (event) => {
 

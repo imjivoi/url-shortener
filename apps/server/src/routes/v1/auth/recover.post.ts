@@ -1,5 +1,5 @@
 import * as v from 'valibot'
-import { updateUser } from '../../services/user'
+import { updateUser } from '../../../services/user'
 
 export default defineWrappedEventHandler(async (event) => {
   const { passowrd, access_token, refresh_token } = await useValidatedBody(

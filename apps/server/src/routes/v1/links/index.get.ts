@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 
-import { getLinksByUserId } from '../../services'
+import { getLinksByUserId } from '../../../services'
 
 const getPagination = (page: number, size: number) => {
   page = page - 1

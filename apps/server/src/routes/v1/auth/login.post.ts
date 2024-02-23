@@ -1,7 +1,8 @@
 import * as v from 'valibot'
-import { registerUser } from '../../services/user'
 
-export default defineWrappedEventHandler(async (event) => {
+import { loginUser } from '../../../services/user'
+
+export default defineEventHandler(async (event) => {
   const { email, password } = await useValidatedBody(
     event,
     v.objectAsync({
@@ -10,5 +11,5 @@ export default defineWrappedEventHandler(async (event) => {
     }),
   )
 
-  return registerUser({ email, password })
+  return loginUser({ email, password })
 })

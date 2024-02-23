@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 
-import { getByLinkId } from '../../../../services'
+import { getByLinkId } from '../../../../../services'
 
 export default defineEventHandler(async (event) => {
   const { id } = await useValidatedParams(event, v.objectAsync({ id: v.string([v.uuid()]) }))

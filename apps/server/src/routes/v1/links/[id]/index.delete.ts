@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 
-import { deleteLink, getLinkById } from '../../../services'
+import { deleteLink, getLinkById } from '../../../../services'
 
 export default defineAuthEventHandler(async (event) => {
   const { id } = await useValidatedParams(

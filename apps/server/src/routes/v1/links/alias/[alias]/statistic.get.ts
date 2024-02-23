@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 
-import { createClick, getCustomerLimits, getLinkByAlias } from '../../../../services'
+import { createClick, getCustomerLimits, getLinkByAlias } from '../../../../../services'
 /**
  * TODO: сделать логгирование
  */

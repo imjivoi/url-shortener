@@ -1,5 +1,5 @@
 import * as v from 'valibot'
-import { getLinkByAlias } from '../../../../services'
+import { getLinkByAlias } from '../../../../../services'
 
 export default defineWrappedEventHandler(async (event) => {
   const { alias } = await useValidatedParams(

@@ -1,4 +1,4 @@
-import { getTotalStatisticByUserId, updateAccount } from '../../services'
+import { getTotalStatisticByUserId, updateAccount } from '../../../services'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()

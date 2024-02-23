@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 
-import { createLink, getCustomer, parseMeta } from '../../services'
+import { createLink, getCustomer, parseMeta } from '../../../services'
 
 
 export default defineEventHandler(async (event) => {
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
   if (!alias) {
     alias = nanoid(5).toLowerCase()
   }
-
+  console.log(config)
   const prefix = import.meta.dev ? 'http://' : 'https://'
 
   const { data, error } = await createLink({

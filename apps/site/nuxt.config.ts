@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'url'
 
 
-const API_URL = process.env.NODE_ENV === 'production' ? process.env.API_URL : 'http://localhost:3000' 
+const API_URL = process.env.NODE_ENV === 'production' ? process.env.API_URL : 'http://localhost:3000/v1' 
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -70,8 +70,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     cronKey: process.env.CRON_KEY,
     public: {
-      APP_DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.APP_DOMAIN_URL : 'localhost:4444',
-      SHORT_DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.SHORT_DOMAIN_URL : 'localhost:3000',
+      apiUrl: API_URL,
+      appDomainUrl: process.env.NODE_ENV === 'production' ? process.env.APP_DOMAIN_URL : 'localhost:4444',
+      shortDomainUrl: process.env.NODE_ENV === 'production' ? process.env.SHORT_DOMAIN_URL : 'localhost:3000',
     },
     supabase: {
       url: process.env.SUPABASE_URL,
@@ -188,10 +189,11 @@ export default defineNuxtConfig({
   
   routeRules: {
     '/api/**': {
-      proxy: API_URL + '/api/**',
+      proxy: API_URL + '/**',
       prerender: false
     },
   },
+  
   // vite: {
   //   server: {
   //     proxy: {
