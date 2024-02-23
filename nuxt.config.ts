@@ -77,6 +77,7 @@ export default defineNuxtConfig({
     cronKey: process.env.CRON_KEY,
     public: {
       DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.DOMAIN_URL : 'http://localhost:3000',
+      shortUrl: process.env.NODE_ENV === 'production' ? 'lny.cx' : 'http://localhost:3000',
     },
     supabase: {
       url: process.env.SUPABASE_URL,
@@ -163,7 +164,7 @@ export default defineNuxtConfig({
       id: 'G-1BZVZS70WX',
     },
   }),
-  
+
   nitro: {
     storage: {
       redis: redisStorage,
