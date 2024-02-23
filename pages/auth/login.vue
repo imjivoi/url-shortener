@@ -54,7 +54,7 @@ const { t } = useI18n()
 useHead({
   titleTemplate: (titleChunk: string) => `${titleChunk} | ${t('authorization')}`,
 })
-// const toast = useMessage()
+const toast = useToast()
 
 const email = ref('')
 const password = ref('')
@@ -87,6 +87,9 @@ const login = async () => {
     }
     navigateTo('/dashboard')
   } catch (error) {
+    if (error.status === 400) {
+      toast.add({ color: 'red', description: 'Invalid email or password' })
+    }
   } finally {
     isLoading.value = false
   }
