@@ -163,6 +163,7 @@ export default defineNuxtConfig({
       id: 'G-1BZVZS70WX',
     },
   }),
+  
   nitro: {
     storage: {
       redis: redisStorage,
