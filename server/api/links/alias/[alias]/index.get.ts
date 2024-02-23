@@ -1,4 +1,5 @@
 import * as v from 'valibot'
+import { getLinkByAlias } from '../../../../services'
 
 export default defineWrappedEventHandler(async (event) => {
   const { alias } = await useValidatedParams(
@@ -8,22 +9,15 @@ export default defineWrappedEventHandler(async (event) => {
     }),
   )
 
-  const client = await useServerSupabaseServiceRole()
+  let result = await useStorage().getItem(`redis:${alias}`)
 
-  const result = await useStorage().getItem(`redis:${alias}`)
+  if (!result) {
+    result = await getLinkByAlias(alias)
 
-  const { data, error } = await client
-    .from('links')
-    .select('redirect_url, title, description, image_url')
-    .eq('alias', alias)
-    .single()
-
-  if (error) {
-    throw createError({
-      statusCode: 501,
-      statusMessage: 'Server error',
-    })
+    if (result) {
+      await useStorage().setItem(`redis:${alias}`, result)
+    }
   }
 
-  return data
+  return result
 })

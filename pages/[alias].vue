@@ -17,7 +17,7 @@ definePageMeta({
 })
 const route = useRoute('alias')
 
-await useAsyncData(async () => {
+const { data } = await useAsyncData(async () => {
   const vercelHeaders = [
     'x-vercel-ip-country',
     'x-vercel-ip-country-region',
@@ -25,34 +25,35 @@ await useAsyncData(async () => {
     'x-vercel-ip-latitude',
     'x-vercel-ip-longitude',
   ]
+  console.time('fetch link')
   try {
     const headers = useRequestHeaders(['cookie', 'x-forwarded-for', 'user-agent', ...vercelHeaders]) as Record<
       string,
       string
     >
-    const link = await $fetch<{ original_url: string }>(`/api/storage/${route.params.alias}`)
-
+    const link = await $fetch<{ original_url: string }>(`/api/links/alias/${route.params.alias}`)
+    console.timeEnd('fetch link')
     if (!link || !link.original_url) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
+    console.time('fetch link stats')
     $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
       headers,
     }).catch((e) => console.log(e))
-
+    console.timeEnd('fetch link stats')
     if (!isCrawler(headers['user-agent'])) {
       return navigateTo(link.original_url, {
         external: true,
-        redirectCode: 301,
       })
     }
+
+    return link
   } catch (error) {
     console.log(error)
     return navigateTo('/')
   }
 })
-
-const { pending, data } = await useFetch(`/api/links/alias/${route.params.alias}`)
 
 useSeoMeta({
   title: data.value?.title,

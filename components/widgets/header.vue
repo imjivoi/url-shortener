@@ -4,7 +4,7 @@
       <div class="font-bold text-primary-500 text-xl ">
         <nuxt-link :to="getHomeLink()" class="flex items-center gap-1">
           <Icon name="ph:link-simple-bold"/>
-          liny
+          Liny
         </nuxt-link>
       </div>
       <div class="navbar-center hidden lg:flex">
