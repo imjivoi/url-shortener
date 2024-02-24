@@ -3,7 +3,7 @@
     <card-skeleton v-for="i in 4" :key="i" />
   </div>
   <div v-else-if="links?.length">
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 list">
       <card
         v-for="link in links"
         :key="link.id"
@@ -27,8 +27,7 @@ interface Props {
 }
 
 defineProps<Props>()
-
-const refreshData = inject('refreshData') as () => void
+const emits = defineEmits(['onRemove', 'onCreate'])
 
 const { t } = useI18n()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
@@ -44,7 +43,7 @@ const deleteLink = async (link) => {
       method: 'DELETE',
       headers,
     })
-    refreshData()
+    emits('onRemove', link.id)
     // message.success(t('messages.successfully_deleted'))
   } catch (error) {
     // message.error(t('messages.something_went_wrong'))
@@ -62,10 +61,27 @@ const openEditModal = (linkData) => {
     bind: {
       link: linkData,
       onSuccess: () => {
-        refreshData()
+        emits('onCreate')
         // message.success(t('messages.link_updated'))
       },
     },
   })
 }
 </script>
+<style scoped lang="scss">
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-leave-active {
+  position: absolute;
+}
+</style>

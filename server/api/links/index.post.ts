@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   let original_url, title, alias, description, image_url
   ;({ original_url, title, alias } = body)
 
-  if (title !== '') {
+  if (!title) {
     try {
       const meta = await parseMeta(original_url)
       title = meta?.meta?.title || meta.og?.title
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
   }
 
   if (!alias) {
-    alias = nanoid(5).toLowerCase()
+    alias = getRandomAlias()
   }
 
   const { data, error } = await createLink({

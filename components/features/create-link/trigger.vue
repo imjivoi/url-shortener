@@ -52,14 +52,14 @@ const create = async () => {
   if (!isValid) return
   isLoading.value = true
   try {
-    await $fetch('/api/links', {
+    const response = await $fetch('/api/links', {
       method: 'POST',
       body: {
         original_url: url.value,
       },
       headers: useRequestHeaders(['cookie']) as Record<string, string>,
     })
-    emits('success')
+    emits('success', response)
     // message.success('Link successfully created')
     url.value = ''
   } catch (error: any) {

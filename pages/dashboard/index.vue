@@ -10,7 +10,12 @@
         <features-create-link-trigger @success="refreshData" />
       </div>
     </div>
-    <entities-link-cards-list :links="linksData?.data || null" :loading="pendingLinksData" />
+    <entities-link-cards-list
+      :links="linksData?.data || null"
+      :loading="pendingLinksData"
+      @onRemove="refreshData"
+      @on-create="refreshData"
+    />
     <div v-if="!pendingLinksData && !linksData?.data?.length" class="mt-16">
       <features-create-link-trigger @success="refreshData" />
     </div>
@@ -19,6 +24,15 @@
       class="mx-auto mt-16"
       :total="linksData?.count"
     /> -->
+    <div class="flex justify-center mt-10">
+      <u-pagination
+        v-if="!pendingLinksData && linksData && linksData?.count > 10"
+        :prev-button="{ icon: 'heroicons:arrow-small-left-20-solid', label: 'Prev', color: 'gray' }"
+        :next-button="{ icon: 'heroicons:arrow-small-right-20-solid', trailing: true, label: 'Next', color: 'gray' }"
+        v-model="page"
+        :total="linksData?.count"
+      />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -58,8 +72,11 @@ const {
   'links',
   async () => {
     try {
-      const data = await $fetch(`/api/links?page=${page.value}`, {
+      const data = await $fetch(`/api/links`, {
         headers: useRequestHeaders(['cookie']) as Record<string, string>,
+        query: {
+          page: page.value,
+        },
       })
       return data
     } catch (error: any) {
@@ -91,11 +108,12 @@ const {
   }
 })
 
-const refreshData = () => {
-  page.value = 1
-  refreshLinksData()
-  refreshStatisticData()
+function removeItem(id: string) {
+  linksData.value.data = linksData.value.data.filter((link: any) => link.id !== id)
 }
 
-provide('refreshData', refreshData)
+const refreshData = (newLink) => {
+  page.value = 1
+  refreshLinksData()
+}
 </script>

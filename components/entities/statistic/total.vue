@@ -2,30 +2,22 @@
   <div>
     <!-- <h2 class="mb-2 text-2xl font-bold">Statistic</h2> -->
     <div class="px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-sm md:px-24 lg:px-8 lg:py-12">
-      <div v-if="loading" class="grid grid-cols-2 row-gap-8">
-        <div class="text-center md:border-r">
-          <div role="status" class="space-y-2.5 animate-pulse max-w-lg">
-            <div class="flex flex-col items-center w-full space-x-2">
-              <div class="h-[48px] bg-gray-300 rounded-full w-[48px] mb-5"></div>
-              <div class="h-[12px] bg-gray-300 rounded-full w-24"></div>
-            </div>
-          </div>
+      <div v-if="loading" class="grid sm:grid-cols-2 gap-4 sm:gap-8">
+        <div role="status" class="space-y-2.5 animate-pulse max-w-lg">
+          <div class="w-full h-20 bg-gray-200 dark:bg-gray-800 rounded-xl"></div>
         </div>
         <div role="status" class="space-y-2.5 animate-pulse max-w-lg">
-          <div class="flex flex-col items-center w-full space-x-2">
-            <div class="h-[48px] bg-gray-300 rounded-full w-[48px] mb-5"></div>
-            <div class="h-[12px] bg-gray-300 rounded-full w-24"></div>
-          </div>
+          <div class="w-full h-20 bg-gray-200 dark:bg-gray-800 rounded-xl"></div>
         </div>
       </div>
-      <div v-else class="grid grid-cols-2 row-gap-8">
-        <div class="text-center md:border-r">
-          <h6 class="text-4xl font-bold lg:text-5xl xl:text-6xl">{{ statistic?.links }}</h6>
-          <p class="text-sm font-medium tracking-widest text-gray-400 uppercase lg:text-base">{{ $t('links') }}</p>
+      <div v-else class="grid sm:grid-cols-2 gap-4 sm:gap-8">
+        <div class="grid gap-2 text-center bg-gray-200 dark:bg-gray-800 rounded-xl p-2">
+          <span class="font-medium text-gray-400">Total links</span>
+          <span class="text-2xl font-medium tracking-widest truncate">{{ statistic?.links }}</span>
         </div>
-        <div class="text-center">
-          <h6 class="text-4xl font-bold lg:text-5xl xl:text-6xl">{{ statistic?.clicks }}</h6>
-          <p class="text-sm font-medium tracking-widest text-gray-400 uppercase lg:text-base">{{ $t('clicks') }}</p>
+        <div class="grid gap-2 text-center bg-gray-200 dark:bg-gray-800 rounded-xl p-2">
+          <span class="font-medium text-gray-400">Total clicks</span>
+          <span class="text-2xl font-bold truncate">{{ statistic?.clicks }}</span>
         </div>
       </div>
     </div>
