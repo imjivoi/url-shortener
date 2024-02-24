@@ -6,7 +6,7 @@
         <label class="mb-2 text-sm">Original url</label>
 
         <u-input
-          v-model:value="url"
+          v-model="url"
           class="mt-2"
           label-top=""
           :status="$v.url.$error && 'error'"
@@ -157,8 +157,8 @@ import useVuelidate from '@vuelidate/core'
 import { minLength, maxLength, required, url as isUrl } from '@vuelidate/validators'
 
 interface Props {
-  onSuccess: () => void
-  defaultUrl: string
+  onSuccess?: () => void
+  defaultUrl?: string
 }
 
 const { defaultUrl, onSuccess } = defineProps<Props>()
@@ -220,7 +220,7 @@ const create = async () => {
       headers,
     })
     close()
-    onSuccess()
+    onSuccess &&  onSuccess()
   } catch (error: any) {
     if (error.statusCode === 403) {
       // toast.error(error?.statusMessage || 'You reached links limit')

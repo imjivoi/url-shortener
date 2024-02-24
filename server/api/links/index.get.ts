@@ -12,7 +12,6 @@ const getPagination = (page: number, size: number) => {
 }
 
 export default defineAuthEventHandler(async (event, user) => {
-
   const { page, size } = await useValidatedQuery(
     event,
     v.objectAsync({
@@ -29,15 +28,8 @@ export default defineAuthEventHandler(async (event, user) => {
     page: page + 1,
   }
 
-  const { data, error, count } = await getLinksByUserId(user.id, { from, to })
+  const { data, count } = await getLinksByUserId(user.id, { from, to })
 
-  if (error) {
-    console.log(error)
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Internal server error',
-    })
-  }
   result.count = count || 0
 
   for (const link of data) {

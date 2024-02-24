@@ -10,6 +10,7 @@ import {
   startOfToday,
   startOfWeek,
   startOfYear,
+  format
 } from 'date-fns'
 
 import type{ StatisticType } from '@/types'
@@ -36,8 +37,8 @@ export const dateRangeConfig: Record<
   { items: Map<number | string, StatisticType[]>; checkFunction: (value: string) => number | string; from: string }
 > = {
   today: {
-    items: new Map(Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [value, []])),
-    checkFunction: (value: string) => getHours(new Date(value)),
+    items: new Map(Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [`${value}:00`, []])),
+    checkFunction: (value: string) => format(new Date(value), 'HH:00'),
     from: startOfToday().toISOString(),
   },
   week: {

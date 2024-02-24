@@ -10,7 +10,6 @@
     </div>
     <div class="flex flex-col md:flex-row gap-5">
       <div class="rounded-2xl p-5 basis-1/2 relative">
-        <div class="bg-card"></div>
         <u-tabs v-model="devicesTabIdx" :items="devicesTabs" class="mb-2"></u-tabs>
         <client-only>
           <entities-statistic-pie-chart
@@ -23,7 +22,6 @@
         </client-only>
       </div>
       <div class="rounded-2xl p-5 basis-1/2 relative">
-        <div class="bg-card"></div>
         <u-tabs v-model="locationTabIdx" :items="locationTabs" class="mb-2"></u-tabs>
         <entities-statistic-pie-chart
           v-if="locationValue"

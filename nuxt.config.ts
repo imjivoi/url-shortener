@@ -164,7 +164,9 @@ export default defineNuxtConfig({
       id: 'G-1BZVZS70WX',
     },
   }),
-
+  experimental: {
+    typedPages: true,
+  },
   nitro: {
     storage: {
       redis: redisStorage,
@@ -201,5 +203,10 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: [/echarts/, /zrender/],
+  },
+  routeRules: {
+    '/dashboard/**': {
+      ssr: false,
+    },
   },
 })

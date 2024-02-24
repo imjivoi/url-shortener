@@ -7,8 +7,15 @@
             {{ link.title }}
           </h2>
           <div class="flex items-center gap-1 sm:hidden text-gray-500">
-            <span>{{ link.clicks || 0 }}</span>
-            <Icon size="15px" class="text-gray-500" name="ion:stats-chart-outline" />
+            <u-button variant="soft" :to="'/dashboard/' + link.id">
+              {{
+                Intl.NumberFormat('en-US', {
+                  notation: 'compact',
+                  maximumFractionDigits: 1,
+                }).format(link?.clicks || 0)
+              }}
+              <Icon size="15px" name="ion:stats-chart-outline" />
+            </u-button>
           </div>
         </div>
 
@@ -25,29 +32,27 @@
       </div>
       <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
         <div class="hidden sm:flex items-center gap-1 text-gray-500">
-          <span>
+          <u-button variant="soft" :to="'/dashboard/' + link.id">
             {{
               Intl.NumberFormat('en-US', {
                 notation: 'compact',
                 maximumFractionDigits: 1,
               }).format(link?.clicks || 0)
             }}
-          </span>
-          <Icon size="15px" name="ion:stats-chart-outline" />
+            <Icon size="15px" name="ion:stats-chart-outline" />
+          </u-button>
         </div>
         <div class="flex justify-between items-center sm:justify-start flex-row gap-6 text-gray-500 mt-5 sm:mt-0">
-          <u-button ghost round type="primary" @click="$router.push('/dashboard/' + link.id)">Stats</u-button>
+          <!-- <u-button variant="ghost" >Stats</u-button> -->
           <div class="flex flex-row gap-4">
-            <u-button icon="material-symbols:content-copy-outline" variant="link" @click="$emit('copy')">
-            </u-button>
+            <u-button icon="material-symbols:content-copy-outline" variant="link" @click="$emit('copy')"></u-button>
             <!-- <n-button class="!hover:text-red-500" circle text type="error" @click="$emit('delete')">
               <template #icon>
                 <Icon size="15px" name="material-symbols:delete-outline" />
               </template>
             </n-button> -->
             <u-dropdown :items="options">
-              <u-button variant="link" icon="mdi:dots-vertical" >
-              </u-button>
+              <u-button variant="link" icon="mdi:dots-vertical"></u-button>
             </u-dropdown>
           </div>
         </div>

@@ -61,7 +61,6 @@ export async function getByLinkId(linkId: string, options?: Options) {
   const dateRange: DateRangetype = options?.dateRange || 'today'
 
   const from = dateRangeConfig[dateRange].from
-
   const { data, error } = await client.from('clicks').select().eq('link_id', linkId).gte('created_at', from)
 
   if (error) {

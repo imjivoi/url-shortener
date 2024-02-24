@@ -30,7 +30,6 @@
               {{ user.email }}
             </u-button>
           </u-dropdown>
-          <!-- <features-select-lang v-if="['dashboard', 'dashboard-id'].includes($route.name as string)" /> -->
         </div>
       </div>
     </div>

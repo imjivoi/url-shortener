@@ -16,7 +16,6 @@ export default defineEventHandler(async (event) => {
       ...(!!dateRange && { dateRange }),
     },
   )
-
   return data?.length ? prepare(data, dateRange as DateRangetype) : null
 })
 

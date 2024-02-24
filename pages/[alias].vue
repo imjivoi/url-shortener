@@ -39,6 +39,7 @@ const { data } = await useAsyncData(async () => {
 
     console.time('fetch link stats')
     $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
+      method: 'POST',
       headers,
     }).catch((e) => console.log(e))
     console.timeEnd('fetch link stats')

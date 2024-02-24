@@ -1,5 +1,5 @@
 <template>
-  <v-chart :option="option" autoresize />
+  <v-chart :option="option" autoresize class="chart" />
 </template>
 
 <script setup lang="ts">
@@ -7,7 +7,7 @@
  * TODO: доделать тултип
  */
 import { BarChart } from 'echarts/charts'
-import { TitleComponent, TooltipComponent, LegendComponent, GridComponent, TimelineComponent, } from 'echarts/components'
+import { TitleComponent, TooltipComponent, LegendComponent, GridComponent, TimelineComponent } from 'echarts/components'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
@@ -23,6 +23,94 @@ const props = defineProps<Props>()
 
 const { options } = toRefs(props)
 
+function getDevices(items: StatisticType[]) {
+  const devices = items.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.device]: (acc[item.device] || 0) + 1,
+    }),
+    {},
+  )
+
+  let stringResult = ''
+
+  for (const [key, value] of Object.entries(devices)) {
+    stringResult += `<b>${key}:</b> ${value} <br>`
+  }
+
+  return stringResult
+}
+
+function getOs(items: StatisticType[]) {
+  const os = items.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.os]: (acc[item.os] || 0) + 1,
+    }),
+    {},
+  )
+
+  let stringResult = ''
+
+  for (const [key, value] of Object.entries(os)) {
+    stringResult += `<b>${key}:</b> ${value} <br>`
+  }
+
+  return stringResult
+}
+
+function getBrowser(items: StatisticType[]) {
+  const browser = items.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.browser]: (acc[item.browser] || 0) + 1,
+    }),
+    {},
+  )
+
+  let stringResult = ''
+
+  for (const [key, value] of Object.entries(browser)) {
+    stringResult += `<b>${key}:</b> ${value} <br>`
+  }
+
+  return stringResult
+}
+
+function getCountry(items: StatisticType[]) {
+  const country = items.reduce(
+    (acc, item) => ({
+      ...acc,
+     ...(item.country && { [item.country]: (acc[item.country] || 0) + 1}),
+    }),
+    {},
+  )
+
+  let stringResult = ''
+
+  for (const [key, value] of Object.entries(country)) {
+    stringResult += `<b>${key}:</b> ${value} <br>`
+  }
+
+  return stringResult
+}
+
+function getCity(items: StatisticType[]) {
+  const city = items.reduce(
+    (acc, item) => ({
+      ...acc,
+      ...(item.city && { [item.city]: (acc[item.city] || 0) + 1 }),
+    }),
+    {},
+  )
+  let stringResult = ''
+
+  for (const [key, value] of Object.entries(city)) {
+    stringResult += `<b>${key}:</b> ${value} <br>`
+  }
+  return stringResult
+}
+
 const option = computed(() => ({
   title: {
     text: 'Clicks',
@@ -31,16 +119,21 @@ const option = computed(() => ({
   tooltip: {
     show: true,
     trigger: 'item',
-    // formatter: function (params, ticket, callback) {
-    //   const details = options.value.get(parseInt(params.name))
-    //   const result = `
-    //     Clicks: ${params.value}
-    //     Devices:
-    //       ${}
-    //   `
+    formatter: function (params, ticket, callback) {
+      const details = options.value.get(params.name)
+      const result = `
+        <b>Clicks:</b> ${params.value}
+         <br>
+        ${getDevices(details)}
+        ${getOs(details)}
+        ${getBrowser(details)}
+        ${getCountry(details)}
+        ${getCity(details)}
 
-    //   return result
-    // },
+      `
+
+      return result
+    },
   },
   xAxis: {
     type: 'category',
@@ -70,5 +163,9 @@ const option = computed(() => ({
 }))
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.chart :deep(svg text, svg rect) {
+  fill: #fff !important;
+  color: #fff;
+}
 </style>

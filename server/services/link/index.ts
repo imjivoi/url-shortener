@@ -60,12 +60,14 @@ export async function getLinksByUserId(userId: string, options?: Options) {
 
   const client = await useServerSupabaseClient()
 
-  return await client
+  const { data, count } = await client
     .from('links')
     .select('*, clicks(count)', { count: 'exact', head })
     .eq('user_id', userId)
     .order('created_at', { ascending: order === 'ASC' })
     .range(from, to)
+
+  return { data, count }
 }
 
 export async function parseMeta(url: string) {

@@ -14,11 +14,11 @@
     <div v-if="!pendingLinksData && !linksData?.data?.length" class="mt-16">
       <features-create-link-trigger @success="refreshData" />
     </div>
-    <shared-pagination
+    <!-- <shared-pagination
       v-if="!pendingLinksData && linksData && linksData?.count > 10"
       class="mx-auto mt-16"
       :total="linksData?.count"
-    />
+    /> -->
   </div>
 </template>
 <script lang="ts" setup>
