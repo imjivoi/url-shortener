@@ -14,7 +14,6 @@
         <client-only>
           <entities-statistic-horizontal-bar-chart
             v-if="devicesValueItem"
-            class="h-[400px] md:h-[350px]"
             :options="devicesValueItem"
             :title="devicesTabs[devicesTabIdx].label"
           />
@@ -25,7 +24,6 @@
         <u-tabs v-model="locationTabIdx" :items="locationTabs" class="mb-2"></u-tabs>
         <entities-statistic-horizontal-bar-chart
           v-if="locationValue"
-          class="h-[400px] md:h-[500px]"
           :options="locationValue"
           :title="locationTabs[locationTabIdx].label"
         />

@@ -7,6 +7,7 @@
         color: colorMode.value === 'dark' ? '#fff' : '#000',
       },
     }"
+    :style="{ height: `${height}px` }"
   />
 </template>
 
@@ -28,6 +29,8 @@ const colorMode = useColorMode()
 
 const props = defineProps<Props>()
 const { options, title } = toRefs(props)
+
+const height = computed(() => getChartHeight())
 
 // const option = computed(() => ({
 //   title: {
@@ -124,7 +127,7 @@ const option = computed(() => ({
     },
   },
   legend: { show: false },
-  grid: { containLabel: true },
+  grid: { containLabel: false, width: 'auto', height: 'auto'},
   xAxis: {
     type: 'value',
     show: false,
@@ -196,7 +199,7 @@ const option = computed(() => ({
         position: 'right',
         distance: 0,
       },
-      barMaxWidth: 40,
+      barWidth: 40,
       barGap: 40,
       barCategoryGap: 15,
       itemStyle: {
@@ -234,4 +237,8 @@ const option = computed(() => ({
     },
   ],
 }))
+
+function getChartHeight() {
+  return Object.keys(props.options).length * 50 + 200
+}
 </script>

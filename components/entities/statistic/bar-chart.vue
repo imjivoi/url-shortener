@@ -145,9 +145,9 @@ const option = computed(() => ({
       name: 'Clicks',
       type: 'bar',
       showBackground: false,
-      backgroundStyle: {
-        color: 'rgba(180, 180, 180, 0.2)',
-      },
+      // backgroundStyle: {
+      //   color: 'rgba(180, 180, 180, 0.2)',
+      // },
       data: Array.from(options.value).map(([_, value]) => (value?.length ? value.length : 0)),
       emphasis: {
         itemStyle: {
@@ -160,10 +160,3 @@ const option = computed(() => ({
   ],
 }))
 </script>
-
-<style scoped lang="scss">
-.chart :deep(svg text, svg rect) {
-  fill: #fff !important;
-  color: #fff;
-}
-</style>
