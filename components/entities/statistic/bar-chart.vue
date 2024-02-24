@@ -3,9 +3,6 @@
 </template>
 
 <script setup lang="ts">
-/**
- * TODO: доделать тултип
- */
 import { BarChart } from 'echarts/charts'
 import { TitleComponent, TooltipComponent, LegendComponent, GridComponent, TimelineComponent } from 'echarts/components'
 import { use } from 'echarts/core'
@@ -116,6 +113,7 @@ const option = computed(() => ({
     text: 'Clicks',
     left: 'left',
   },
+  backgroundColor: 'transparent',
   tooltip: {
     show: true,
     trigger: 'item',

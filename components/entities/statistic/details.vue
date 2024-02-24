@@ -12,9 +12,9 @@
       <div class="rounded-2xl p-5 basis-1/2 relative">
         <u-tabs v-model="devicesTabIdx" :items="devicesTabs" class="mb-2"></u-tabs>
         <client-only>
-          <entities-statistic-pie-chart
+          <entities-statistic-horizontal-bar-chart
             v-if="devicesValueItem"
-            class="h-[400px] md:h-[500px]"
+            class="h-[400px] md:h-[350px]"
             :options="devicesValueItem"
             :title="devicesTabs[devicesTabIdx].label"
           />
@@ -23,7 +23,7 @@
       </div>
       <div class="rounded-2xl p-5 basis-1/2 relative">
         <u-tabs v-model="locationTabIdx" :items="locationTabs" class="mb-2"></u-tabs>
-        <entities-statistic-pie-chart
+        <entities-statistic-horizontal-bar-chart
           v-if="locationValue"
           class="h-[400px] md:h-[500px]"
           :options="locationValue"
@@ -40,7 +40,9 @@ import { THEME_KEY } from 'vue-echarts'
 
 import { type StatisticType } from '../../../types'
 
-provide(THEME_KEY, 'light')
+
+const colorMode = useColorMode()
+provide(THEME_KEY, colorMode.value)
 
 interface Props {
   statistic?: Map<number | string, StatisticType[]> | null
