@@ -17,7 +17,7 @@
         </div>
         <div class="grid gap-2 text-center bg-gray-200 dark:bg-gray-800 rounded-xl p-2">
           <span class="font-medium text-gray-400">Total clicks</span>
-          <span class="text-2xl font-bold truncate">{{ statistic?.clicks }}</span>
+          <span class="text-2xl font-medium truncate">{{ statistic?.clicks }}</span>
         </div>
       </div>
     </div>
