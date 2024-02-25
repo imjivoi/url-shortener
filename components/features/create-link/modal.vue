@@ -21,7 +21,7 @@
       <div>
         <div class="relative">
           <div>
-            <label class="mb-2 text-sm">{{ $t('short_url') }}</label>
+            <label class="mb-2 text-sm">Short url</label>
             <div class="flex items-start gap-2 w-full">
               <div class="basis-1/3">
                 <u-form-group name="domain">
@@ -39,9 +39,7 @@
                 </u-form-group>
               </div>
               <div class="basis-1/3">
-                <u-button class="hidden sm:flex" block @click="generateAlias">
-                  {{ $t('button.generate') }}
-                </u-button>
+                <u-button class="hidden sm:flex" block @click="generateAlias">Generate</u-button>
                 <u-button
                   class="sm:hidden"
                   circle
@@ -138,7 +136,7 @@
       </div> -->
       <div class="flex justify-center gap-4 mt-4">
         <u-button :loading="isLoading" type="submit">Create</u-button>
-        <u-button @click="close" color="white">{{ $t('button.cancel') }}</u-button>
+        <u-button @click="close" color="white">Cancel</u-button>
       </div>
     </u-form>
   </shared-modal>

@@ -29,7 +29,7 @@ interface Props {
 defineProps<Props>()
 const emits = defineEmits(['onRemove', 'onCreate'])
 
-const { t } = useI18n()
+// const { t } = useI18n()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 const { copy } = useClipboard()
 const modal = useModal()
@@ -52,7 +52,7 @@ const deleteLink = async (link) => {
 
 const copyLink = async (value: string) => {
   await copy(value)
-  toast.add({ title: t('messages.link_copied') })
+  toast.add({ title: 'Link copied' })
 }
 
 const openEditModal = (linkData) => {

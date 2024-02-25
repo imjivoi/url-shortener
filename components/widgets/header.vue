@@ -1,21 +1,14 @@
 <template>
   <header>
     <div class="container mx-auto flex justify-between items-center h-[48px] px-10">
-      <div class="font-bold text-primary-500 text-xl ">
+      <div class="font-bold text-primary-500 text-xl">
         <nuxt-link :to="getHomeLink()" class="flex items-center gap-1">
-          <Icon name="ph:link-simple-bold"/>
+          <Icon name="ph:link-simple-bold" />
           Liny
         </nuxt-link>
       </div>
       <div class="navbar-center hidden lg:flex">
-        <!-- <ul class="menu menu-horizontal px-1">
-          <li>
-            <nuxt-link to="/">{{ $t('home') }}</nuxt-link>
-          </li>
-          <li v-if="user">
-            <nuxt-link to="/dashboard">{{ $t('dashboard') }}</nuxt-link>
-          </li>
-        </ul> -->
+
       </div>
       <div>
         <!-- <div class="flex gap-2">
@@ -40,7 +33,7 @@ import { LogOut as LogoutIcon } from '@vicons/ionicons5'
 
 import DashboardIcon from 'assets/icons/dashboard.svg'
 
-const { locale, defaultLocale, t } = useI18n()
+// const { locale, defaultLocale, t } = useI18n()
 
 const user = await useUser()
 
@@ -55,13 +48,13 @@ function getHomeLink() {
 const options = [
   [
     {
-      label: t('dashboard'),
+      label: 'Dashboard',
       click: () => navigateTo('/dashboard'),
       icon: 'ph:house-thin',
       // icon: renderIcon(DashboardIcon),
     },
     {
-      label: t('logout'),
+      label: 'Logout',
       click: () => logout(),
       icon: 'ph:sign-out',
       // icon: renderIcon(LogoutIcon),
@@ -86,4 +79,3 @@ async function logout() {
   } catch (error) {}
 }
 </script>
-

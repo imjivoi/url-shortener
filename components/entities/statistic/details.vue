@@ -38,7 +38,6 @@ import { THEME_KEY } from 'vue-echarts'
 
 import { type StatisticType } from '../../../types'
 
-
 const colorMode = useColorMode()
 provide(THEME_KEY, colorMode.value)
 
@@ -62,7 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
   bot: null,
 })
 const { statistic } = toRefs(props)
-const { t } = useI18n()
+// const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 
@@ -102,19 +101,19 @@ const locationValue = computed(() => {
 })
 const dateRangeOptions = [
   {
-    label: t('today'),
+    label: 'Today',
     value: 'today',
   },
   {
-    label: t('week'),
+    label: 'Week',
     value: 'week',
   },
   {
-    label: t('month'),
+    label: 'Month',
     value: 'month',
   },
   {
-    label: t('year'),
+    label: 'Year',
     value: 'year',
   },
 ]

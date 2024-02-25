@@ -69,17 +69,17 @@ defineProps<Props>()
 
 const emits = defineEmits(['copy', 'delete', 'edit'])
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const options = [
   [
     {
-      label: t('edit'),
+      label: 'Edit',
       click: () => emits('edit'),
       icon: 'ph:pencil-light',
     },
     {
-      label: t('delete'),
+      label: 'Delete',
       click: () => emits('delete'),
       icon: 'heroicons:trash-20-solid',
     },

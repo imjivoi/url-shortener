@@ -13,7 +13,7 @@
       <template v-else>
         <form class="space-y-6" @submit.prevent>
           <div>
-            <label class="mb-2 text-xs first-letter:uppercase">{{ $t('auth.your_email') }}</label>
+            <label class="mb-2 text-xs first-letter:uppercase">Your email</label>
 
             <u-input
               v-model="email"
@@ -27,9 +27,7 @@
               </span>
             </small>
           </div>
-          <u-button :loading="isLoading" class="rounded-full" block @click="login">
-            {{ $t('button.send') }}
-          </u-button>
+          <u-button :loading="isLoading" class="rounded-full" block @click="login">Send</u-button>
         </form>
       </template>
     </div>
@@ -39,11 +37,11 @@
 import useVuelidate from '@vuelidate/core'
 import { required, email as isEmal, minLength } from '@vuelidate/validators'
 
-const { t } = useI18n()
+// const { t } = useI18n()
 const toast = useToast()
 
 useHead({
-  titleTemplate: (titleChunk: string) => `${titleChunk} | ${t('authorization')}`,
+  titleTemplate: (titleChunk: string) => `${titleChunk} | Authorization`,
 })
 // const toast = useMessage()
 

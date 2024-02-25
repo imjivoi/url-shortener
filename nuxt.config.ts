@@ -14,35 +14,39 @@ export default defineNuxtConfig({
   spaLoadingTemplate: false,
   app: {
     head: {
+      title: 'Simple url shortener',
+      description:
+        'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
       meta: [
-        // {
-        //   name: 'description',
-        //   content:
-        //     'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
-        // },
-        // {
-        //   name: 'keywords',
-        //   content: 'url link shortener short url free analytics sharing',
-        // },
-        // {
-        //   key: 'og:title',
-        //   property: 'og:title',
-        //   name: 'og:title',
-        //   content: 'Simple url shortener',
-        // },
-        // {
-        //   key: 'og:description',
-        //   property: 'og:description',
-        //   name: 'og:description',
-        //   content:
-        //     'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
-        // },
         {
-          key: 'og:image',
-          property: 'og:image',
-          name: 'og:image',
-          content: '/og-image.png',
+          hid: 'description',
+          name: 'description',
+          content:
+            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
         },
+        {
+          name: 'keywords',
+          content: 'url link shortener short url free analytics sharing',
+        },
+        {
+          key: 'og:title',
+          property: 'og:title',
+          name: 'og:title',
+          content: 'Simple url shortener',
+        },
+        {
+          key: 'og:description',
+          property: 'og:description',
+          name: 'og:description',
+          content:
+            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
+        },
+        // {
+        //   key: 'og:image',
+        //   property: 'og:image',
+        //   name: 'og:image',
+        //   content: '/og-image.png',
+        // },
         {
           key: 'og:site',
           property: 'og:site',
@@ -68,6 +72,35 @@ export default defineNuxtConfig({
         {
           href: 'https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap',
           rel: 'stylesheet',
+        },
+        {
+          rel: 'icon',
+          href: '/favicon.ico',
+        },
+        {
+          rel: 'apple-touch-icon',
+          type: 'image/png',
+          href: '/apple-touch-icon.png',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon-32x32.png',
+          sizes: '32x32',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon-16x16.png',
+          sizes: '16x16',
+        },
+        {
+          rel: 'manifest',
+          href: '/site.webmanifest',
+        },
+        {
+          rel: 'shortcut icon',
+          href: '/favicon.ico',
         },
       ],
     },
@@ -98,7 +131,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-viewport',
     '@nuxtjs/device',
-    '@nuxtjs/i18n',
+    // '@nuxtjs/i18n',
     // 'nuxt-security',
     '@nuxtjs/robots',
     'nuxt-simple-sitemap',
@@ -106,33 +139,37 @@ export default defineNuxtConfig({
     // '@zadigetvoltaire/nuxt-gtm',
     'nuxt-gtag',
     '@nuxt/ui',
+    '@nuxtjs/seo',
   ],
-  i18n: {
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root',
-      alwaysRedirect: true,
-    },
-    // vueI18n: './i18n.config.ts',
-    strategy: 'no_prefix',
-    defaultLocale: 'en',
-    pages: {
-      dashboard: false,
-    },
-    locales: [
-      {
-        code: 'en',
-        iso: 'en',
-        name: 'English',
-      },
-      // {
-      //   code: 'es',
-      //   iso: 'es',
-      //   name: 'Español',
-      // },
-    ],
+  site: {
+    url: 'https://liny.app',
   },
+  // i18n: {
+  //   detectBrowserLanguage: {
+  //     useCookie: true,
+  //     cookieKey: 'i18n_redirected',
+  //     redirectOn: 'root',
+  //     alwaysRedirect: true,
+  //   },
+  //   // vueI18n: './i18n.config.ts',
+  //   strategy: 'no_prefix',
+  //   defaultLocale: 'en',
+  //   pages: {
+  //     dashboard: false,
+  //   },
+  //   locales: [
+  //     {
+  //       code: 'en',
+  //       iso: 'en',
+  //       name: 'English',
+  //     },
+  //     // {
+  //     //   code: 'es',
+  //     //   iso: 'es',
+  //     //   name: 'Español',
+  //     // },
+  //   ],
+  // },
   // security: {
   //   rateLimiter: {
   //     value: {
@@ -208,5 +245,8 @@ export default defineNuxtConfig({
     '/dashboard/**': {
       ssr: false,
     },
+  },
+  devtools: {
+    enabled: true,
   },
 })

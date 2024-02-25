@@ -7,7 +7,7 @@
           'Register'
         }}
       </h2>
-      <form class="space-y-6" @submit.prevent>
+      <form class="space-y-4" @submit.prevent>
         <div>
           <label class="mb-2 text-xs first-letter:uppercase">Email</label>
 

@@ -7,7 +7,7 @@
           'Login'
         }}
       </h2>
-      <form class="space-y-6" @submit.prevent>
+      <form class="space-y-4" @submit.prevent>
         <div>
           <label class="mb-2 text-xs first-letter:uppercase">Email</label>
 
@@ -32,7 +32,7 @@
           </small>
         </div>
         <u-button :loading="isLoading" class="rounded-full" block @click="login">
-          {{ $t('button.send') }}
+          {{ 'Login' }}
         </u-button>
 
         <div class="mt-4 text-sm">
@@ -49,10 +49,10 @@
 import useVuelidate from '@vuelidate/core'
 import { required, email as isEmal, minLength } from '@vuelidate/validators'
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 useHead({
-  titleTemplate: (titleChunk: string) => `${titleChunk} | ${t('authorization')}`,
+  titleTemplate: (titleChunk: string) => `${titleChunk} | Authorization`,
 })
 const toast = useToast()
 

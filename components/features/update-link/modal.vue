@@ -1,6 +1,6 @@
 <template>
   <shared-modal @update:model-value="close">
-    <template #title>{{ $t('update_link') }}</template>
+    <template #title>Update link</template>
     <form class="flex flex-col gap-2" @submit.prevent>
       <div>
         <label class="mb-2 text-xs">Original url</label>
@@ -21,7 +21,7 @@
       <div>
         <div class="relative flex items-end gap-2">
           <div>
-            <label class="text-xs">{{ $t('short_url') }}</label>
+            <label class="text-xs">Short url</label>
             <u-input
               v-model:value="alias"
               class="input mt-2"
@@ -36,9 +36,7 @@
             </u-input>
           </div>
 
-          <u-button class="hidden sm:flex" quaternary type="primary" @click="generateAlias">
-            {{ $t('button.generate') }}
-          </u-button>
+          <u-button class="hidden sm:flex" quaternary type="primary" @click="generateAlias">Generate</u-button>
           <u-button class="sm:hidden" circle ghost type="primary" @click="generateAlias">
             <template #icon>
               <Icon name="material-symbols:auto-mode-rounded" />
@@ -71,8 +69,8 @@
     </form>
     <template #footer>
       <div class="flex justify-center gap-4">
-        <u-button :loading="isLoading" @click="create">{{ $t('button.update') }}</u-button>
-        <u-button @click="close" color="white">{{ $t('button.cancel') }}</u-button>
+        <u-button :loading="isLoading" @click="create">Update</u-button>
+        <u-button @click="close" color="white">Cancel</u-button>
       </div>
     </template>
   </shared-modal>

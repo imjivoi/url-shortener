@@ -28,8 +28,7 @@
       </div>
     </div>
     <div class="rounded-2xl p-5 basis-1/2 overflow-hidden relative">
-      <div class="bg-card"></div>
-      <h2 class="font-bold text-2xl first-letter:uppercase">{{ $t('total_clicks') }}</h2>
+      <h2 class="font-bold text-2xl first-letter:uppercase">Total clicks</h2>
       <div class="flex items-center justify-center h-full">
         <span class="text-6xl font-bold text-gray-500 text-center truncate">
           {{

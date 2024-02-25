@@ -6,7 +6,7 @@
     </div>
     <div v-if="linksData?.data?.length" class="mb-10">
       <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
-        <h2 class="text-2xl font-bold text-left first-letter:uppercase">{{ $t('links') }}</h2>
+        <h2 class="text-2xl font-bold text-left first-letter:uppercase">Links</h2>
         <features-create-link-trigger @success="refreshData" />
       </div>
     </div>
@@ -36,8 +36,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-defineI18nRoute(false)
-
 definePageMeta({
   scrollToTop: true,
 })
