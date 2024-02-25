@@ -31,14 +31,19 @@ const { data } = await useAsyncData(async () => {
       string,
       string
     >
-    const link = await $fetch<{ original_url: string }>(`/api/links/alias/${route.params.alias}`)
+    const host = useRequestHeader('host')
+
+    const link = await $fetch(`/api/links/domain/${host}/alias/${route.params.alias}`)
     console.timeEnd('fetch link')
-    if (!link || !link.original_url) {
+
+    console.log(host)
+
+    if (host !== link?.domain || !link.original_url) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
     console.time('fetch link stats')
-    $fetch(`/api/links/alias/${route.params.alias}/statistic`, {
+    $fetch(`/api/links/domain/${host}/alias/${route.params.alias}/statistic`, {
       method: 'POST',
       headers,
     }).catch((e) => console.log(e))

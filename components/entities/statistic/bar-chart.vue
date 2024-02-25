@@ -21,6 +21,7 @@ const props = defineProps<Props>()
 const { options } = toRefs(props)
 
 function getDevices(items: StatisticType[]) {
+  if (!items?.length) return ''
   const devices = items.reduce(
     (acc, item) => ({
       ...acc,
@@ -39,6 +40,7 @@ function getDevices(items: StatisticType[]) {
 }
 
 function getOs(items: StatisticType[]) {
+  if (!items?.length) return ''
   const os = items.reduce(
     (acc, item) => ({
       ...acc,
@@ -57,6 +59,8 @@ function getOs(items: StatisticType[]) {
 }
 
 function getBrowser(items: StatisticType[]) {
+  if (!items?.length) return ''
+
   const browser = items.reduce(
     (acc, item) => ({
       ...acc,
@@ -75,10 +79,12 @@ function getBrowser(items: StatisticType[]) {
 }
 
 function getCountry(items: StatisticType[]) {
+  if (!items?.length) return ''
+
   const country = items.reduce(
     (acc, item) => ({
       ...acc,
-     ...(item.country && { [item.country]: (acc[item.country] || 0) + 1}),
+      ...(item.country && { [item.country]: (acc[item.country] || 0) + 1 }),
     }),
     {},
   )
@@ -93,6 +99,8 @@ function getCountry(items: StatisticType[]) {
 }
 
 function getCity(items: StatisticType[]) {
+  if (!items?.length) return ''
+
   const city = items.reduce(
     (acc, item) => ({
       ...acc,

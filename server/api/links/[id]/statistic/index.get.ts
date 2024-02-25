@@ -1,12 +1,15 @@
 import * as v from 'valibot'
 
 import { getByLinkId } from '../../../../services'
-import { dateRangeConfig } from '../../../../../utils'
+import { dateRangeConfig, countries } from '../../../../../utils'
 import type { DateRangetype, StatisticType } from '../../../../../types'
 
 export default defineEventHandler(async (event) => {
   const { id } = await useValidatedParams(event, v.objectAsync({ id: v.string([v.uuid()]) }))
-  const { dateRange } = await useValidatedQuery(event, v.objectAsync({ dateRange: v.optional(v.picklist(['today', 'week', 'month', 'year']), 'today') }))
+  const { dateRange } = await useValidatedQuery(
+    event,
+    v.objectAsync({ dateRange: v.optional(v.picklist(['today', 'week', 'month', 'year']), 'today') }),
+  )
 
   const data = await getByLinkId(
     id,
@@ -47,7 +50,8 @@ function prepare(data: StatisticType[], dateRange: DateRangetype) {
     }
 
     if (item.country) {
-      country[item.country] = country[item.country] + 1 || 1
+      const countryName = countries[item.country] || item.country
+      country[countryName] = country[countryName] + 1 || 1
     }
     if (item.city) {
       city[item.city] = city[item.city] + 1 || 1

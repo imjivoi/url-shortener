@@ -45,6 +45,41 @@ export async function getLinkById(id: string) {
   return data
 }
 
+export async function getLinkByParams(params: Partial<Database['public']['Tables']['links']['Row']>) {
+  const client = await useServerSupabaseClient()
+
+  const query = client.from('links').select('*, clicks(count)')
+
+  if (params.id) {
+    query.eq('id', params.id)
+  }
+
+  if (params.alias) {
+    query.eq('alias', params.alias)
+  }
+
+  if (params.user_id) {
+    query.eq('user_id', params.user_id)
+  }
+
+
+  if (params.original_url) {
+    query.eq('original_url', params.original_url)
+  }
+
+  if (params.domain) {
+    query.eq('domain', params.domain)
+  }
+
+  const { data, error } = await query
+
+  if (error) {
+    throw error
+  }
+
+  return data
+}
+
 interface Options {
   from?: number
   to?: number

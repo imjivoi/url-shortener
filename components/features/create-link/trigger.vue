@@ -78,6 +78,9 @@ function openCreateModal() {
     component: FeaturesCreateLinkModal,
     bind: {
       defaultUrl: url.value,
+      onSuccess: () => {
+        emits('success')
+      },
     },
   })
 }

@@ -19,6 +19,8 @@ export default defineAppConfig({
     select: {
       default: {
         trailingIcon: 'heroicons:chevron-down-20-solid',
+        loadingIcon: 'eos-icons:loading',
+        selectedIcon: 'heroicons:check-20-solid',
       },
     },
     notification: {
@@ -31,6 +33,12 @@ export default defineAppConfig({
     accordion: {
       default: {
         openIcon: 'heroicons:chevron-down-20-solid',
+      },
+    },
+    selectMenu: {
+      default: {
+        loadingIcon: 'eos-icons:loading',
+        selectedIcon: 'heroicons:check-20-solid',
       },
     },
   },

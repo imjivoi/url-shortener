@@ -1,63 +1,57 @@
 <template>
   <shared-modal @update:model-value="close">
     <template #title>Create link</template>
-    <form class="flex flex-col gap-4" @submit.prevent>
+    <u-form :state="formState" :validate="validateWithVuelidate" class="flex flex-col gap-4" @submit="create">
       <div>
         <label class="mb-2 text-sm">Original url</label>
 
         <u-input
-          v-model="url"
+          v-model="formState.url"
           class="mt-2"
           label-top=""
           :status="$v.url.$error && 'error'"
           placeholder="https://facebook.com/profile/myprofile"
         />
-        <label v-if="$v.url.$error" class="text-sm">
+        <small v-if="$v.url.$error" class="text-sm">
           <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="text-red-500">
             {{ error.$message }}
           </span>
-        </label>
+        </small>
       </div>
       <div>
-        <div class="relative flex items-end gap-4">
+        <div class="relative">
           <div>
-            <label class="text-sm">{{ $t('short_url') }}</label>
-            <div class="flex gap-2 items-center">
-              <div>
-                <u-select-menu class="mt-2" v-model="domain" :items="domains" />
+            <label class="mb-2 text-sm">{{ $t('short_url') }}</label>
+            <div class="flex items-start gap-2 w-full">
+              <div class="basis-1/3">
+                <u-form-group name="domain">
+                  <u-select-menu v-model="formState.domain" :options="domains" :loading="isDomainsPending" />
+                </u-form-group>
               </div>
-              <div>
-                <label class="text-xs"></label>
-                <u-input
-                  v-model:value="alias"
-                  class="input mt-2"
-                  placeholder="my-link"
-                  :status="(aliasError || $v.alias.$error) && 'error'"
-                ></u-input>
+              <div class="basis-2/3">
+                <u-form-group name="alias" class="w-full">
+                  <u-input
+                    class="w-full"
+                    v-model="formState.alias"
+                    placeholder="my-link"
+                    :status="(aliasError || $v.alias.$error) && 'error'"
+                  ></u-input>
+                </u-form-group>
+              </div>
+              <div class="basis-1/3">
+                <u-button class="hidden sm:flex" block @click="generateAlias">
+                  {{ $t('button.generate') }}
+                </u-button>
+                <u-button
+                  class="sm:hidden"
+                  circle
+                  @click="generateAlias"
+                  icon="material-symbols:auto-mode-rounded"
+                ></u-button>
               </div>
             </div>
           </div>
-
-          <u-button class="hidden sm:flex" quaternary type="primary" @click="generateAlias">
-            {{ $t('button.generate') }}
-          </u-button>
-          <u-button
-            class="sm:hidden"
-            circle
-            ghost
-            type="primary"
-            @click="generateAlias"
-            icon="material-symbols:auto-mode-rounded"
-          ></u-button>
         </div>
-        <label v-if="aliasError || $v.alias.$error" class="text-sm">
-          <span v-if="aliasError" class="text-red-500">{{ aliasError }}</span>
-          <template v-if="$v.alias.$error">
-            <span v-for="(error, idx) in $v.alias.$errors" :key="idx" class="text-red-500">
-              {{ error.$message }}
-            </span>
-          </template>
-        </label>
       </div>
       <!-- <div class="border border-gray-200 dark:border-gray-900 p-4 rounded-xl">
         <label class="mb-2 text-sm block">Optional</label>
@@ -142,13 +136,11 @@
           </span>
         </label>
       </div> -->
-    </form>
-    <template #footer>
-      <div class="flex justify-center gap-4">
-        <u-button :loading="isLoading" @click="create">Create</u-button>
+      <div class="flex justify-center gap-4 mt-4">
+        <u-button :loading="isLoading" type="submit">Create</u-button>
         <u-button @click="close" color="white">{{ $t('button.cancel') }}</u-button>
       </div>
-    </template>
+    </u-form>
   </shared-modal>
 </template>
 <script lang="ts" setup>
@@ -162,10 +154,9 @@ interface Props {
 }
 
 const { defaultUrl, onSuccess } = defineProps<Props>()
-const config = useRuntimeConfig()
 const emits = defineEmits(['success', 'update:modelValue'])
 
-const domains = [config.public.shortUrl]
+const { data: domains, pending: isDomainsPending } = await useAsyncData('domains', () => $fetch('/api/links/domains'))
 
 const accordionItems = [
   {
@@ -178,18 +169,20 @@ const accordionItems = [
   },
 ]
 
-const domain = ref(domains[0])
-const url = ref(defaultUrl || '')
-const alias = ref('')
-const title = ref('')
-const description = ref('')
-const utmCampaign = ref('')
-const utmSource = ref('')
-const utmMedium = ref('')
-const utmTerm = ref('')
-const utmContent = ref('')
-const utmId = ref('')
-const utmSourcePlatform = ref('')
+const formState = ref({
+  url: defaultUrl || '',
+  domain: domains.value[0],
+  alias: '',
+  title: '',
+  description: '',
+  utmCampaign: '',
+  utmSource: '',
+  utmMedium: '',
+  utmTerm: '',
+  utmContent: '',
+  utmId: '',
+  utmSourcePlatform: '',
+})
 
 const aliasError = ref('')
 
@@ -202,7 +195,17 @@ const rules = {
   description: { minLength: minLength(3), maxLength: maxLength(100) },
 }
 
-const $v = useVuelidate(rules, { url, alias, title, description })
+const $v = useVuelidate(rules, formState)
+
+async function validateWithVuelidate() {
+  console.log('valdiate')
+  $v.value.$touch()
+  await $v.value.$validate()
+  return $v.value.$errors.map((error) => ({
+    message: error.$message,
+    path: error.$propertyPath,
+  }))
+}
 
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 const create = async () => {
@@ -213,14 +216,14 @@ const create = async () => {
     await $fetch(`/api/links`, {
       method: 'POST',
       body: {
-        title: title.value,
-        original_url: url.value,
-        alias: alias.value,
+        title: formState.value.title,
+        original_url: formState.value.url,
+        alias: formState.value.alias,
       },
       headers,
     })
     close()
-    onSuccess &&  onSuccess()
+    onSuccess && onSuccess()
   } catch (error: any) {
     if (error.statusCode === 403) {
       // toast.error(error?.statusMessage || 'You reached links limit')
@@ -238,25 +241,30 @@ const resetErrors = () => {
 }
 
 const generateAlias = () => {
-  alias.value = getRandomAlias()
+  formState.value.alias = getRandomAlias()
 }
 
 const checkAlias = useDebounceFn(async () => {
   try {
-    const response = await $fetch(`/api/links/alias/${alias.value}/check`, { headers })
+    const response = await $fetch(`/api/links/domain/${formState.value.domain}/alias/${formState.value.alias}/check`, {
+      headers,
+    })
     if (response.exists) {
       aliasError.value = 'Alias already exist'
     }
   } catch (error) {}
 }, 800)
 
-watch(alias, (val) => {
-  if (val) {
-    checkAlias()
-  }
-})
+watch(
+  () => [formState.value.alias, formState.value.domain],
+  (val) => {
+    if (formState.value.alias && formState.value.domain) {
+      checkAlias()
+    }
+  },
+)
 
-watch([alias, title, url], () => {
-  resetErrors()
-})
+// watch([alias, title, url], () => {
+//   resetErrors()
+// })
 </script>

@@ -17,6 +17,7 @@ export default defineAuthEventHandler(async (event, user) => {
     v.objectAsync({
       page: v.optional(v.coerce(v.number(), Number), 1),
       size: v.optional(v.coerce(v.number(), Number), 10),
+      
     }),
   )
 

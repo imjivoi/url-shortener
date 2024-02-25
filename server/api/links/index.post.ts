@@ -1,18 +1,29 @@
-import { nanoid } from 'nanoid'
+import * as v from 'valibot'
 
-import { createLink, getCustomer, parseMeta } from '../../services'
+import { createLink, getCustomer, getLinkByParams, parseMeta } from '../../services'
 
+import { DEFAULT_DOMAINS } from '../../constants'
 
-export default defineEventHandler(async (event) => {
-  const user = await useServerSupabaseUser()
-  if (!user) {
+const DOMAIN_LIST = [...(import.meta.dev ? ['localhost:3000'] : []), ...DEFAULT_DOMAINS]
+
+export default defineAuthEventHandler(async (event, user) => {
+  let { original_url, title, description, alias, domain } = await useValidatedBody(
+    event,
+    v.objectAsync({
+      original_url: v.string(),
+      title: v.optional(v.string()),
+      description: v.optional(v.string()),
+      alias: v.optional(v.string()),
+      domain: v.optional(v.string()),
+    }),
+  )
+
+  if (domain && !DOMAIN_LIST.includes(domain)) {
     throw createError({
-      statusCode: 401,
+      statusCode: 400,
+      statusMessage: 'Invalid domain',
     })
   }
-  const config = useRuntimeConfig()
-
-  const body = await readBody(event)
 
   const account = await getCustomer(user.id)
 
@@ -22,8 +33,25 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Links limit exceeded',
     })
   }
-  let original_url, title, alias, description, image_url
-  ;({ original_url, title, alias } = body)
+
+  if (!alias) {
+    alias = getRandomAlias()
+  }
+
+  const existedLink = await getLinkByParams({ alias, domain })
+
+  if (existedLink?.length) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Link with such params already exists',
+    })
+  }
+
+  if (!domain) {
+    domain = DOMAIN_LIST[0]
+  }
+
+  let image_url = null
 
   if (!title) {
     try {
@@ -33,18 +61,17 @@ export default defineEventHandler(async (event) => {
       image_url = meta.og?.image || meta.meta?.image
     } catch (error) {
       console.log(error)
-      title = null
+      title = ''
     }
   }
 
-  if (!alias) {
-    alias = getRandomAlias()
-  }
+  const prefix = domain === 'localhost:3000' ? 'http://' : 'https://'
 
   const { data, error } = await createLink({
+    domain,
     title,
     original_url,
-    redirect_url: config.public.DOMAIN_URL + '/' + alias,
+    redirect_url: prefix + domain + '/' + alias,
     alias,
     description,
     image_url,
@@ -58,7 +85,9 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  await useStorage().setItem(`redis:${data.alias}`, data)
+  const { id, user_id, ...linkData } = data
+
+  await useStorage().setItem(getCachedLinkKey(data), linkData)
 
   return data
 })
