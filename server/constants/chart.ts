@@ -10,10 +10,10 @@ import {
   startOfToday,
   startOfWeek,
   startOfYear,
-  format
+  format,
 } from 'date-fns'
 
-import type{ StatisticType } from '@/types'
+import type { StatisticType } from '@/types'
 
 export const months = [
   'January',
@@ -34,17 +34,24 @@ export const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday ', 'Thursday', 'F
 
 export const dateRangeConfig: Record<
   string,
-  { items: Map<number | string, StatisticType[]>; checkFunction: (value: string) => number | string; from: string }
+  {
+    items: Map<number | string, StatisticType[]>
+    checkFunction: (value: string, timezone?: string) => number | string
+    from: string
+  }
 > = {
   today: {
     items: new Map(Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [`${value}:00`, []])),
-    checkFunction: (value: string) => format(new Date(value), 'HH:00'),
+    checkFunction: (value: string, timeZone?: string) => {
+      const date = new Date(value)
+      return format(new Date(date.toLocaleString('en-US', { timeZone })), 'HH:00')
+    },
     from: startOfToday().toISOString(),
   },
   week: {
     items: new Map(week.map((value) => [value, []])),
     checkFunction: (value: string) => week[getDay(new Date(value))],
-    from: startOfWeek(Date.now()).toISOString(),
+    from: startOfWeek(Date.now(), { weekStartsOn: 1 }).toISOString(),
   },
   month: {
     items: new Map(Array.from({ length: getDaysInMonth(new Date()) }, (_, i) => i + 1).map((value) => [value, []])),

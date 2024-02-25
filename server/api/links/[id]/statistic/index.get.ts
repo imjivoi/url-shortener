@@ -1,7 +1,7 @@
 import * as v from 'valibot'
 
 import { getByLinkId } from '../../../../services'
-import { dateRangeConfig, countries } from '../../../../../utils'
+import { dateRangeConfig, countries } from '../../../../constants'
 import type { DateRangetype, StatisticType } from '../../../../../types'
 
 export default defineEventHandler(async (event) => {
@@ -19,10 +19,13 @@ export default defineEventHandler(async (event) => {
       ...(!!dateRange && { dateRange }),
     },
   )
-  return data?.length ? prepare(data, dateRange as DateRangetype) : null
+
+  const timezone = getHeader(event, 'x-vercel-ip-timezone') as string
+
+  return data?.length ? prepare(data, dateRange as DateRangetype, timezone) : null
 })
 
-function prepare(data: StatisticType[], dateRange: DateRangetype) {
+function prepare(data: StatisticType[], dateRange: DateRangetype, timezone: string) {
   const config = dateRangeConfig[dateRange]
 
   const items = new Map(config.items)
@@ -34,7 +37,7 @@ function prepare(data: StatisticType[], dateRange: DateRangetype) {
   const bot: Record<string, number> = {}
 
   for (const item of data) {
-    const key = config.checkFunction(item.created_at)
+    const key = config.checkFunction(item.created_at, timezone)
     const mapValue = items.get(key)
     items.set(key, [...(mapValue || []), item])
     if (item.device) {

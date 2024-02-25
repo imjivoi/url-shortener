@@ -24,6 +24,7 @@ const { data } = await useAsyncData(async () => {
     'x-vercel-ip-city',
     'x-vercel-ip-latitude',
     'x-vercel-ip-longitude',
+    'x-vercel-ip-timezone'
   ]
   console.time('fetch link')
   try {

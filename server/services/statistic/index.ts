@@ -1,5 +1,5 @@
 import { getDomainWithoutWWW, getUserAgentData } from '../../lib'
-import { dateRangeConfig } from '../../../utils'
+import { dateRangeConfig } from '../../constants'
 import type { DateRangetype } from '../../../types'
 import { getLinkByAlias } from '../link'
 import { getCustomerLimits } from '../customer'
@@ -61,6 +61,7 @@ export async function getByLinkId(linkId: string, options?: Options) {
   const dateRange: DateRangetype = options?.dateRange || 'today'
 
   const from = dateRangeConfig[dateRange].from
+  console.log(from)
   const { data, error } = await client.from('clicks').select().eq('link_id', linkId).gte('created_at', from)
 
   if (error) {

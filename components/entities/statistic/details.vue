@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <div v-else>Nothig found</div>
+  <div v-else>Nothig found. Try choice other date range</div>
 </template>
 <script setup lang="ts">
 import { THEME_KEY } from 'vue-echarts'
