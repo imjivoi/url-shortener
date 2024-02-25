@@ -143,7 +143,9 @@ export default defineNuxtConfig({
   ],
   site: {
     url: 'https://liny.app',
+    name: 'liny.app',
   },
+
   // i18n: {
   //   detectBrowserLanguage: {
   //     useCookie: true,
