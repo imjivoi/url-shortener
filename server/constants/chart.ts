@@ -30,7 +30,7 @@ export const months = [
   'December',
 ]
 
-export const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday ', 'Thursday', 'Friday', 'Saturday']
+export const week = ['Monday', 'Tuesday', 'Wednesday ', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 export const dateRangeConfig: Record<
   string,
@@ -50,7 +50,7 @@ export const dateRangeConfig: Record<
   },
   week: {
     items: new Map(week.map((value) => [value, []])),
-    checkFunction: (value: string) => week[getDay(new Date(value))],
+    checkFunction: (value: string) => format(new Date(value), 'EEEE'),
     from: startOfWeek(Date.now(), { weekStartsOn: 1 }).toISOString(),
   },
   month: {
