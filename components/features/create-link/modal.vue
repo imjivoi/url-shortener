@@ -219,6 +219,13 @@ const create = async () => {
         title: formState.value.title,
         original_url: formState.value.url,
         alias: formState.value.alias,
+        domain: formState.value.domain,
+        description: formState.value.description,
+        utm_campaign: formState.value.utmCampaign,
+        utm_source: formState.value.utmSource,
+        utm_medium: formState.value.utmMedium,
+        utm_term: formState.value.utmTerm,
+        utm_content: formState.value.utmContent,
       },
       headers,
     })
