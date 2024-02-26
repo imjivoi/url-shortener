@@ -15,16 +15,16 @@ import { isCrawler } from '../server/lib'
 definePageMeta({
   // middleware: 'alias',
 })
-const route = useRoute('alias')
 
-const { data } = await useAsyncData(async () => {
+const { data } = await useAsyncData(async (ctx) => {
+  const alias = ctx?._route.params.alias as string
   const vercelHeaders = [
     'x-vercel-ip-country',
     'x-vercel-ip-country-region',
     'x-vercel-ip-city',
     'x-vercel-ip-latitude',
     'x-vercel-ip-longitude',
-    'x-vercel-ip-timezone'
+    'x-vercel-ip-timezone',
   ]
   console.time('fetch link')
   try {
@@ -34,17 +34,16 @@ const { data } = await useAsyncData(async () => {
     >
     const host = useRequestHeader('host')
 
-    const link = await $fetch(`/api/links/domain/${host}/alias/${route.params.alias}`)
+    const link = await $fetch(`/api/links/domain/${host}/alias/${alias}`)
     console.timeEnd('fetch link')
 
-    console.log(host)
 
     if (host !== link?.domain || !link.original_url) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
     console.time('fetch link stats')
-    $fetch(`/api/links/domain/${host}/alias/${route.params.alias}/statistic`, {
+    $fetch(`/api/links/domain/${host}/alias/${alias}/statistic`, {
       method: 'POST',
       headers,
     }).catch((e) => console.log(e))

@@ -25,19 +25,10 @@ export default defineCachedEventHandler(
       }),
     )
 
-    let result = await useStorage().getItem(getCachedLinkKey({ alias, domain }))
+    const result = await getLinkByParams({ alias, domain })
+    const { id, user_id, ...linkData } = result[0]
 
-    if (!result) {
-      result = await getLinkByParams({ alias, domain })
-
-      if (result?.[0]) {
-        const { id, user_id, ...linkData } = result
-
-        await useStorage().setItem(getCachedLinkKey({ alias, domain }), linkData)
-      }
-    }
-
-    return result
+    return linkData
   },
   {
     getKey(event) {

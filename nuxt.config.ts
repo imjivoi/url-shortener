@@ -206,13 +206,14 @@ export default defineNuxtConfig({
   }),
   experimental: {
     typedPages: true,
+    asyncContext: true,
   },
   nitro: {
     storage: {
-      redis: redisStorage,
+      cache: redisStorage,
     },
     devStorage: {
-      redis: {
+      cache: {
         driver: 'fs',
         base: './.data/db',
       },
@@ -222,6 +223,7 @@ export default defineNuxtConfig({
     },
     preset: 'vercel',
   },
+
   hooks: {
     // 'build:before': () => {
     //   z.object({
@@ -252,10 +254,4 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
-  devServerHandlers: [
-    {
-      route: '/emails/**:templateName',
-      handler: '~/server/dev/emails.ts',
-    },
-  ],
 })

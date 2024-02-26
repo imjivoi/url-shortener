@@ -6,7 +6,7 @@ export function getRandomAlias() {
 }
 
 export function getCachedLinkKey(link: any) {
-  return `redis:${link.domain}:${link.alias}`
+  return `cache:${link.domain}:${link.alias}`
 }
 
 export function capitalize(word: string) {

@@ -62,7 +62,6 @@ export async function getLinkByParams(params: Partial<Database['public']['Tables
     query.eq('user_id', params.user_id)
   }
 
-
   if (params.original_url) {
     query.eq('original_url', params.original_url)
   }
