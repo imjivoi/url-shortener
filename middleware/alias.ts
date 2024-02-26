@@ -27,10 +27,10 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     }
 
     console.time('fetch link stats')
-    await $fetch(`/api/links/domain/${host}/alias/${params.alias}/statistic`, {
-      method: 'POST',
-      headers,
-    }).catch((e) => console.log(e))
+    // await $fetch(`/api/links/domain/${host}/alias/${params.alias}/statistic`, {
+    //   method: 'POST',
+    //   headers,
+    // }).catch((e) => console.log(e))
     console.timeEnd('fetch link stats')
     if (!isCrawler(headers['user-agent'])) {
       return navigateTo(link.original_url, {
