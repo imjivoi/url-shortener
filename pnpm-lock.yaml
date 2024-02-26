@@ -47,6 +47,9 @@ dependencies:
   '@vuelidate/validators':
     specifier: ^2.0.3
     version: 2.0.4(vue@3.4.19)
+  consola:
+    specifier: ^3.2.3
+    version: 3.2.3
   cron:
     specifier: ^2.4.1
     version: 2.4.4
