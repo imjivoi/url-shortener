@@ -249,7 +249,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/dashboard/**': {
       ssr: false,
-    },
+    }
   },
   devtools: {
     enabled: true,

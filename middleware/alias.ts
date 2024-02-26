@@ -8,29 +8,36 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     'x-vercel-ip-city',
     'x-vercel-ip-latitude',
     'x-vercel-ip-longitude',
+    'x-vercel-ip-timezone',
   ]
+  console.time('fetch link')
   try {
     const headers = useRequestHeaders(['cookie', 'x-forwarded-for', 'user-agent', ...vercelHeaders]) as Record<
       string,
       string
     >
-    const link = await $fetch<{ original_url: string }>(`/api/storage/${params.alias}`)
+    const host = useRequestHeader('host')
 
-    if (!link || !link.original_url) {
+    const link = await $fetch(`/api/links/domain/${host}/alias/${params.alias}`)
+    console.timeEnd('fetch link')
+
+
+    if (host !== link?.domain || !link.original_url) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
+    console.time('fetch link stats')
+    $fetch(`/api/links/domain/${host}/alias/${params.alias}/statistic`, {
+      method: 'POST',
+      headers,
+    }).catch((e) => console.log(e))
+    console.timeEnd('fetch link stats')
     if (!isCrawler(headers['user-agent'])) {
-      await sendRedirect(useNuxtApp().callHook('').ssrContext?.event, link.original_url, 302)
-
-      try {
-        await $fetch(`/api/links/alias/${params.alias}/statistic`, {
-          headers,
-        })
-      } catch (e) {
-        console.log(e)
-      }
+      return navigateTo(link.original_url, {
+        external: true,
+      })
     }
+
   } catch (error) {
     console.log(error)
     return navigateTo('/')
