@@ -210,7 +210,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     storage: {
-      cache: redisStorage,
+      cache: {
+        driver: 'memory'
+      },
     },
     devStorage: {
       cache: {
