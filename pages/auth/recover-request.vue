@@ -8,7 +8,12 @@
         }}
       </h2>
       <template v-if="success">
-        <p class="text-center first-letter:uppercase">We successfuly sent reset link to your email</p>
+        <u-alert color="green" variant="outline">
+          <template #description>
+            We successfuly sent reset link to your email!
+          </template>
+        </u-alert>
+        <p class="text-center first-letter:uppercase"></p>
       </template>
       <template v-else>
         <form class="space-y-6" @submit.prevent>
@@ -28,6 +33,12 @@
             </small>
           </div>
           <u-button :loading="isLoading" class="rounded-full" block @click="login">Send</u-button>
+          <div>
+            <nuxt-link to="/auth/login" class="hover:underline underline-offset-4 text-primary-500">
+              <Icon name="heroicons:arrow-long-left" />
+              Go back to login
+            </nuxt-link>
+          </div>
         </form>
       </template>
     </div>

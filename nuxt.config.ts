@@ -140,6 +140,7 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxt/ui',
     '@nuxtjs/seo',
+    '@vue-email/nuxt',
   ],
   site: {
     url: 'https://liny.app',
@@ -251,4 +252,10 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+  devServerHandlers: [
+    {
+      route: '/emails/**:templateName',
+      handler: '~/server/dev/emails.ts',
+    },
+  ],
 })

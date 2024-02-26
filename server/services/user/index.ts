@@ -74,10 +74,17 @@ export async function updateUser(body) {
   const { data, error } = await client.auth.updateUser(body)
 
   if (error) {
-    throw createError({
-      message: error?.message,
-      statusCode: 500,
-    })
+    if (error.status >= 401 && error.status < 500) {
+      throw createError({
+        statusMessage: error?.message,
+        statusCode: error.status,
+      })
+    } else {
+      throw createError({
+        message: error?.message,
+        statusCode: 500,
+      })
+    }
   }
 
   return data.user

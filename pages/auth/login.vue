@@ -28,7 +28,7 @@
             </span>
           </small>
           <small class="text-right text-xs text-gray-400 block my-4">
-            <nuxt-link to="/auth/recover" class="hover:underline underline-offset-4">Forgot your password?</nuxt-link>
+            <nuxt-link to="/auth/recover-request" class="hover:underline underline-offset-4">Forgot your password?</nuxt-link>
           </small>
         </div>
         <u-button :loading="isLoading" class="rounded-full" block @click="login">

@@ -2,10 +2,10 @@ import * as v from 'valibot'
 import { updateUser } from '../../services/user'
 
 export default defineWrappedEventHandler(async (event) => {
-  const { passowrd, access_token, refresh_token } = await useValidatedBody(
+  const { password, access_token, refresh_token } = await useValidatedBody(
     event,
     v.objectAsync({
-      passowrd: v.string(),
+      password: v.string(),
       access_token: v.string(),
       refresh_token: v.string(),
     }),
@@ -15,5 +15,10 @@ export default defineWrappedEventHandler(async (event) => {
 
   await client.auth.setSession({ access_token, refresh_token })
 
-  return updateUser({ passowrd })
+  const user = await updateUser({ password })
+
+  setCookie(event, 'access-token', access_token, { httpOnly: true })
+  setCookie(event, 'refresh-token', refresh_token, { httpOnly: true })
+
+  return user
 })

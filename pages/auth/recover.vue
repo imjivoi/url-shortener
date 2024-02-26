@@ -1,7 +1,7 @@
 <template>
   <u-card class="w-full mx-auto max-w-sm rounded-2xl overflow-hidden relative">
     <div class="p-5">
-      <h2 class="text-2xl font-bold text-center mb-5 first-letter:uppercase">Your new password</h2>
+      <h2 class="text-2xl font-bold text-center mb-5 first-letter:uppercase">Confirm your new password</h2>
       <form class="space-y-6" @submit.prevent>
         <div>
           <label class="mb-2 text-xs first-letter:uppercase">{{ 'New pasword' }}</label>
@@ -39,19 +39,12 @@
 import useVuelidate from '@vuelidate/core'
 import { required, minLength, sameAs } from '@vuelidate/validators'
 
-const { t } = useI18n()
 const toast = useToast()
 
-definePageMeta({
-  // middleware: (ctx) => {
-  //   if (!ctx.query.access_token && !ctx.query.refresh_token) {
-  //     return navigateTo('/auth/recover-request')
-  //   }
-  // },
-})
+const route = useRoute('auth-recover')
 
 useHead({
-  titleTemplate: (titleChunk: string) => `${titleChunk} | ${t('authorization')}`,
+  titleTemplate: (titleChunk: string) => `${titleChunk} | Authorization`,
 })
 // const toast = useMessage()
 
@@ -68,18 +61,31 @@ const rules = {
 const $v = useVuelidate(rules, { password, passwordRepeat })
 
 const login = async () => {
+  const params = new URLSearchParams(route.hash.replace('#', ''))
+
+  const accessToken = params.get('access_token')
+  const refreshToken = params.get('refresh_token')
   const isValid = await $v.value.$validate()
   if (!isValid) return
+
+  if (!accessToken || !refreshToken) {
+    toast.add({ title: 'No token', color: 'red' })
+    return
+  }
   isLoading.value = true
   try {
     await $fetch('/api/auth/recover', {
       method: 'POST',
-      body: { password: password.value },
+      body: { password: password.value, access_token: accessToken, refresh_token: refreshToken },
     })
     success.value = true
-    // navigateTo('/dashboard')
+    navigateTo('/dashboard')
   } catch (error) {
-    toast.add({ title: 'Something went wrong', color: 'red' })
+    if (error.status === 422) {
+      toast.add({ title: ' New password should be different from the old password', color: 'red' })
+      return
+    }
+    toast.add({ title: error.message, color: 'red' })
   } finally {
     isLoading.value = false
   }

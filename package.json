@@ -13,7 +13,8 @@
     "sb:migration:up": "pnpm dlx supabase migration up",
     "sb:types": "pnpm dlx supabase gen types typescript --local > server/db/database.types.ts",
     "sb:reset": "pnpm dlx supabase db reset && pnpm sb:types",
-    "lint": "eslint --ext .ts,.js,.vue ."
+    "lint": "eslint --ext .ts,.js,.vue .",
+    "email:render": "npx vue-email export --out ./emails/html"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.6.5",
@@ -53,6 +54,7 @@
     "@upstash/redis": "^1.22.0",
     "@vercel/kv": "^1.0.1",
     "@vicons/ionicons5": "^0.12.0",
+    "@vue-email/nuxt": "^0.8.17",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.3",
     "cron": "^2.4.1",
@@ -61,6 +63,7 @@
     "html-metadata-parser": "^2.0.4",
     "maska": "^2.1.10",
     "nanoid": "^4.0.2",
+    "nodemailer": "^6.9.10",
     "nuxt-icon": "^0.2.11",
     "nuxt-simple-sitemap": "^1.0.11",
     "nuxt-viewport": "^2.0.6",
@@ -70,6 +73,7 @@
     "valibot": "^0.28.1",
     "vue-data-ui": "^1.9.98",
     "vue-echarts": "^6.6.1",
+    "vue-email": "^0.8.9",
     "vue-final-modal": "^3.4.11"
   }
 }
