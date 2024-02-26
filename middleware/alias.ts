@@ -27,7 +27,7 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     }
 
     console.time('fetch link stats')
-    $fetch(`/api/links/domain/${host}/alias/${params.alias}/statistic`, {
+    await $fetch(`/api/links/domain/${host}/alias/${params.alias}/statistic`, {
       method: 'POST',
       headers,
     }).catch((e) => console.log(e))

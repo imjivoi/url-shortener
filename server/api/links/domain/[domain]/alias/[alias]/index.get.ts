@@ -35,5 +35,6 @@ export default defineCachedEventHandler(
       return getCachedLinkKey(event.context.params)
     },
     group: 'link',
+    name: ''
   },
 )

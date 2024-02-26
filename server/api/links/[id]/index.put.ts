@@ -18,7 +18,7 @@ export default defineAuthEventHandler(async (event) => {
   const data = await updateLink(linkId, body)
   const { id, user_id, ...linkData } = data
 
-  await useStorage().setItem(getCachedLinkKey(data), linkData)
+  // await useStorage().setItem(getCachedLinkKey(data), linkData)
 
   return data
 })
