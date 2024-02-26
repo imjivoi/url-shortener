@@ -36,7 +36,7 @@ const modal = useModal()
 const toast = useToast()
 
 const deleteLink = async (link) => {
-  const isConfirmed = confirm(t('confirm.remove_link'))
+  const isConfirmed = confirm('Do you really want to delete this link?')
   if (!isConfirmed) return
   try {
     await $fetch(`/api/links/${link.id}`, {
