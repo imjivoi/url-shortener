@@ -27,7 +27,6 @@ export default defineCachedEventHandler(
 
     const result = await getLinkByParams({ alias, domain })
     const { id, user_id, ...linkData } = result[0]
-
     return linkData
   },
   {

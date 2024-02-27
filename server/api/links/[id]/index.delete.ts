@@ -15,6 +15,9 @@ export default defineAuthEventHandler(async (event) => {
   if (link) {
     await deleteLink(link!.id)
     const storage = useStorage('cache')
+    console.log('storage cache keys: ', await storage.getKeys())
+    console.log('storage default keys: ', await useStorage().getKeys())
+    console.log(`remove cache:  link:item:${getCachedLinkKey(link)}.json`)
     await storage.removeItem(`link:item:${getCachedLinkKey(link)}.json`)
   }
 
