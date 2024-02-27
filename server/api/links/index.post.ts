@@ -85,6 +85,8 @@ export default defineAuthEventHandler(async (event, user) => {
     })
   }
 
+  //prefetch to cache
+  await $fetch('/api/links/domain/' + domain + '/alias/' + alias)
   const { id, user_id, ...linkData } = data
 
   return data

@@ -212,12 +212,6 @@ export default defineNuxtConfig({
     storage: {
       cache: redisStorage,
     },
-    devStorage: {
-      cache: {
-        driver: 'fs',
-        base: './.data/db',
-      },
-    },
     experimental: {
       asyncContext: true,
     },

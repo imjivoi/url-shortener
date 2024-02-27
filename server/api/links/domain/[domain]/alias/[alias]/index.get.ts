@@ -32,9 +32,10 @@ export default defineCachedEventHandler(
   },
   {
     getKey(event) {
-            return getCachedLinkKey(event.context.params)
+      return getCachedLinkKey(event.context.params)
     },
     group: 'link',
     name: 'item',
+    maxAge: 60 * 5
   },
 )
