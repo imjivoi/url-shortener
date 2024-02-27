@@ -2,7 +2,7 @@ import { DEFAULT_DOMAINS } from '../constants'
 //TODO: переделать на eventHandler({ onResponse})
 export default defineNitroPlugin((nitro) => {
   nitro.hooks.hook('afterResponse', async (event, request) => {
-    // console.log(event.path)
+    console.log(event.web)
     // // const host = getHeader(event, 'host')
     // const status = getResponseStatus(event)
     // console.log(status)

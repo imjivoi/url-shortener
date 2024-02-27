@@ -10,7 +10,6 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     'x-vercel-ip-longitude',
     'x-vercel-ip-timezone',
   ]
-  console.time('fetch link')
   try {
     const headers = useRequestHeaders(['cookie', 'x-forwarded-for', 'user-agent', ...vercelHeaders]) as Record<
       string,
@@ -19,14 +18,13 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     const host = useRequestHeader('host')
 
     const link = await $fetch(`/api/links/domain/${host}/alias/${params.alias}`)
-    console.timeEnd('fetch link')
 
     if (host !== link?.domain || !link.original_url) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
     const event = useNuxtApp().ssrContext?.event
-    console.log(event)
+
     event?.waitUntil($fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
       console.error,
     ))
