@@ -10,8 +10,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { isCrawler } from '../server/lib'
-
 definePageMeta({
   middleware: 'alias',
 })
@@ -34,7 +32,7 @@ const { data } = await useAsyncData(async (ctx) => {
     >
     const host = useRequestHeader('host')
 
-    const link = await $fetch(`/api/links/domain/${host}/alias/${alias}`)
+    const link = await $fetch(`/api/links/domain/${host}/alias/${alias}`, { headers })
 
     return link
   } catch (error) {
@@ -42,13 +40,17 @@ const { data } = await useAsyncData(async (ctx) => {
     return navigateTo('/')
   }
 })
+defineOgImage({ url: data.value?.image_url })
 
 useSeoMeta({
   title: data.value?.title,
   ogTitle: data.value?.title,
   description: data.value?.description || '',
   ogDescription: data.value?.description || '',
-  ogImage: data.value?.image_url || '',
+  ogImage: {
+    url: data.value?.image_url || ''
+  },
   ogSiteName: data.value?.original_url,
 })
+
 </script>

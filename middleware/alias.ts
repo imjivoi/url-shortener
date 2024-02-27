@@ -21,17 +21,19 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
     const link = await $fetch(`/api/links/domain/${host}/alias/${params.alias}`)
     console.timeEnd('fetch link')
 
-
     if (host !== link?.domain || !link.original_url) {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
+
+    $fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
+      console.error,
+    )
 
     if (!isCrawler(headers['user-agent'])) {
       return navigateTo(link.original_url, {
         external: true,
       })
     }
-
   } catch (error) {
     console.log(error)
     return navigateTo('/')
