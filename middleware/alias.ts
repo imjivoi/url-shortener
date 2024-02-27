@@ -25,9 +25,11 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
-    $fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
+    const event = useNuxtApp().ssrContext?.event
+    console.log(event)
+    event?.waitUntil($fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
       console.error,
-    )
+    ))
 
     if (!isCrawler(headers['user-agent'])) {
       return navigateTo(link.original_url, {
