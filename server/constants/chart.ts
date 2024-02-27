@@ -41,7 +41,7 @@ export const dateRangeConfig: Record<
   }
 > = {
   today: {
-    items: new Map(Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [`${value}:00`, []])),
+    items: new Map(Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [`0${value}:00`, []])),
     checkFunction: (value: string, timeZone?: string) => {
       const date = new Date(value)
       return format(new Date(date.toLocaleString('en-US', { timeZone })), 'HH:00')

@@ -109,8 +109,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     cronKey: process.env.CRON_KEY,
     public: {
-      DOMAIN_URL: process.env.NODE_ENV === 'production' ? process.env.DOMAIN_URL : 'http://localhost:3000',
-      shortUrl: process.env.NODE_ENV === 'production' ? 'lny.cx' : 'http://localhost:3000',
+      appUrl: process.env.NODE_ENV === 'production' ? process.env.APP_URL : 'http://localhost:3000',
+      appDomainUrl: process.env.NODE_ENV === 'production' ? process.env.APP_DOMAIN_URL : 'localhost:3000',
     },
     supabase: {
       url: process.env.SUPABASE_URL,

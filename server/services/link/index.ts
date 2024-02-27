@@ -117,7 +117,7 @@ export async function updateLink(linkId: string, body: Database['public']['Table
     .from('links')
     .update({
       ...body,
-      ...(body.alias && { redirect_url: config.public.DOMAIN_URL + '/' + body.alias }),
+      ...(body.alias && { redirect_url: config.public.appUrl + '/' + body.alias }),
       updated_at: new Date().toISOString(),
     })
     .eq('id', linkId)

@@ -58,7 +58,7 @@ export async function requestPasswordRecover(body) {
 
   const config = useRuntimeConfig()
   const { data, error } = await client.auth.resetPasswordForEmail(body.email, {
-    redirectTo: config.public.DOMAIN_URL + '/auth/recover',
+    redirectTo: config.public.appUrl + '/auth/recover',
   })
 
   if (error) {
