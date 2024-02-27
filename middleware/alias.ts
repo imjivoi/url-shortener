@@ -25,9 +25,9 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
 
     const event = useNuxtApp().ssrContext?.event
 
-    // event?.waitUntil($fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
-    //   console.error,
-    // ))
+    event?.waitUntil($fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
+      console.error,
+    ))
 
     if (!isCrawler(headers['user-agent'])) {
       return navigateTo(link.original_url, {
