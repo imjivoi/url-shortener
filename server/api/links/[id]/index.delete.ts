@@ -15,7 +15,7 @@ export default defineAuthEventHandler(async (event) => {
   if (link) {
     await deleteLink(link!.id)
 
-    // await useStorage().removeItem(getCachedLinkKey(link))
+    await useStorage('link:item').removeItem(`${getCachedLinkKey(link)}.json`)
   }
 
   setResponseStatus(event, 204)

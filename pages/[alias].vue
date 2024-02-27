@@ -49,6 +49,6 @@ useSeoMeta({
   description: data.value?.description || '',
   ogDescription: data.value?.description || '',
   ogImage: data.value?.image_url || '',
-  ogSiteName: data.value?.redirect_url,
+  ogSiteName: data.value?.original_url,
 })
 </script>
