@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="border border-gray-200 dark:border-gray-900 p-4 rounded-xl">
+    <div class="border border-gray-200 dark:border-gray-900 p-4 rounded-xl">
         <label class="mb-2 text-sm block">Optional</label>
         <UAccordion multiple :items="accordionItems">
           <template #og-parameters>
@@ -56,7 +56,7 @@
               <div>
                 <label class="text-sm">Title</label>
                 <u-input
-                  v-model="title"
+                  v-model="formState.title"
                   class="mt-2"
                   :status="$v.title.$error && 'error'"
                   placeholder="My facebook profile"
@@ -70,7 +70,7 @@
               <div>
                 <label class="text-sm">Description</label>
                 <u-textarea
-                  v-model="description"
+                  v-model="formState.description"
                   class="mt-2"
                   :status="$v.description.$error && 'error'"
                   placeholder="My incredible facebook profile description"
@@ -87,36 +87,36 @@
             <div class="flex flex-col gap-4">
               <div>
                 <label class="text-sm">Campaign</label>
-                <u-input v-model="utmCampaign" class="mt-2" placeholder="summer_sale" />
+                <u-input v-model="formState.utmCampaign" class="mt-2" placeholder="summer_sale" />
               </div>
               <div>
                 <label class="text-sm">Source</label>
-                <u-input v-model="utmSource" class="mt-2" placeholder="facebook" />
+                <u-input v-model="formState.utmSource" class="mt-2" placeholder="facebook" />
               </div>
               <div>
                 <label class="text-sm">Medium</label>
-                <u-input v-model="utmMedium" class="mt-2" placeholder="social" />
+                <u-input v-model="formState.utmMedium" class="mt-2" placeholder="social" />
               </div>
               <div>
                 <label class="text-sm">Term</label>
-                <u-input v-model="utmTerm" class="mt-2" placeholder="summer_sale" />
+                <u-input v-model="formState.utmTerm" class="mt-2" placeholder="summer_sale" />
               </div>
               <div>
                 <label class="text-sm">Content</label>
-                <u-input v-model="utmContent" class="mt-2" placeholder="image_ad" />
+                <u-input v-model="formState.utmContent" class="mt-2" placeholder="image_ad" />
               </div>
-              <div>
+              <!-- <div>
                 <label class="text-sm">ID</label>
                 <u-input v-model="utmId" class="mt-2" placeholder="123" />
               </div>
               <div>
                 <label class="text-sm">Source platform</label>
                 <u-input v-model="utmSourcePlatform" class="mt-2" placeholder="facebook" />
-              </div>
+              </div> -->
             </div>
           </template>
         </UAccordion>
-      </div> -->
+      </div>
     <!-- <div>
         <label class="mt-2 text-xs">Title</label>
         <n-input

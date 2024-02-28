@@ -1,4 +1,4 @@
-import * as v from 'valibot'
+import { linkSchema } from '../../schemas'
 
 import { createLink, getCustomer, getLinkByParams, parseMeta } from '../../services'
 
@@ -7,16 +7,8 @@ import { DEFAULT_DOMAINS } from '../../constants'
 const DOMAIN_LIST = [...(import.meta.dev ? ['localhost:3000'] : []), ...DEFAULT_DOMAINS]
 
 export default defineAuthEventHandler(async (event, user) => {
-  let { original_url, title, description, alias, domain } = await useValidatedBody(
-    event,
-    v.objectAsync({
-      original_url: v.string(),
-      title: v.optional(v.string()),
-      description: v.optional(v.string()),
-      alias: v.optional(v.string()),
-      domain: v.optional(v.string()),
-    }),
-  )
+  let { original_url, title, description, alias, domain, utm_campaign, utm_content, utm_medium, utm_source, utm_term } =
+    await useValidatedBody(event, linkSchema)
 
   if (domain && !DOMAIN_LIST.includes(domain)) {
     throw createError({
@@ -53,16 +45,18 @@ export default defineAuthEventHandler(async (event, user) => {
 
   let image_url = null
 
+  const meta = await parseMeta(original_url)
+
   if (!title) {
-    try {
-      const meta = await parseMeta(original_url)
-      title = meta?.meta?.title || meta.og?.title
-      description = meta.og?.description || meta.meta?.description
-      image_url = meta.og?.image || meta.meta?.image
-    } catch (error) {
-      console.log(error)
-      title = ''
-    }
+    title = meta?.meta?.title || meta.og?.title
+  }
+
+  if (!description) {
+    description = meta.og?.description || meta.meta?.description
+  }
+
+  if (!image_url) {
+    image_url = meta.og?.image || meta.meta?.image
   }
 
   const prefix = domain === 'localhost:3000' ? 'http://' : 'https://'
@@ -70,12 +64,17 @@ export default defineAuthEventHandler(async (event, user) => {
   const { data, error } = await createLink({
     domain,
     title,
-    original_url,
+    original_url: getUrlWithUtmParams(original_url, { utm_campaign, utm_content, utm_medium, utm_source, utm_term }),
     redirect_url: prefix + domain + '/' + alias,
     alias,
     description,
     image_url,
     user_id: user.id,
+    utm_campaign,
+    utm_content,
+    utm_medium,
+    utm_source,
+    utm_term,
   })
 
   if (error || !data) {
@@ -85,8 +84,8 @@ export default defineAuthEventHandler(async (event, user) => {
     })
   }
 
-  //prefetch to cache
-  await $fetch('/api/links/domain/' + domain + '/alias/' + alias)
+  //prefetch to cache\
+  event.waitUntil($fetch('/api/links/domain/' + domain + '/alias/' + alias))
   const { id, user_id, ...linkData } = data
 
   return data
