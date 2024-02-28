@@ -186,7 +186,7 @@ const isLoading = ref(false)
 const rules = {
   url: { isUrl, required },
   alias: { minLength: minLength(3), maxLength: maxLength(20), required },
-  title: { minLength: minLength(3), maxLength: maxLength(50) },
+  title: { minLength: minLength(3), maxLength: maxLength(100) },
   description: { minLength: minLength(3), maxLength: maxLength(200) },
 }
 

@@ -8,9 +8,9 @@ export async function createLink(body: Database['public']['Tables']['links']['In
   return await client.from('links').insert(body).select().single()
 }
 
-export async function deleteLink(id: string) {
+export async function deleteLink(id: string, userId: string) {
   const client = await useServerSupabaseClient()
-  const { error } = await client.from('links').delete().eq('id', id)
+  const { error } = await client.from('links').delete().eq('id', id).eq('user_id', userId)
 
   if (error) {
     throw error
@@ -109,7 +109,7 @@ export async function parseMeta(url: string) {
   return result
 }
 
-export async function updateLink(linkId: string, body: Database['public']['Tables']['links']['Update']) {
+export async function updateLink(linkId: string, userId:string, body: Database['public']['Tables']['links']['Update']) {
   const config = useRuntimeConfig()
   const client = await useServerSupabaseClient()
 
@@ -121,6 +121,7 @@ export async function updateLink(linkId: string, body: Database['public']['Table
       updated_at: new Date().toISOString(),
     })
     .eq('id', linkId)
+    .eq('user_id', userId)
     .select()
     .single()
 

@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="flex justify-between items-center">
-      <div class="text-gray-500 text-sm">&bull; {{ getCreatedAt() }}</div>
+      <div class="text-gray-500 text-sm">{{link.created_at !== link.updated_at ? 'edited ' : ''}}{{ getDate(link.updated_at) }}</div>
       <div class="flex gap-2">
         <u-button variant="soft" :to="'/dashboard/' + link.id">
           {{
@@ -73,7 +73,7 @@ function getFaviconUrl() {
   return `https://www.google.com/s2/favicons?sz=64&domain_url=${url.hostname}`
 }
 
-function getCreatedAt() {
-  return formatDistanceToNow(new Date(props.link.created_at), { addSuffix: true })
+function getDate(date) {
+  return formatDistanceToNow(new Date(date), { addSuffix: true })
 }
 </script>
