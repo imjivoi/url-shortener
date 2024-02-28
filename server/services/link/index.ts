@@ -115,11 +115,7 @@ export async function updateLink(linkId: string, userId:string, body: Database['
 
   const { data, error } = await client
     .from('links')
-    .update({
-      ...body,
-      ...(body.alias && { redirect_url: config.public.appUrl + '/' + body.alias }),
-      updated_at: new Date().toISOString(),
-    })
+    .update(body)
     .eq('id', linkId)
     .eq('user_id', userId)
     .select()
