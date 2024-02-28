@@ -9,7 +9,7 @@ import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
 
-import { type StatisticType } from '../../../types'
+import { type StatisticType } from '@/types'
 
 use([CanvasRenderer, BarChart, TitleComponent, TooltipComponent, LegendComponent, GridComponent, TimelineComponent])
 

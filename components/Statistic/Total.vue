@@ -10,7 +10,7 @@
           <div class="w-full h-20 bg-gray-200 dark:bg-gray-800 rounded-xl"></div>
         </div>
       </div>
-      <div v-else class="grid sm:grid-cols-2 gap-4 sm:gap-8">
+      <div v-else class="grid sm:grid-cols-2 gap-4 sm:gap-6">
         <div class="grid gap-2 text-center bg-gray-200 dark:bg-gray-800 rounded-xl p-2">
           <span class="font-medium text-gray-400">Total links</span>
           <span class="text-2xl font-medium tracking-widest truncate">{{ statistic?.links }}</span>
@@ -19,6 +19,11 @@
           <span class="font-medium text-gray-400">Total clicks</span>
           <span class="text-2xl font-medium truncate">{{ statistic?.clicks }}</span>
         </div>
+        <!-- <div class="grid gap-2 text-center bg-gray-200 dark:bg-gray-800 rounded-xl p-2">
+          <span class="font-medium text-gray-400">Most popular</span>
+          <span class="text-sm font-medium truncate text-left">Clicks: {{ statistic?.mostPopular.clicks }}</span>
+          <span class="text-sm font-medium truncate text-left">URL: {{ statistic?.mostPopular.url }}</span>
+        </div> -->
       </div>
     </div>
     <!-- <div class="stats stats-horizontal shadow">

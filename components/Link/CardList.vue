@@ -1,10 +1,10 @@
 <template>
-  <div v-if="loading" class="flex flex-col gap-4">
-    <card-skeleton v-for="i in 4" :key="i" />
+  <div v-if="loading" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 list">
+    <link-card-skeleton v-for="i in 4" :key="i" />
   </div>
   <div v-else-if="links?.length">
-    <div class="flex flex-col gap-4 list">
-      <card
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 list">
+      <link-card
         v-for="link in links"
         :key="link.id"
         :link="link"
@@ -16,10 +16,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { FeaturesUpdateLinkModal } from '#components'
-
-import CardSkeleton from './card-skeleton.vue'
-import Card from './card.vue'
+import { LinkCreateUpdateModal } from '#components'
 
 interface Props {
   links: any[] | null
@@ -57,7 +54,7 @@ const copyLink = async (value: string) => {
 
 const openEditModal = (linkData) => {
   modal.open({
-    component: FeaturesUpdateLinkModal,
+    component: LinkCreateUpdateModal,
     bind: {
       link: linkData,
       onSuccess: () => {

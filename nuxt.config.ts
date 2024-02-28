@@ -141,6 +141,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/seo',
     '@vue-email/nuxt',
+    '@nuxt/image',
   ],
   site: {
     url: 'https://liny.app',
@@ -243,6 +244,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/dashboard/**': {
       ssr: false,
+      cache: { maxAge: 60 * 5 },
     }
   },
   devtools: {

@@ -5,14 +5,14 @@
   <div v-if="statistic">
     <div class="rounded-2xl p-5 mb-5 relative">
       <client-only>
-        <entities-statistic-bar-chart v-if="statistic" class="h-[300px] md:h-[500px]" :options="statistic" />
+        <statistic-bar-chart v-if="statistic" class="h-[300px] md:h-[500px]" :options="statistic" />
       </client-only>
     </div>
     <div class="flex flex-col md:flex-row gap-5">
       <div class="rounded-2xl p-5 basis-1/2 relative">
         <u-tabs v-model="devicesTabIdx" :items="devicesTabs" class="mb-2"></u-tabs>
         <client-only>
-          <entities-statistic-horizontal-bar-chart
+          <statistic-horizontal-bar-chart
             v-if="devicesValueItem"
             :options="devicesValueItem"
             :title="devicesTabs[devicesTabIdx].label"
@@ -22,7 +22,7 @@
       </div>
       <div class="rounded-2xl p-5 basis-1/2 relative">
         <u-tabs v-model="locationTabIdx" :items="locationTabs" class="mb-2"></u-tabs>
-        <entities-statistic-horizontal-bar-chart
+        <statistic-horizontal-bar-chart
           v-if="locationValue"
           :options="locationValue"
           :title="locationTabs[locationTabIdx].label"
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { THEME_KEY } from 'vue-echarts'
 
-import { type StatisticType } from '../../../types'
+import { type StatisticType } from '../../types'
 
 const colorMode = useColorMode()
 provide(THEME_KEY, colorMode.value)

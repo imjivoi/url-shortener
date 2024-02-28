@@ -69,6 +69,6 @@ const dateRangeValue = computed({
   <div>
     <u-select v-model="dateRangeValue" :options="dateRangeOptions" placeholder="Select range" />
 
-    <entities-statistic-new-bar-chart :statistic-items="statistic?.items" :key="dateRangeValue" v-if="statistic"/>
+    <statistic-new-bar-chart :statistic-items="statistic?.items" :key="dateRangeValue" v-if="statistic"/>
   </div>
 </template>

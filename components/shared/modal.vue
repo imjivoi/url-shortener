@@ -8,7 +8,7 @@
     teleport-to="#__nuxt"
   >
     <div class="flex justify-end sm:hidden absolute top-2 right-2 w-full">
-      <u-button variant="link" icon="ic:baseline-close" @click="$emit('update:modelValue', false)"></u-button>
+      <u-button variant="link" icon="ic:baseline-close" @click="closeModal"></u-button>
     </div>
     <div class="modal__title text-center font-bold text-2xl">
       <slot name="title"></slot>
@@ -24,6 +24,13 @@
 
 <script lang="ts" setup>
 import { VueFinalModal } from 'vue-final-modal'
+
+const emits = defineEmits(['update:modelValue'])
+const closeModal = () => {
+  emits('update:modelValue', false)
+}
+
+provide('closeModal', closeModal)
 </script>
 
 <style lang="scss">

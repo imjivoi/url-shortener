@@ -13,7 +13,7 @@
     <!-- <entities-link-info-skeleton v-if="pendingLinkData" />
     <entities-link-info v-else class="mb-5" :link="linkData" />
     <entities-statistic-details-skeleton v-if="pendingStatistic" /> -->
-    <entities-statistic-details
+    <statistic-details
       :statistic="statistic?.items"
       :devices="statistic?.device"
       :os="statistic?.os"

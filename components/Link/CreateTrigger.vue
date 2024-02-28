@@ -29,7 +29,7 @@
 import useVuelidate from '@vuelidate/core'
 import { required, url as isUrl } from '@vuelidate/validators'
 
-import { FeaturesCreateLinkModal } from '#components'
+import { LinkCreateUpdateModal } from '#components'
 
 const modal = useModal()
 
@@ -73,7 +73,7 @@ const create = async () => {
 
 function openCreateModal() {
   modal.open({
-    component: FeaturesCreateLinkModal,
+    component: LinkCreateUpdateModal,
     bind: {
       defaultUrl: url.value,
       onSuccess: () => {

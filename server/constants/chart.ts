@@ -54,8 +54,8 @@ export const dateRangeConfig: Record<
     from: startOfWeek(Date.now(), { weekStartsOn: 1 }).toISOString(),
   },
   month: {
-    items: new Map(Array.from({ length: getDaysInMonth(new Date()) }, (_, i) => i + 1).map((value) => [value, []])),
-    checkFunction: (value: string) => getDate(new Date(value)),
+    items: new Map(Array.from({ length: getDaysInMonth(new Date()) }, (_, i) => i + 1).map((value) => [`${months[getMonth(new Date())].substring(0, 3)} ${value}`, []])),
+    checkFunction: (value: string) => `${months[getMonth(new Date())].substring(0, 3)} ${getDate(new Date(value))}`,
     from: startOfMonth(Date.now()).toISOString(),
   },
   year: {
