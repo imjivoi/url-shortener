@@ -52,17 +52,14 @@ export async function createClick(linkId: string) {
 }
 
 interface Options {
-  dateRange: DateRangetype
+  from: string
 }
 
 export async function getByLinkId(linkId: string, options?: Options) {
   const client = await useServerSupabaseClient()
 
-  const dateRange: DateRangetype = options?.dateRange || 'today'
 
-  const from = dateRangeConfig[dateRange].from
-
-  const { data, error } = await client.from('clicks').select().eq('link_id', linkId).gte('created_at', from)
+  const { data, error } = await client.from('clicks').select().eq('link_id', linkId).gte('created_at', options?.from)
 
   if (error) {
     throw error

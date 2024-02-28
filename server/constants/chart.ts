@@ -37,26 +37,26 @@ export const dateRangeConfig: Record<
   {
     items: Map<number | string, StatisticType[]>
     checkFunction: (value: string, timezone?: string) => number | string
-    from: string
+    from: (timezone?: string) => string
   }
 > = {
   today: {
     items: new Map(
-      Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [
+      Array.from({ length: 24 }, (_, i) => i).map((value) => [
         value.toString().length === 2 ? `${value}:00` : `0${value}:00`,
         [],
       ]),
     ),
     checkFunction: (value: string, timeZone?: string) => {
       const date = new Date(value)
-      return format(new Date(date.toLocaleString('en-US', { timeZone })), 'HH:00')
+      return format(new Date(date.toLocaleString('en', { timeZone })), 'HH:00')
     },
-    from: startOfToday().toISOString(),
+    from: (timeZone?: string) => new Date(startOfToday().toLocaleString('en', { timeZone })).toISOString(),
   },
   week: {
     items: new Map(week.map((value) => [value, []])),
     checkFunction: (value: string) => format(new Date(value), 'EEEE'),
-    from: startOfWeek(Date.now(), { weekStartsOn: 1 }).toISOString(),
+    from: (timeZone?: string) => startOfWeek(Date.now(), { weekStartsOn: 1 }).toLocaleString('en', { timeZone }),
   },
   month: {
     items: new Map(
@@ -66,11 +66,11 @@ export const dateRangeConfig: Record<
       ]),
     ),
     checkFunction: (value: string) => `${months[getMonth(new Date())].substring(0, 3)} ${getDate(new Date(value))}`,
-    from: startOfMonth(Date.now()).toISOString(),
+    from: (timeZone?: string) => startOfMonth(Date.now()).toLocaleString('en', { timeZone }),
   },
   year: {
     items: new Map(months.map((value) => [value, []])),
     checkFunction: (value: string) => months[getMonth(new Date(value))],
-    from: startOfYear(Date.now()).toISOString(),
+    from: (timeZone?: string) => startOfYear(Date.now()).toLocaleString('en', { timeZone }),
   },
 }

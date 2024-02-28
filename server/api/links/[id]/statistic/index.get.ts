@@ -11,17 +11,18 @@ export default defineEventHandler(async (event) => {
     v.objectAsync({ dateRange: v.optional(v.picklist(['today', 'week', 'month', 'year']), 'today') }),
   )
 
+  const timezone = getHeader(event, 'x-vercel-ip-timezone') as string || 'America/Argentina/Tucuman'
+
+  const from = dateRangeConfig[dateRange as DateRangetype].from(timezone)
+
   const data = await getByLinkId(
     id,
     // @ts-ignore
 
     {
-      ...(!!dateRange && { dateRange }),
+      from,
     },
   )
-
-  const timezone = getHeader(event, 'x-vercel-ip-timezone') as string
-  console.log('timezone: ', timezone)
 
   return data?.length ? prepare(data, dateRange as DateRangetype, timezone) : null
 })
