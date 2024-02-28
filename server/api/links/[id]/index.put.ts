@@ -1,6 +1,6 @@
 import * as v from 'valibot'
 
-import { parseMeta, updateLink } from '../../../services'
+import { getLinkById, parseMeta, updateLink } from '../../../services'
 
 import { DEFAULT_DOMAINS } from '../../../constants'
 
@@ -50,7 +50,12 @@ export default defineAuthEventHandler(async (event, user) => {
   }
 
   const prefix = domain === 'localhost:3000' ? 'http://' : 'https://'
+  const link = await getLinkById(linkId, user.id)
 
+  if (link?.alias !== alias || link?.domain !== domain) {
+    const storage = useStorage('cache')
+    await storage.removeItem(`link:item:${getCachedLinkKey(link)}.json`)
+  }
   const data = await updateLink(linkId, user.id, {
     title,
     description,
@@ -61,7 +66,7 @@ export default defineAuthEventHandler(async (event, user) => {
     redirect_url: prefix + domain + '/' + alias,
   })
   const { id, user_id, ...linkData } = data
-
+  event.waitUntil($fetch(`/api/links/domain/${domain}/alias/${alias}`))
   // await useStorage().setItem(getCachedLinkKey(data), linkData)
 
   return data

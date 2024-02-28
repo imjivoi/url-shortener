@@ -30,10 +30,10 @@ export async function getAllLinks() {
   return await client.from('links').select('*, clicks!inner()', { count: 'exact' })
 }
 
-export async function getLinkById(id: string) {
+export async function getLinkById(id: string, userId: string) {
   const client = await useServerSupabaseClient()
 
-  const { data, error } = await client.from('links').select('*, clicks(count)').eq('id', id).single()
+  const { data, error } = await client.from('links').select('*, clicks(count)').eq('id', id).eq('user_id', userId).single()
 
   if (error?.code === '404 not_found') {
     throw createError({
