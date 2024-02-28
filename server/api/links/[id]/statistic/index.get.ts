@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   )
 
   const timezone = getHeader(event, 'x-vercel-ip-timezone') as string
-  console.log(timezone)
+  console.log('timezone: ', timezone)
 
   return data?.length ? prepare(data, dateRange as DateRangetype, timezone) : null
 })
