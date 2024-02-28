@@ -41,7 +41,12 @@ export const dateRangeConfig: Record<
   }
 > = {
   today: {
-    items: new Map(Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [`0${value}:00`, []])),
+    items: new Map(
+      Array.from({ length: 24 }, (_, i) => i + 1).map((value) => [
+        value.toString().length === 2 ? `${value}:00` : `0${value}:00`,
+        [],
+      ]),
+    ),
     checkFunction: (value: string, timeZone?: string) => {
       const date = new Date(value)
       return format(new Date(date.toLocaleString('en-US', { timeZone })), 'HH:00')
@@ -54,7 +59,12 @@ export const dateRangeConfig: Record<
     from: startOfWeek(Date.now(), { weekStartsOn: 1 }).toISOString(),
   },
   month: {
-    items: new Map(Array.from({ length: getDaysInMonth(new Date()) }, (_, i) => i + 1).map((value) => [`${months[getMonth(new Date())].substring(0, 3)} ${value}`, []])),
+    items: new Map(
+      Array.from({ length: getDaysInMonth(new Date()) }, (_, i) => i + 1).map((value) => [
+        `${months[getMonth(new Date())].substring(0, 3)} ${value}`,
+        [],
+      ]),
+    ),
     checkFunction: (value: string) => `${months[getMonth(new Date())].substring(0, 3)} ${getDate(new Date(value))}`,
     from: startOfMonth(Date.now()).toISOString(),
   },
