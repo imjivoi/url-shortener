@@ -30,7 +30,7 @@ export const months = [
   'December',
 ]
 
-export const week = ['Monday', 'Tuesday', 'Wednesday ', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+export const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 export const dateRangeConfig: Record<
   string,
