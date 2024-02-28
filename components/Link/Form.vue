@@ -258,6 +258,8 @@ watch(
 )
 
 watch(domains, (val) => {
-  formState.value.domain = val[0]
+  if (!formState.value.domain) {
+    formState.value.domain = val[0]
+  }
 })
 </script>
