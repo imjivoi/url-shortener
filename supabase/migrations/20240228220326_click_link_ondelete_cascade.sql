@@ -1,0 +1,1 @@
+alter table public.clicks drop constraint clicks_link_id_fkey, add constraint clicks_link_id_fkey foreign key (link_id) references public.links (id) on delete cascade;
