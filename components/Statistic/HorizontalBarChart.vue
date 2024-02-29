@@ -4,7 +4,7 @@
     autoresize
     :theme="{
       textStyle: {
-        color: colorMode.value === 'dark' ? '#fff' : '#000',
+        color: '#000',
       },
     }"
     :style="{ height: `${height}px` }"

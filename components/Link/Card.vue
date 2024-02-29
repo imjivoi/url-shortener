@@ -1,9 +1,9 @@
 <template>
-  <div class="p-4 grid gap-4 transition-all shadow hover:shadow-md rounded-xl bg-white">
+  <div class="p-4 grid gap-4 transition-all shadow hover:shadow-md rounded-xl bg-white dark:bg-gray-800">
     <div class="flex justify-between gap-6">
       <div class="flex gap-4">
         <div class="flex-none">
-          <nuxt-img :src="getFaviconUrl()" width="40" />
+          <nuxt-img :src="getFaviconUrl()" width="40" class="rounded-full" />
         </div>
         <div class="overflow-hidden grid gap-1 text-left">
           <h2 class="text-lg font-bold text-left truncate" v-if="link.title">

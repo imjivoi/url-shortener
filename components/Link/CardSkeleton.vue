@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 grid gap-4 transition-all shadow hover:shadow-md rounded-xl bg-white">
+  <div class="p-4 grid gap-4 transition-all shadow hover:shadow-md rounded-xl bg-white dark:bg-gray-800">
     <div class="flex justify-between gap-6 w-full">
       <div class="flex items-center gap-4 w-full">
         <div role="status" class="animate-pulse">
