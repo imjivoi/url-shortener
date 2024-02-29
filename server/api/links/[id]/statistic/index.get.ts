@@ -15,6 +15,8 @@ export default defineEventHandler(async (event) => {
 
   const from = dateRangeConfig[dateRange as DateRangetype].from(timezone)
 
+    console.log('from: ', from)
+
   const data = await getByLinkId(
     id,
     // @ts-ignore
