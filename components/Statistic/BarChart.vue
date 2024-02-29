@@ -8,6 +8,7 @@ import { TitleComponent, TooltipComponent, LegendComponent, GridComponent, Timel
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
+import { format } from 'date-fns'
 
 import { type StatisticType } from '@/types'
 
@@ -15,106 +16,20 @@ use([CanvasRenderer, BarChart, TitleComponent, TooltipComponent, LegendComponent
 
 interface Props {
   options: Map<string | number, StatisticType[]>
+  dateRange: string
 }
 const props = defineProps<Props>()
 
 const { options } = toRefs(props)
 
-function getDevices(items: StatisticType[]) {
-  if (!items?.length) return ''
-  const devices = items.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.device]: (acc[item.device] || 0) + 1,
-    }),
-    {},
-  )
 
-  let stringResult = ''
-
-  for (const [key, value] of Object.entries(devices)) {
-    stringResult += `<b>${key}:</b> ${value} <br>`
+const formattedKeys = computed(()=> {
+  const keys = Array.from(options.value.keys())
+  if(props.dateRange === '24h') {
+    return keys.map((key) => format(new Date(key as string), 'HH:mm'))
   }
-
-  return stringResult
-}
-
-function getOs(items: StatisticType[]) {
-  if (!items?.length) return ''
-  const os = items.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.os]: (acc[item.os] || 0) + 1,
-    }),
-    {},
-  )
-
-  let stringResult = ''
-
-  for (const [key, value] of Object.entries(os)) {
-    stringResult += `<b>${key}:</b> ${value} <br>`
-  }
-
-  return stringResult
-}
-
-function getBrowser(items: StatisticType[]) {
-  if (!items?.length) return ''
-
-  const browser = items.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.browser]: (acc[item.browser] || 0) + 1,
-    }),
-    {},
-  )
-
-  let stringResult = ''
-
-  for (const [key, value] of Object.entries(browser)) {
-    stringResult += `<b>${key}:</b> ${value} <br>`
-  }
-
-  return stringResult
-}
-
-function getCountry(items: StatisticType[]) {
-  if (!items?.length) return ''
-
-  const country = items.reduce(
-    (acc, item) => ({
-      ...acc,
-      ...(item.country && { [item.country]: (acc[item.country] || 0) + 1 }),
-    }),
-    {},
-  )
-
-  let stringResult = ''
-
-  for (const [key, value] of Object.entries(country)) {
-    stringResult += `<b>${key}:</b> ${value} <br>`
-  }
-
-  return stringResult
-}
-
-function getCity(items: StatisticType[]) {
-  if (!items?.length) return ''
-
-  const city = items.reduce(
-    (acc, item) => ({
-      ...acc,
-      ...(item.city && { [item.city]: (acc[item.city] || 0) + 1 }),
-    }),
-    {},
-  )
-  let stringResult = ''
-
-  for (const [key, value] of Object.entries(city)) {
-    stringResult += `<b>${key}:</b> ${value} <br>`
-  }
-  return stringResult
-}
+  return keys
+})
 
 const option = computed(() => ({
   title: {
@@ -128,14 +43,8 @@ const option = computed(() => ({
     formatter: function (params, ticket, callback) {
       const details = options.value.get(params.name)
       const result = `
+        <b>${params.name}</b> <br>
         <b>Clicks:</b> ${params.value}
-         <br>
-        ${getDevices(details)}
-        ${getOs(details)}
-        ${getBrowser(details)}
-        ${getCountry(details)}
-        ${getCity(details)}
-
       `
 
       return result
@@ -143,7 +52,7 @@ const option = computed(() => ({
   },
   xAxis: {
     type: 'category',
-    data: Array.from(options.value.keys()),
+    data: formattedKeys.value,
   },
   yAxis: {
     type: 'value',

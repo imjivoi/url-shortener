@@ -8,14 +8,14 @@ export default defineEventHandler(async (event) => {
   const { id } = await useValidatedParams(event, v.objectAsync({ id: v.string([v.uuid()]) }))
   const { dateRange } = await useValidatedQuery(
     event,
-    v.objectAsync({ dateRange: v.optional(v.picklist(['today', 'week', 'month', 'year']), 'today') }),
+    v.objectAsync({ dateRange: v.optional(v.picklist(['24h', 'week', 'month', 'year']), '24h') }),
   )
 
-  const timezone = getHeader(event, 'x-vercel-ip-timezone') as string || 'America/Argentina/Tucuman'
+  const timezone = (getHeader(event, 'x-vercel-ip-timezone') as string) || 'America/Argentina/Tucuman'
 
-  const from = dateRangeConfig[dateRange as DateRangetype].from(timezone)
+  const from = dateRangeConfig[dateRange as DateRangetype].from
 
-    console.log('from: ', from)
+  console.log('from: ', from)
 
   const data = await getByLinkId(
     id,
@@ -40,7 +40,7 @@ function prepare(data: StatisticType[], dateRange: DateRangetype, timezone: stri
   const bot: Record<string, number> = {}
 
   for (const item of data) {
-    const key = config.checkFunction(item.created_at, timezone)
+    const key = config.checkFunction(item.created_at)
     const mapValue = items.get(key)
     items.set(key, [...(mapValue || []), item])
     if (item.device) {

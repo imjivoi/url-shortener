@@ -5,7 +5,7 @@
   <div v-if="statistic">
     <div class="rounded-2xl p-5 mb-5 relative">
       <client-only>
-        <statistic-bar-chart v-if="statistic" class="h-[300px] md:h-[500px]" :options="statistic" />
+        <statistic-bar-chart v-if="statistic" class="h-[300px] md:h-[500px]" :date-range="dateRangeValue" :options="statistic" />
       </client-only>
     </div>
     <div class="flex flex-col md:flex-row gap-5">
@@ -101,8 +101,8 @@ const locationValue = computed(() => {
 })
 const dateRangeOptions = [
   {
-    label: 'Today',
-    value: 'today',
+    label: 'Last 24h',
+    value: '24h',
   },
   {
     label: 'Week',
@@ -120,7 +120,7 @@ const dateRangeOptions = [
 
 const dateRangeValue = computed({
   get() {
-    return (route.query.dateRange as string) || 'today'
+    return (route.query.dateRange as string) || '24h'
   },
   set(value: string) {
     router.push({ name: 'dashboard-id', query: { ...route.query, dateRange: value } })
