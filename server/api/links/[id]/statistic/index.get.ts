@@ -25,7 +25,6 @@ export default defineEventHandler(async (event) => {
       from,
     },
   )
-
   return data?.length ? prepare(data, dateRange as DateRangetype, timezone) : null
 })
 

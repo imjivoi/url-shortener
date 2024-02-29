@@ -11,7 +11,7 @@ import {
   startOfWeek,
   startOfYear,
   format,
-  
+  startOfDay,
 } from 'date-fns'
 
 import { utcToZonedTime } from 'date-fns-tz'
@@ -52,14 +52,14 @@ export const dateRangeConfig: Record<
     ),
     checkFunction: (value: string, timeZone?: string) => {
       const date = new Date(value)
-      return format(new Date(date.toLocaleString('en', { timeZone })), 'HH:00')
+      return format(date, 'HH:00')
     },
-    from: (timeZone?: string) => startOfToday().toISOString(),
+    from: (timeZone?: string) => startOfDay(new Date(new Date().toLocaleString('en', { timeZone }))).toISOString(),
   },
   week: {
     items: new Map(week.map((value) => [value, []])),
     checkFunction: (value: string) => format(new Date(value), 'EEEE'),
-    from: (timeZone?: string) => startOfWeek(Date.now(), { weekStartsOn: 1 }).toLocaleString('en', { timeZone }),
+    from: (timeZone?: string) => startOfWeek(Date.now(), { weekStartsOn: 1 }).toISOString(),
   },
   month: {
     items: new Map(
@@ -69,11 +69,11 @@ export const dateRangeConfig: Record<
       ]),
     ),
     checkFunction: (value: string) => `${months[getMonth(new Date())].substring(0, 3)} ${getDate(new Date(value))}`,
-    from: (timeZone?: string) => startOfMonth(Date.now()).toLocaleString('en', { timeZone }),
+    from: (timeZone?: string) => startOfMonth(Date.now()).toISOString(),
   },
   year: {
     items: new Map(months.map((value) => [value, []])),
     checkFunction: (value: string) => months[getMonth(new Date(value))],
-    from: (timeZone?: string) => startOfYear(Date.now()).toLocaleString('en', { timeZone }),
+    from: (timeZone?: string) => startOfYear(Date.now()).toISOString(),
   },
 }
