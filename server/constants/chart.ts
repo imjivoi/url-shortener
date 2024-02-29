@@ -54,7 +54,7 @@ export const dateRangeConfig: Record<
       const date = new Date(value)
       return format(date, 'HH:00')
     },
-    from: (timeZone?: string) => startOfDay(new Date()).toISOString(),
+    from: (timeZone?: string) => new Date(new Date().setHours(0,0,0,0)).toISOString(),
   },
   week: {
     items: new Map(week.map((value) => [value, []])),
