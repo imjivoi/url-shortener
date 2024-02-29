@@ -10,7 +10,7 @@ export default defineAuthEventHandler(async (event, user) => {
     }),
   )
 
-  const link = await getLinkById(id)
+  const link = await getLinkById(id, user.id)
 
   if (link) {
     await deleteLink(link!.id, user.id)
