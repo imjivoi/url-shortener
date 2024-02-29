@@ -32,88 +32,6 @@ const { options, title } = toRefs(props)
 
 const height = computed(() => getChartHeight())
 
-// const option = computed(() => ({
-//   title: {
-//     text: '',
-//     left: 'left',
-//   },
-//   tooltip: {
-//     show: true,
-//     trigger: 'item',
-//   },
-//   xAxis: {
-//     offset: 50,
-//     type: 'value',
-//     show: false,
-//   },
-//   yAxis: [
-//     {
-//       type: 'category',
-//       data: Object.keys(options.value),
-//       show: true,
-//       position: 'left',
-//       axisLine: {
-//         show: false,
-//       },
-//       z: 3,
-//       axisTick: {
-//         show: false,
-//       },
-//       axisLabel: {
-//         color: '#000', //var(--primary-text-color)
-//         inside: true,
-//         // ...
-//         show: true,
-//       },
-//       nameLocation: 'start',
-//     },
-//     {
-//       type: 'category',
-//       data: Object.values(options.value),
-//       position: 'right',
-//       axisLine: {
-//         show: false,
-//       },
-//       axisTick: {
-//         show: false,
-//       },
-//       axisLabel: {
-//         color: '#000', //var(--primary-text-color)
-//         inside: false,
-//         show: true,
-//       },
-//     },
-//   ],
-//   series: Object.entries(options.value).map(([key, value]) => ({
-//     type: 'bar',
-//     data: [value],
-//     name: key,
-//     label: {
-//       show: true,
-//     },
-//   })),
-//   //  [
-//   //   {
-//   //     type: 'bar',
-//   //     data: Array.from(options.value).map(([_, value]) => (value?.length ? value.length : 0)),
-//   //   },
-//   // ],
-//   // dataset: {
-//   //   source: [Object.entries(options.value).map(([key, value]) => [key, value])],
-//   // },
-//   // visualMap: {
-//   //   orient: 'horizontal',
-//   //   left: 'center',
-//   //   min: 10,
-//   //   max: 100,
-//   //   text: ['High Score', 'Low Score'],
-//   //   // Map the score column to color
-//   //   dimension: 0,
-//   //   inRange: {
-//   //     color: ['#65B581', '#FFCE34', '#FD665F'],
-//   //   },
-//   // },
-// }))
 const option = computed(() => ({
   title: {
     show: false,
@@ -127,7 +45,7 @@ const option = computed(() => ({
     },
   },
   legend: { show: false },
-  grid: { containLabel: false, width: 'auto', height: 'auto'},
+  grid: { containLabel: false, width: 'auto', height: 'auto' },
   xAxis: {
     type: 'value',
     show: false,
@@ -163,6 +81,8 @@ const option = computed(() => ({
       axisLabel: {
         // color: '#000', //var(--primary-text-color)
         inside: true,
+        fontWeight: '500',
+        fontSize: '16px',
         // ...
         show: true,
       },
@@ -180,8 +100,10 @@ const option = computed(() => ({
         show: false,
       },
       axisLabel: {
-        // color: '#000', //var(--primary-text-color)
+        color: '#000', //var(--primary-text-color)
         inside: false,
+        fontSize: '14px',
+
         show: true,
       },
       nameGap: 2,
@@ -202,8 +124,13 @@ const option = computed(() => ({
       barWidth: 40,
       barGap: 40,
       barCategoryGap: 15,
+      legendHoverLink: false,
       itemStyle: {
         borderRadius: 4,
+        color: 'rgb(125 211 252)',
+      },
+      emphasis: {
+        disabled: true,
       },
 
       // itemStyle: {
@@ -239,6 +166,6 @@ const option = computed(() => ({
 }))
 
 function getChartHeight() {
-  return Object.keys(props.options).length * 50 + 200
+  return Object.keys(props.options).length * 20 + 200
 }
 </script>

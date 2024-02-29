@@ -22,10 +22,9 @@ const props = defineProps<Props>()
 
 const { options } = toRefs(props)
 
-
-const formattedKeys = computed(()=> {
+const formattedKeys = computed(() => {
   const keys = Array.from(options.value.keys())
-  if(props.dateRange === '24h') {
+  if (props.dateRange === '24h') {
     return keys.map((key) => format(new Date(key as string), 'HH:mm'))
   }
   return keys
@@ -66,11 +65,15 @@ const option = computed(() => ({
       //   color: 'rgba(180, 180, 180, 0.2)',
       // },
       data: Array.from(options.value).map(([_, value]) => (value?.length ? value.length : 0)),
+      itemStyle: {
+        color: 'rgb(125 211 252)',
+      },
       emphasis: {
         itemStyle: {
           shadowBlur: 10,
           shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)',
+          color: 'rgb(125 211 252)',
+          shadowColor: 'rgba(0, 0, 0, 0.2)',
         },
       },
     },
