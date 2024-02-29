@@ -53,7 +53,7 @@ export const dateRangeConfig: Record<
       const date = new Date(value)
       return format(new Date(date.toLocaleString('en', { timeZone })), 'HH:00')
     },
-    from: (timeZone?: string) => utcToZonedTime(startOfToday(), timeZone as string).toISOString(),
+    from: (timeZone?: string) => startOfToday().toISOString(),
   },
   week: {
     items: new Map(week.map((value) => [value, []])),
