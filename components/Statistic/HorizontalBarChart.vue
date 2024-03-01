@@ -1,14 +1,5 @@
 <template>
-  <v-chart
-    :option="option"
-    autoresize
-    :theme="{
-      textStyle: {
-        color: '#000',
-      },
-    }"
-    :style="{ height: `${height}px` }"
-  />
+  <v-chart :option="option" autoresize :theme="{}" :style="{ height: `${height}px` }" />
 </template>
 
 <script setup lang="ts">
@@ -79,7 +70,7 @@ const option = computed(() => ({
         show: false,
       },
       axisLabel: {
-        // color: '#000', //var(--primary-text-color)
+        color: colorMode.value === 'dark' ? '#fff' : '#000', //var(--primary-text-color)
         inside: true,
         fontWeight: '500',
         fontSize: '16px',
@@ -100,7 +91,7 @@ const option = computed(() => ({
         show: false,
       },
       axisLabel: {
-        color: '#000', //var(--primary-text-color)
+        color: colorMode.value === 'dark' ? '#fff' : '#000', //var(--primary-text-color)
         inside: false,
         fontSize: '14px',
 
@@ -126,46 +117,57 @@ const option = computed(() => ({
       barCategoryGap: 15,
       legendHoverLink: false,
       itemStyle: {
-        borderRadius: 4,
-        color: 'rgb(125 211 252)',
+        borderRadius: 8,
+        color: (params) => {
+          const idx = Object.keys(options.value).indexOf(params.name)
+          return getColor(idx)
+        },
       },
       emphasis: {
         disabled: true,
       },
-
-      // itemStyle: {
-      //   color: {
-      //     type: 'linear',
-      //     x: 0,
-      //     y: 0,
-      //     x2: 1,
-      //     y2: 0,
-      //     colorStops: [
-      //       {
-      //         offset: 0,
-      //         color: '#008D8E', // --histogram-item-gradient-background
-      //       },
-      //       {
-      //         offset: 1,
-      //         color: '#24C1C3', // color at 100%
-      //       },
-      //     ],
-      //     global: false, // default is false
-      //   },
-      //   borderRadius: 4,
-
-      //   // normal: {
-      //   //   label: {
-      //   //     show: true,
-      //   //     position: ["100%", "50%"]
-      //   //   }
-      //   // }
-      // },
     },
   ],
 }))
 
 function getChartHeight() {
   return Object.keys(props.options).length * 20 + 200
+}
+
+function getColor(idx: number) {
+  const light = [
+    'rgba(255, 190, 11, 0.2)',
+    'rgba(251, 86, 7, 0.2)',
+    'rgba(255, 0, 110, 0.2)',
+    'rgba(131, 56, 236, 0.2)',
+    'rgba(58, 134, 255, 0.2)',
+    'rgba(6, 214, 160, 0.2)',
+    'rgba(7, 59, 76, 0.2)',
+    'rgba(240, 128, 128, 0.2)',
+    'rgba(255, 218, 185, 0.2)',
+    'rgba(7, 59, 76, 0.2)',
+    'rgba(255, 153, 200, 0.2)',
+    'rgba(252, 246, 189, 0.2)',
+    'rgba(208, 244, 222, 0.2)',
+  ]
+
+  const dark = [
+    'rgba(255, 190, 11, 0.5)',
+    'rgba(251, 86, 7, 0.5)',
+    'rgba(255, 0, 110, 0.5)',
+    'rgba(131, 56, 236, 0.5)',
+    'rgba(58, 134, 255, 0.5)',
+    'rgba(6, 214, 160, 0.5)',
+    'rgba(7, 59, 76, 0.5)',
+    'rgba(240, 128, 128, 0.5)',
+    'rgba(255, 218, 185, 0.5)',
+    'rgba(7, 59, 76, 0.5)',
+    'rgba(255, 153, 200, 0.5)',
+    'rgba(252, 246, 189, 0.5)',
+    'rgba(208, 244, 222, 0.5)',
+  ]
+
+  const colors = colorMode.value === 'dark' ? dark : light
+  return colors[idx] || colors[0]
 }
 </script>

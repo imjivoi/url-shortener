@@ -23,7 +23,9 @@
       </div>
     </div>
     <div class="flex justify-between items-center">
-      <div class="text-gray-500 text-sm">{{link.created_at !== link.updated_at ? 'edited ' : ''}}{{ getDate(link.updated_at) }}</div>
+      <div class="text-gray-500 text-sm">
+        {{ link.created_at !== link.updated_at ? 'edited ' : '' }}{{ getDate(link.updated_at) }}
+      </div>
       <div class="flex gap-2">
         <u-button variant="soft" :to="'/dashboard/' + link.id">
           {{
@@ -62,7 +64,10 @@ const options = [
     {
       label: 'Delete',
       click: () => emits('delete'),
-      icon: 'heroicons:trash-20-solid',
+      icon: 'heroicons:trash',
+      class:
+        'text-red-500 hover:bg-red-500 dark:hover:bg-red-500 dark:text-red-500 hover:text-white dark:hover:text-white [&>svg]:text-red-500 dark:[&>svg]:text-red-500 [&:hover>svg]:text-white dark:[&:hover>svg]:text-white',
+      iconClass: '',
     },
   ],
 ]

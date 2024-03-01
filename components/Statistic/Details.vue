@@ -5,18 +5,22 @@
   <div v-if="statistic">
     <div class="rounded-2xl p-5 mb-5 relative">
       <client-only>
-        <statistic-bar-chart v-if="statistic" class="h-[300px] md:h-[500px]" :date-range="dateRangeValue" :options="statistic" />
+        <statistic-bar-chart
+          v-if="statistic"
+          class="h-[300px] md:h-[500px]"
+          :date-range="dateRangeValue"
+          :options="statistic"
+        />
       </client-only>
     </div>
     <div class="flex flex-col md:flex-row gap-5">
       <div class="rounded-2xl p-5 basis-1/2 relative">
         <u-tabs v-model="devicesTabIdx" :items="devicesTabs" class="mb-2"></u-tabs>
         <client-only>
-          <statistic-horizontal-bar-chart
-            v-if="devicesValueItem"
-            :options="devicesValueItem"
-            :title="devicesTabs[devicesTabIdx].label"
-          />
+          <keep-alive v-if="devicesValueItem">
+            <statistic-horizontal-bar-chart :options="devicesValueItem" :title="devicesTabs[devicesTabIdx].label" />
+          </keep-alive>
+
           <div v-else class="flex items-center justify-center h-[300px] md:h-[500px]">Nothig found</div>
         </client-only>
       </div>
