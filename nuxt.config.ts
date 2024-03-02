@@ -245,9 +245,19 @@ export default defineNuxtConfig({
     '/dashboard/**': {
       ssr: false,
       cache: { maxAge: 60 * 5 },
-    }
+    },
   },
   devtools: {
     enabled: true,
-  }
+  },
+  content: {
+    documentDriven: true,
+    highlight: {
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark',
+      },
+      preload: ['cpp', 'csharp', 'rust', 'wenyan', 'yaml', 'latex'],
+    },
+  },
 })
