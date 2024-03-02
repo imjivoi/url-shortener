@@ -1,13 +1,13 @@
 <template>
   <div class="">
-    <h1 class="text-3xl font-bold mb-6">{{ data.title }}</h1>
+    <h1 class="text-3xl font-bold mb-6">{{ data!.title }}</h1>
 
     <div class="flex justify-start gap-4 text-gray-500 dark:text-gray-400 text-sm mb-10">
-      <span>Created at {{ data.createdAt }}</span>
+      <span>Created at {{ data!.createdAt }}</span>
       &middot;
-      <span>Read time {{ data.readingTime }}</span>
+      <span>Read time {{ data!.readingTime }}</span>
     </div>
-    <img :src="data.image" class="rounded-xl" />
+    <img :src="data!.image" class="rounded-xl" />
     <TableOfContent :toc="toc.links" v-if="toc" class="my-4" />
     <div>
       <article
@@ -23,32 +23,26 @@
 const route = useRoute('blog-slug')
 const { data } = await useAsyncData('blog', () => queryContent(route.path).findOne())
 
-defineOgImageComponent('BlogTemplate', {
-  title: data.title,
-  description: data.description,
-  image: data.image,
+defineOgImageComponent('MyTemplate', {
+  title: data.value!.title,
+  description: data.value!.description,
+  image: data.value!.image,
+  siteName: route.fullPath,
 })
 
 const { toc } = useContent()
 
-useSeoMeta({
-  title: data.title,
-  description: data.description,
-  image: data.image,
-  url: route.fullPath,
-  type: 'article',
-  article: {
-    publishedTime: data.createdAt,
-    modifiedTime: data.createdAt,
-  },
-  ogTitle: data.title,
-  ogDescription: data.description,
+useHead({
+  titleTemplate: data.value!.title,
 })
 
-defineOgImageComponent('BlogTemplate', {
-  title: data.title,
-  description: data.description,
-  image: data.image,
-  url: route.fullPath,
+useSeoMeta({
+  title: data.value!.title,
+  description: data.value!.description,
+  ogTitle: data.value!.title,
+  ogDescription: data.value!.description,
+  ogImage: {
+    url: data.value!.image,
+  },
 })
 </script>

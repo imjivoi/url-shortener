@@ -13,6 +13,7 @@ const props = withDefaults(
   {
     theme: '#0ea5e9',
     title: 'title',
+    siteName: 'liny.app',
   },
 )
 
@@ -66,8 +67,7 @@ const siteLogo = computed(() => {
 <template>
   <div
     class="w-full h-full flex justify-between relative p-[60px]"
-    :class="[colorMode === 'light' ? ['bg-white', 'text-gray-900'] : ['bg-[#191627]', 'text-gray-50']]"
-  
+    :class="[colorMode.value === 'light' ? ['bg-white', 'text-gray-900'] : ['bg-[#191627]', 'text-gray-50']]"
   >
     <div class="h-full w-full justify-between relative">
       <div class="flex flex-row justify-between items-start">
@@ -78,7 +78,7 @@ const siteLogo = computed(() => {
           <p
             v-if="description"
             class="text-[35px]"
-            :class="[colorMode === 'light' ? ['text-gray-700'] : ['text-gray-300']]"
+            :class="[colorMode.value === 'light' ? ['text-gray-700'] : ['text-gray-300']]"
           >
             {{ description }}
           </p>
@@ -86,7 +86,7 @@ const siteLogo = computed(() => {
       </div>
       <div class="flex flex-row justify-center items-center text-left w-full">
         <img src="/apple-touch-icon.png" height="30" />
-        <p style="font-size: 25px" class="font-bold">liny.app</p>
+        <p style="font-size: 25px" class="font-bold">{{ siteName }}</p>
       </div>
     </div>
   </div>

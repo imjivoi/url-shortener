@@ -1,7 +1,7 @@
 ---
 title: 'The Power of URL Shortener Services: Streamlining the Web Experience'
 description: 'In the expansive realm of the internet, where information flows incessantly, the importance of concise, easily shareable links cannot be overstated. Enter URL shortener services, the unsung heroes of the digital age, simplifying the cumbersome URLs into compact, manageable forms. But what exactly are URL shorteners, and why are they so widely used?'
-image: '/blog/1.jpg'
+image: '/images/blog/the-power-of-url-shortener-services.jpg'
 readingTime: '4 min'
 createdAt: '01/03/2024'
 ---

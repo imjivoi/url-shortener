@@ -24,7 +24,7 @@ const { data } = await useAsyncData(async (ctx) => {
     'x-vercel-ip-longitude',
     'x-vercel-ip-timezone',
   ]
-  console.time('fetch link')
+
   try {
     const headers = useRequestHeaders(['cookie', 'x-forwarded-for', 'user-agent', ...vercelHeaders]) as Record<
       string,

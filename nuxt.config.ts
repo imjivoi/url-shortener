@@ -198,7 +198,7 @@ export default defineNuxtConfig({
   sitemap: {
     hostname: 'https://liny.app',
 
-    exclude: ['/dashboard', '/dashboard/**', '/auth', '/blog'],
+    exclude: ['/dashboard', '/dashboard/**', '/auth' ],
   },
   ...(process.env.NODE_ENV === 'production' && {
     gtag: {
@@ -246,6 +246,9 @@ export default defineNuxtConfig({
       ssr: false,
       cache: { maxAge: 60 * 5 },
     },
+    '/blog/**': {
+      prerender: true,
+    }
   },
   devtools: {
     enabled: true,

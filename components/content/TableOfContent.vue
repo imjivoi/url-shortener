@@ -3,7 +3,7 @@ defineProps(['toc'])
 </script>
 
 <template>
-  <div class="bg-gray-100 dark:bg-gray-900 font-bold rounded-lg text-sm" aria-label="Table of Content">
+  <div class="bg-gray-100 dark:bg-gray-900/80 font-bold rounded-lg text-sm" aria-label="Table of Content">
     <header class="py-3 px-7">
       <h3 class="text-gray-400 dark:text-gray-500">In this article</h3>
     </header>

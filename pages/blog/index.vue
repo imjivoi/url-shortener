@@ -25,4 +25,14 @@
 </template>
 <script lang="ts" setup>
 const { data: articles } = await useAsyncData('blog', () => queryContent('/blog').find())
+
+defineOgImageComponent('MyTemplate', {
+  title: 'Blog',
+  siteName: 'liny.app/blog',
+})
+
+useSeoMeta({
+  title: 'Blog',
+  ogTitle: 'Blog',
+})
 </script>

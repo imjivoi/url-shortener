@@ -67,7 +67,7 @@ const siteLogo = computed(() => {
 <template>
   <div
     class="w-full h-full flex justify-between relative p-[60px]"
-    :class="[colorMode === 'light' ? ['bg-white', 'text-gray-900'] : ['bg-[#191627]', 'text-gray-50']]"
+    :class="[colorMode.value === 'light' ? ['bg-white', 'text-gray-900'] : ['bg-[#191627]', 'text-gray-50']]"
   
   >
     <div class="h-full w-full justify-between relative">
@@ -80,7 +80,7 @@ const siteLogo = computed(() => {
           <p
             v-if="description"
             class="text-[35px]"
-            :class="[colorMode === 'light' ? ['text-gray-700'] : ['text-gray-300']]"
+            :class="[colorMode.value === 'light' ? ['text-gray-700'] : ['text-gray-300']]"
           >
             {{ description }}
           </p>
