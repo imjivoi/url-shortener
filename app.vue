@@ -9,43 +9,6 @@
 <script setup>
 import { ModalsContainer } from 'vue-final-modal'
 defineOgImageComponent('MyTemplate')
-// const { t } = useI18n()
-
-// const i18nHead = useLocaleHead({
-//   addSeoAttributes: {
-//     canonicalQueries: ['foo'],
-//   },
-// })
-// useHead({
-//   title: t('head.title'),
-//   htmlAttrs: {
-//     lang: i18nHead.value.htmlAttrs.lang,
-//   },
-//   link: [...(i18nHead.value.link || [])],
-//   meta: [
-//     ...(i18nHead.value.meta || []),
-//     {
-//       name: 'description',
-//       content: t('head.description'),
-//     },
-//     {
-//       name: 'keywords',
-//       content: t('head.keywords'),
-//     },
-//     {
-//       hid: 'og:title',
-//       name: 'og:title',
-//       property: 'og:title',
-//       content: t('head.title'),
-//     },
-//     {
-//       hid: 'og:description',
-//       name: 'og:description',
-//       property: 'og:description',
-//       content: t('head.description'),
-//     },
-//   ],
-// })
 </script>
 <style lang="scss" scoped>
 .background {

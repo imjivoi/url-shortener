@@ -37,12 +37,13 @@ useHead({
 })
 
 useSeoMeta({
-  title: data.value!.title,
-  description: data.value!.description,
-  ogTitle: data.value!.title,
-  ogDescription: data.value!.description,
-  ogImage: {
-    url: data.value!.image,
-  },
+  title: () => data.value!.title,
+  description: () => data.value!.description,
+  ogTitle: () => data.value!.title,
+  ogDescription: () => data.value!.description,
+  ogImage: () => data.value!.image,
+  twitterTitle: () => data.value!.title,
+  twitterDescription: () => data.value!.description,
+  twitterImage: () => data.value!.image,
 })
 </script>

@@ -17,6 +17,9 @@ export default defineNuxtConfig({
       title: 'Simple url shortener',
       description:
         'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
+      htmlAttrs: {
+        lang: 'en',
+      },
       meta: [
         {
           hid: 'description',
@@ -198,7 +201,7 @@ export default defineNuxtConfig({
   sitemap: {
     hostname: 'https://liny.app',
 
-    exclude: ['/dashboard', '/dashboard/**', '/auth' ],
+    exclude: ['/dashboard', '/dashboard/**', '/auth'],
   },
   ...(process.env.NODE_ENV === 'production' && {
     gtag: {
@@ -248,7 +251,7 @@ export default defineNuxtConfig({
     },
     '/blog/**': {
       prerender: true,
-    }
+    },
   },
   devtools: {
     enabled: true,
