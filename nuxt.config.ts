@@ -250,7 +250,7 @@ export default defineNuxtConfig({
       cache: { maxAge: 60 * 5 },
     },
     '/blog/**': {
-      prerender: true,
+      static: true,
     },
   },
   devtools: {
