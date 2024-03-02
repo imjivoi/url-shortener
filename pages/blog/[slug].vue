@@ -24,9 +24,9 @@ const route = useRoute('blog-slug')
 const { data } = await useAsyncData('blog', () => queryContent(route.path).findOne())
 
 defineOgImageComponent('MyTemplate', {
-  title: data.value!.title,
-  description: data.value!.description,
-  image: data.value!.image,
+  title: () => data.value!.title,
+  description: () => data.value!.description,
+  image: () => data.value!.image,
   siteName: route.fullPath,
 })
 
