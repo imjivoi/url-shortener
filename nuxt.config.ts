@@ -14,58 +14,7 @@ export default defineNuxtConfig({
   spaLoadingTemplate: false,
   app: {
     head: {
-      title: 'Simple url shortener',
-      description:
-        'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: 'url link shortener short url free analytics sharing',
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: 'Simple url shortener',
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content:
-            'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
-        },
-        // {
-        //   key: 'og:image',
-        //   property: 'og:image',
-        //   name: 'og:image',
-        //   content: '/og-image.png',
-        // },
-        {
-          key: 'og:site',
-          property: 'og:site',
-          content: 'https://liny.app',
-        },
-        {
-          key: 'og:site_name',
-          property: 'og:site_name',
-          content: 'liny.app',
-        },
-        {
-          key: 'og:type',
-          property: 'og:type',
-          content: 'website',
-        },
-      ],
-
+      //meta moved to app.vue
       link: [
         {
           href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap',
@@ -77,6 +26,7 @@ export default defineNuxtConfig({
         },
         {
           rel: 'icon',
+          type: 'image/x-icon',
           href: '/favicon.ico',
         },
         {
