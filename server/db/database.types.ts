@@ -120,61 +120,32 @@ export type Database = {
           },
         ]
       }
-      customer_limits: {
+      customers: {
         Row: {
           clicks_limit: number
           clicks_limit_exceeded: boolean | null
-          created_at: string
-          customer_id: string
+          created_at: string | null
           id: string
           links_limit: number
           links_limit_exceeded: boolean | null
-          updated_at: string
+          updated_at: string | null
         }
         Insert: {
-          clicks_limit: number
+          clicks_limit?: number
           clicks_limit_exceeded?: boolean | null
-          created_at?: string
-          customer_id: string
-          id?: string
-          links_limit: number
+          created_at?: string | null
+          id: string
+          links_limit?: number
           links_limit_exceeded?: boolean | null
-          updated_at?: string
+          updated_at?: string | null
         }
         Update: {
           clicks_limit?: number
           clicks_limit_exceeded?: boolean | null
-          created_at?: string
-          customer_id?: string
+          created_at?: string | null
           id?: string
           links_limit?: number
           links_limit_exceeded?: boolean | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "customer_limits_customer_id_fkey"
-            columns: ["customer_id"]
-            isOneToOne: false
-            referencedRelation: "customers"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      customers: {
-        Row: {
-          created_at: string | null
-          id: string
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id: string
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string
           updated_at?: string | null
         }
         Relationships: [

@@ -13,10 +13,9 @@ export function defineAuthEventHandler<T>(handler: (event: H3Event<T>, user: Use
 }
 
 export function defineWrappedEventHandler<T>(handler: EventHandler<T>) {
-  return defineEventHandler<T>(async (event) => {
+  return defineEventHandler<T>((event) => {
     try {
-      const result = await handler(event)
-      return result
+      return typeof handler === 'function' ? handler(event) : handler.handler(event)
     } catch (error) {
       console.log(error)
       if ([400, 422].includes(error.statusCode)) {

@@ -27,13 +27,18 @@ export async function getLinkByAlias(alias: string) {
 export async function getAllLinks() {
   const client = await useServerSupabaseServiceRole()
 
-  return await client.from('links').select('*, clicks!inner()', { count: 'exact' })
+  return client.from('links').select('*, clicks!inner()', { count: 'exact' })
 }
 
 export async function getLinkById(id: string, userId: string) {
   const client = await useServerSupabaseClient()
 
-  const { data, error } = await client.from('links').select('*, clicks(count)').eq('id', id).eq('user_id', userId).single()
+  const { data, error } = await client
+    .from('links')
+    .select('*, clicks(count)')
+    .eq('id', id)
+    .eq('user_id', userId)
+    .single()
 
   if (error?.code === '404 not_found') {
     throw createError({
@@ -109,7 +114,11 @@ export async function parseMeta(url: string) {
   return result
 }
 
-export async function updateLink(linkId: string, userId:string, body: Database['public']['Tables']['links']['Update']) {
+export async function updateLink(
+  linkId: string,
+  userId: string,
+  body: Database['public']['Tables']['links']['Update'],
+) {
   const config = useRuntimeConfig()
   const client = await useServerSupabaseClient()
 

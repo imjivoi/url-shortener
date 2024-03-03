@@ -2,7 +2,7 @@ import { getDomainWithoutWWW, getUserAgentData } from '../../lib'
 import { dateRangeConfig } from '../../constants'
 import type { DateRangetype } from '../../../types'
 import { getLinkByAlias } from '../link'
-import { getCustomerLimits } from '../customer'
+import { getCustomer} from '../customer'
 
 export async function createClick(linkId: string) {
   const event = useEvent()
@@ -58,8 +58,11 @@ interface Options {
 export async function getByLinkId(linkId: string, options?: Options) {
   const client = await useServerSupabaseClient()
 
-
-  const { data, error } = await client.from('clicks').select().eq('link_id', linkId).gte('created_at', options?.from)
+  const { data, error } = await client
+    .from('clicks')
+    .select()
+    .eq('link_id', linkId)
+    .gte('created_at', options?.from)
 
   if (error) {
     throw error
@@ -71,14 +74,10 @@ export async function getByLinkId(linkId: string, options?: Options) {
 export async function getTotalStatisticByUserId(userId: string) {
   const client = await useServerSupabaseClient()
 
-  const { count: links, error: linksError } = await client
-    .from('links')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', userId)
-  const { count: clicks, error: clicksError } = await client
-    .from('clicks')
-    .select('links!inner()', { count: 'exact', head: true })
-    .eq('links.user_id', userId)
+  const [{ count: links, error: linksError }, { count: clicks, error: clicksError }] = await Promise.all([
+    client.from('links').select('*', { count: 'exact', head: true }).eq('user_id', userId),
+    client.from('clicks').select('links!inner()', { count: 'exact', head: true }).eq('links.user_id', userId),
+  ])
 
   return {
     links,
@@ -86,14 +85,13 @@ export async function getTotalStatisticByUserId(userId: string) {
   }
 }
 
-
-export async function createStatistic(alias:string) {
+export async function createStatistic(alias: string) {
   const link = await getLinkByAlias(alias)
 
   if (link) {
-    const limits = await getCustomerLimits(link.user_id)
+    const customer = await getCustomer(link.user_id)
 
-    if (!limits?.clicks_limit_exceeded) {
+    if (!customer?.clicks_limit_exceeded) {
       await createClick(link.id)
     }
   }
