@@ -1,6 +1,5 @@
 <template>
   <div class="p-4 w-full sm:w-auto bg-gray-200 dark:bg-gray-800 rounded-xl">
-    <h2 class="text-center font-bold text-xl mb-4 hidden first-letter:uppercase">Paste your url</h2>
     <form class="flex gap-2 items-center" @submit.prevent>
       <div class="relative flex-1 sm:flex-auto">
         <u-input

@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col justify-between h-full">
+  <div class="flex flex-col justify-between h-dvh">
     <app-header />
-    <main class="h-full">
+    <main class="flex-1">
       <div class="container px-10 lg:max-w-5xl pt-8 pb-16 mx-auto">
         <slot />
       </div>

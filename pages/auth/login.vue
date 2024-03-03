@@ -88,7 +88,7 @@ const login = async () => {
     navigateTo('/dashboard')
   } catch (error) {
     if (error.status === 400) {
-      toast.add({ color: 'red', description: 'Invalid email or password' })
+      toast.add({ color: 'red', description: error.message })
     }
   } finally {
     isLoading.value = false

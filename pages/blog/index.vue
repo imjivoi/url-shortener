@@ -6,10 +6,10 @@
     <nuxt-link :to="article._path" v-for="(article, idx) in articles" :key="idx">
       <article class="rounded-2xl bg-gray-50 dark:bg-gray-800 overflow-hidden hover:shadow transition-all">
         <div>
-          <img :src="article.image" />
+          <img :src="article.image" class="max-h-[172px]" />
         </div>
         <div class="p-4 grid gap-4">
-          <h3 class="font-semibold">
+          <h3 class="font-semibold line-clamp-3">
             {{ article.title }}
           </h3>
           <div class="flex gap-4 justify-start items-center text-gray-500 dark:text-gray-400 text-xs">

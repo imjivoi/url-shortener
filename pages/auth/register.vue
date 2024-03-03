@@ -7,7 +7,10 @@
           'Register'
         }}
       </h2>
-      <form class="space-y-4" @submit.prevent>
+      <template v-if="success">
+        <p>We successfully sent confirmation email to {{ email }}</p>
+      </template>
+      <form class="space-y-4" @submit.prevent v-else>
         <div>
           <label class="mb-2 text-xs first-letter:uppercase">Email</label>
 
