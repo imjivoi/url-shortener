@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="z-10">
     <div class="container mx-auto flex justify-between items-center h-[48px] px-10">
       <div class="font-bold text-primary-500 text-xl">
         <nuxt-link :to="getHomeLink()" class="flex items-center gap-1">
