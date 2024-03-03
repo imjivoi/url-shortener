@@ -28,16 +28,19 @@ export default defineNuxtConfig({
             'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
         },
         {
+          hid: 'keywords',
           name: 'keywords',
           content: 'url link shortener short url free analytics sharing',
         },
         {
+          hid: 'og:title',
           key: 'og:title',
           property: 'og:title',
           name: 'og:title',
           content: 'Simple url shortener',
         },
         {
+          hid: 'og:description',
           key: 'og:description',
           property: 'og:description',
           name: 'og:description',
@@ -219,7 +222,7 @@ export default defineNuxtConfig({
     experimental: {
       asyncContext: true,
     },
-    preset: 'vercel',
+    // preset: 'vercel',
   },
 
   hooks: {
