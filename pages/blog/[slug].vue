@@ -45,5 +45,5 @@ useSeoMeta({
   ogUrl: route.fullPath,
 })
 
-defineOgImage({ url: data.value?.image_url })
+defineOgImage({ url: data.value?.image })
 </script>
