@@ -32,18 +32,18 @@ const { data } = await useAsyncData('blog', () => queryContent(route.path).findO
 
 const { toc } = useContent()
 
-useHead({
-  titleTemplate: data.value!.title,
+useSeoMeta({
+  title: data.value!.title,
+  description: data.value!.description,
+  ogTitle: data.value!.title,
+  ogDescription: data.value!.description,
+  ogImage: data.value!.image,
+  twitterTitle: data.value!.title,
+  twitterDescription: data.value!.description,
+  twitterImage: data.value!.image,
+  twitterCard: 'summary_large_image',
+  ogUrl: route.fullPath,
 })
 
-useSeoMeta({
-  title: () => data.value!.title,
-  description: () => data.value!.description,
-  ogTitle: () => data.value!.title,
-  ogDescription: () => data.value!.description,
-  ogImage: () => data.value!.image,
-  twitterTitle: () => data.value!.title,
-  twitterDescription: () => data.value!.description,
-  twitterImage: () => data.value!.image,
-})
+defineOgImage({ url: data.value?.image_url })
 </script>
