@@ -34,16 +34,12 @@ export default defineNuxtConfig({
         },
         {
           hid: 'og:title',
-          key: 'og:title',
           property: 'og:title',
-          name: 'og:title',
           content: 'Simple url shortener',
         },
         {
           hid: 'og:description',
-          key: 'og:description',
           property: 'og:description',
-          name: 'og:description',
           content:
             'Create custom short links that are perfect for sharing on social media, email, and more - and start seeing results today',
         },
