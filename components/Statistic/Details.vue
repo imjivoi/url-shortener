@@ -53,6 +53,7 @@ interface Props {
   country?: Record<string, number> | null
   city?: Record<string, number> | null
   bot?: Record<string, number> | null
+  referer?: Record<string, number> | null
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -63,6 +64,7 @@ const props = withDefaults(defineProps<Props>(), {
   country: null,
   city: null,
   bot: null,
+  referer: null
 })
 const { statistic } = toRefs(props)
 // const { t } = useI18n()
@@ -96,6 +98,9 @@ const locationTabs = [
   {
     label: 'City',
   },
+  {
+    label: 'Referer',
+  }
 ]
 const locationTabIdx = ref(0)
 const locationValue = computed(() => {

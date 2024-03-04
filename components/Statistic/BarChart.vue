@@ -66,13 +66,13 @@ const option = computed(() => ({
       // },
       data: Array.from(options.value).map(([_, value]) => (value?.length ? value.length : 0)),
       itemStyle: {
-        color: 'rgb(125 211 252)',
+        color: 'rgb(59, 130, 246)',
       },
       emphasis: {
         itemStyle: {
           shadowBlur: 10,
           shadowOffsetX: 0,
-          color: 'rgb(125 211 252)',
+          color: 'rgb(59, 130, 246)',
           shadowColor: 'rgba(0, 0, 0, 0.2)',
         },
       },

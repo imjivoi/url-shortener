@@ -21,6 +21,7 @@
       :country="statistic?.country"
       :city="statistic?.city"
       :bot="statistic?.bot"
+      :referer="statistic?.referer"
     />
   </div>
 </template>

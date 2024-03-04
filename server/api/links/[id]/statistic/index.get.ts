@@ -17,12 +17,11 @@ export default defineEventHandler(async (event) => {
 
   const data = await getByLinkId(
     id,
-    // @ts-ignore
-
     {
       from,
     },
   )
+
   return data?.length ? prepare(data, dateRange as DateRangetype, timezone) : null
 })
 
@@ -36,6 +35,7 @@ function prepare(data: StatisticType[], dateRange: DateRangetype, timezone: stri
   const country: Record<string, number> = {}
   const city: Record<string, number> = {}
   const bot: Record<string, number> = {}
+  const referer: Record<string, number> = {}
 
   for (const item of data) {
     const key = config.checkFunction(item.created_at)
@@ -64,6 +64,10 @@ function prepare(data: StatisticType[], dateRange: DateRangetype, timezone: stri
     if (item.bot) {
       bot.bot = bot.bot + 1 || 1
     }
+
+    if (item.referer) {
+      referer[item.referer] = referer[item.referer] + 1 || 1
+    }
   }
-  return { items: Array.from(items), os, device, browser, country, city, bot }
+  return { items: Array.from(items), os, device, browser, country, city, bot, referer }
 }
