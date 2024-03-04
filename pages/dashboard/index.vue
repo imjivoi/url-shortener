@@ -1,6 +1,6 @@
 <template>
   <div class="text-center transition-all duration-300">
-    <div>
+    <div v-if="pendingStatisticData || linksData?.data?.length">
       <h1 class="text-3xl font-bold">Dashboard</h1>
       <statistic-total :statistic="statisticData" :loading="pendingStatisticData" class="mb-10" />
     </div>
@@ -17,13 +17,9 @@
       @on-create="refreshData"
     />
     <div v-if="!pendingLinksData && !linksData?.data?.length" class="mt-16">
-      <link-create-trigger @success="refreshData" />
+      <h2 class="text-2xl font-bold mb-6">Create your link</h2>
+      <link-create-trigger @success="refreshData" class="max-w-sm mx-auto" />
     </div>
-    <!-- <shared-pagination
-      v-if="!pendingLinksData && linksData && linksData?.count > 10"
-      class="mx-auto mt-16"
-      :total="linksData?.count"
-    /> -->
     <div class="flex justify-center mt-10">
       <u-pagination
         v-if="!pendingLinksData && linksData && linksData?.count > 10"

@@ -9,7 +9,7 @@ export default defineAppConfig({
       base: 'active:scale-95 transition-all duration-200 ease-in-out',
       color: {
         primary: {
-          solid: 'bg-gradient-to-r from-primary-300 via-primary-400 to-primary-500 text-gray-50',
+          solid: 'bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 text-gray-50',
         },
       },
       default: {

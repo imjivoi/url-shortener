@@ -1,12 +1,16 @@
 <template>
   <div class="p-4 w-full sm:w-auto bg-gray-200 dark:bg-gray-800 rounded-xl">
-    <form class="flex gap-2 items-center" @submit.prevent>
+    <form class="flex flex-col sm:flex-row gap-4 sm:gap-2 sm:items-center" @submit.prevent>
       <div class="relative flex-1 sm:flex-auto">
         <u-input
           v-model="url"
           :disabled="isLoading"
           :status="$v.url.$error ? 'error' : 'success'"
           placeholder="Paste your url here"
+          class="w-full"
+          :ui="{
+            base: 'w-full',
+          }"
         />
         <small v-if="$v.url.$error" class="text-xs absolute left-0 top-[100%]">
           <span v-for="(error, idx) in $v.url.$errors" :key="idx" class="block w-max text-red-500">
@@ -15,11 +19,11 @@
         </small>
       </div>
       <div class="flex gap-2">
-        <u-button :loading="isLoading" @click="create">
+        <u-button :loading="isLoading" @click="create" block class="basis-1/2">
           <icon name="ph:magic-wand-fill" />
           Short
         </u-button>
-        <u-button variant="ghost" @click="openCreateModal">Create</u-button>
+        <u-button variant="ghost" @click="openCreateModal" block class="basis-1/2">Create</u-button>
       </div>
     </form>
   </div>
