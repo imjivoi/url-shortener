@@ -83,63 +83,19 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-viewport',
     '@nuxtjs/device',
-    // '@nuxtjs/i18n',
-    // 'nuxt-security',
     '@nuxtjs/robots',
-    'nuxt-simple-sitemap',
     '@nuxt/content',
-    // '@zadigetvoltaire/nuxt-gtm',
     'nuxt-gtag',
     '@nuxt/ui',
     '@nuxtjs/seo',
     '@vue-email/nuxt',
     '@nuxt/image',
+    '@nuxtjs/sitemap'
   ],
   site: {
     url: 'https://liny.app',
     name: 'liny.app',
   },
-
-  // i18n: {
-  //   detectBrowserLanguage: {
-  //     useCookie: true,
-  //     cookieKey: 'i18n_redirected',
-  //     redirectOn: 'root',
-  //     alwaysRedirect: true,
-  //   },
-  //   // vueI18n: './i18n.config.ts',
-  //   strategy: 'no_prefix',
-  //   defaultLocale: 'en',
-  //   pages: {
-  //     dashboard: false,
-  //   },
-  //   locales: [
-  //     {
-  //       code: 'en',
-  //       iso: 'en',
-  //       name: 'English',
-  //     },
-  //     // {
-  //     //   code: 'es',
-  //     //   iso: 'es',
-  //     //   name: 'Español',
-  //     // },
-  //   ],
-  // },
-  // security: {
-  //   rateLimiter: {
-  //     value: {
-  //       tokensPerInterval: 150,
-  //       interval: 'hour',
-  //       fireImmediately: true,
-  //     },
-  //     route: '/api/links',
-  //   },
-  //   headers: {
-  //     contentSecurityPolicy: false,
-  //     crossOriginEmbedderPolicy: false,
-  //   },
-  // },
   robots: {
     rules: {
       UserAgent: '*',
@@ -150,7 +106,12 @@ export default defineNuxtConfig({
   sitemap: {
     hostname: 'https://liny.app',
 
-    exclude: ['/dashboard', '/dashboard/**', '/auth'],
+    exclude: ['/dashboard', '/dashboard/**', '/auth', '/auth/**'],
+    trailingSlash: true,
+    sources: [
+      '/api/__sitemap__/urls'
+    ],
+    
   },
   ...(process.env.NODE_ENV === 'production' && {
     gtag: {
