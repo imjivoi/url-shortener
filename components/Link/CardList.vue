@@ -29,7 +29,7 @@ const emits = defineEmits(['onRemove', 'onCreate'])
 // const { t } = useI18n()
 const headers = useRequestHeaders(['cookie']) as Record<string, string>
 const { copy } = useClipboard()
-const modal = useModal()
+const modal = useFinalModal()
 const toast = useToast()
 
 const deleteLink = async (link) => {

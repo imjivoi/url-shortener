@@ -1,5 +1,5 @@
 import { $vfm, DynamicModalOptions } from 'vue-final-modal' // eslint-disable-line import/named
-export default function useModal() {
+export default function useFinalModal() {
   const open = (options: DynamicModalOptions) => {
     $vfm.show(options)
   }

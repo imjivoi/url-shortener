@@ -34,7 +34,7 @@ import { required, url as isUrl } from '@vuelidate/validators'
 
 import { LinkCreateUpdateModal } from '#components'
 
-const modal = useModal()
+const modal = useFinalModal()
 
 const url = ref('')
 
