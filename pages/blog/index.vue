@@ -6,7 +6,7 @@
     <nuxt-link :to="article._path" v-for="(article, idx) in articles" :key="idx">
       <article class="rounded-2xl bg-gray-50 dark:bg-gray-800 overflow-hidden hover:shadow transition-all">
         <div>
-          <img :src="article.image" class="max-h-[172px]" />
+          <img :src="article.image" />
         </div>
         <div class="p-4 grid gap-4">
           <h3 class="font-semibold line-clamp-3">

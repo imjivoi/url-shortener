@@ -109,7 +109,7 @@ export default defineNuxtConfig({
     exclude: ['/dashboard', '/dashboard/**', '/auth', '/auth/**'],
     trailingSlash: true,
     sources: [
-      '/api/__sitemap__/urls'
+      '/api/__sitemap__'
     ],
     
   },

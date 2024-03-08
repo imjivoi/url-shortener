@@ -5,11 +5,9 @@ import { serverQueryContent } from '#content/server'
 export default defineSitemapEventHandler(async (e) => {
   const contentList = (await serverQueryContent(e).find()) as ParsedContent[]
 
-  return contentList
-    .map((c) => {
-      return asSitemapUrl({
-        loc: `/blog/${c._path}`,
-        lastmod: new Date().toISOString()
-      })
+  return contentList.map((c) => {
+    return asSitemapUrl({
+      loc: `/blog/${c._path}`,
     })
+  })
 })
