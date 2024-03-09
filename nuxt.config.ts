@@ -111,7 +111,7 @@ export default defineNuxtConfig({
     sources: [
       '/api/__sitemap__'
     ],
-    
+    cacheMaxAgeSeconds: 60 * 10
   },
   ...(process.env.NODE_ENV === 'production' && {
     gtag: {
