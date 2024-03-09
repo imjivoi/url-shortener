@@ -24,7 +24,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-const { data: articles } = await useAsyncData('blog', () => queryContent().find())
+const { data: articles } = await useAsyncData('blog', () => queryContent().sort({ createdAt: -1 }).find())
 
 defineOgImageComponent('MyTemplate', {
   title: 'Blog',
