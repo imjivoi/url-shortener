@@ -23,13 +23,33 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
       throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
     }
 
-    const event = useNuxtApp().ssrContext?.event
+    const event = useNuxtApp().ssrContext?.event!
 
-    event?.waitUntil($fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
-      console.error,
-    ))
+    event?.waitUntil(
+      $fetch('/api/links/domain/' + host + '/alias/' + params.alias + '/statistic', { headers, method: 'POST' }).catch(
+        console.error,
+      ),
+    )
 
     if (!isCrawler(headers['user-agent'])) {
+      // Check if ads have been viewed today
+      const adsViewedCookie = useCookie('ads-viewed', {
+        path: '/',
+        maxAge: 86400, // 24 hours
+      })
+      const currentDate = new Date().toDateString()
+
+      // If ads haven't been viewed today, redirect to ads page
+      if (adsViewedCookie.value !== currentDate) {
+        // Set cookie to mark ads as viewed for today
+        adsViewedCookie.value = currentDate
+
+        // Only redirect to ads page if not already on the ads page
+        if (!useRoute().path.endsWith('/ads')) {
+          return navigateTo(`/${params.alias}/ads`)
+        }
+      }
+
       return navigateTo(link.original_url, {
         external: true,
       })
