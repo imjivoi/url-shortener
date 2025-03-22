@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   } = useRuntimeConfig()
   const host = useRequestHeader('host') || window.location.host
 
-  if (routeName !== 'alias' && host !== appDomainUrl && !to.path.includes('sw.js')) {
+  if (routeName !== 'alias' && host !== appDomainUrl && !to.path.includes('sw.js') && routeName !== 'alias-ads') {
     return navigateTo(appUrl + to.path, { replace: true, redirectCode: 309, external: true })
   }
 })
