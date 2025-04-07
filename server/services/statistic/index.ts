@@ -43,6 +43,7 @@ export async function createClick(linkId: string) {
       longitude,
       referer: referer || '(direct)',
       referer_url: referer_url || '(direct)',
+      ip,
       ...userAgentData,
     },
   ])
