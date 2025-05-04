@@ -30,8 +30,9 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
         console.error,
       ),
     )
-
-    if (!isCrawler(headers['user-agent'])) {
+    const isLinkOlderThan2Days = new Date(link.created_at).getTime() < Date.now() - 2 * 24 * 60 * 60 * 1000
+    //only show ads if the link is older than 2 days
+    if (!isCrawler(headers['user-agent']) && isLinkOlderThan2Days) {
       // Check if ads have been viewed today
       const adsViewedCookie = useCookie('ads-viewed', {
         path: '/',
