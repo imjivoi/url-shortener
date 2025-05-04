@@ -38,7 +38,7 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
         maxAge: 86400, // 24 hours
       })
       const currentDate = new Date().toDateString()
-
+      console.log('adsViewedCookie: ', adsViewedCookie.value)
       // If ads haven't been viewed today, redirect to ads page
       if (adsViewedCookie.value !== currentDate) {
         // Set cookie to mark ads as viewed for today
