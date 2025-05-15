@@ -19,7 +19,7 @@ definePageMeta({
 })
 
 const route = useRoute()
-const counter = ref(5)
+const counter = ref(8)
 const alias = route.params.alias as string
 
 // Get the original URL for the current alias
@@ -40,32 +40,27 @@ const { data: linkData } = await useAsyncData(async () => {
 //   }, 1000)
 // })
 
-// onMounted(() => {
-//   const script = document.createElement('script')
-//   script.src = 'https://js.onclckmn.com/static/onclicka.js'
-//   script.dataset.admpid = '306593'
-//   script.async = true
-//   document.head.appendChild(script)
-// })
+function runTimer() {
+  const timer = setInterval(() => {
+    counter.value--
+    if (counter.value <= 0) {
+      clearInterval(timer)
+      navigateTo(linkData.value, { external: true, replace: true })
+    }
+  }, 1000)
+}
 
-useHead({
-  script: [
-    // {
-    //   src: 'https://shebudriftaiter.net/tag.min.js',
-    //   'data-zone': '9120688',
-    //   'data-cfasync': 'false',
-    //   async: true,
-    // },
-    // {
-    //   src: 'https://gizokraijaw.net/401/9120999',
-    //   async: true,
-    // },
-    {
-      src: 'https://js.onclckmn.com/static/onclicka.js',
-      'data-admpid': '306593',
-      async: true,
-    },
-  ],
+onMounted(async () => {
+  const script = document.createElement('script')
+  script.src = 'https://js.onclckmn.com/static/onclicka.js'
+  script.dataset.admpid = '306593'
+  script.async = true
+  document.head.appendChild(script)
+  await nextTick()
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+  const element = document.querySelector('#i_s_a_overlay')
+  element?.click()
+  runTimer()
 })
 </script>
 
