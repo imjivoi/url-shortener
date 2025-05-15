@@ -29,16 +29,24 @@ const { data: linkData } = await useAsyncData(async () => {
   return link.original_url
 })
 
-// Create a countdown timer and redirect when it reaches 0
-onMounted(() => {
-  const timer = setInterval(() => {
-    counter.value--
-    if (counter.value <= 0) {
-      clearInterval(timer)
-      navigateTo(linkData.value, { external: true, replace: true })
-    }
-  }, 1000)
-})
+// // Create a countdown timer and redirect when it reaches 0
+// onMounted(() => {
+//   const timer = setInterval(() => {
+//     counter.value--
+//     if (counter.value <= 0) {
+//       clearInterval(timer)
+//       navigateTo(linkData.value, { external: true, replace: true })
+//     }
+//   }, 1000)
+// })
+
+// onMounted(() => {
+//   const script = document.createElement('script')
+//   script.src = 'https://js.onclckmn.com/static/onclicka.js'
+//   script.dataset.admpid = '306593'
+//   script.async = true
+//   document.head.appendChild(script)
+// })
 
 useHead({
   script: [
@@ -48,8 +56,13 @@ useHead({
     //   'data-cfasync': 'false',
     //   async: true,
     // },
+    // {
+    //   src: 'https://gizokraijaw.net/401/9120999',
+    //   async: true,
+    // },
     {
-      src: 'https://gizokraijaw.net/401/9120999',
+      src: 'https://js.onclckmn.com/static/onclicka.js',
+      'data-admpid': '306593',
       async: true,
     },
   ],
