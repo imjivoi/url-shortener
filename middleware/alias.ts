@@ -30,25 +30,25 @@ export default defineNuxtRouteMiddleware(async ({ params }) => {
         console.error,
       ),
     )
-    const isLinkOlderThan2Days = new Date(link.created_at).getTime() < Date.now() - 2 * 24 * 60 * 60 * 1000
+    // const isLinkOlderThan2Days = new Date(link.created_at).getTime() < Date.now() - 2 * 24 * 60 * 60 * 1000
     if (!isCrawler(headers['user-agent'])) {
-      // Check if ads have been viewed today
-      const adsViewedCookie = useCookie('ads-viewed', {
-        path: '/',
-        maxAge: 86400, // 24 hours
-      })
-      const currentDate = new Date().toDateString()
-      console.log('adsViewedCookie: ', adsViewedCookie.value)
-      // If ads haven't been viewed today, redirect to ads page
-      if (adsViewedCookie.value !== currentDate) {
-        // Set cookie to mark ads as viewed for today
-        adsViewedCookie.value = currentDate
+      // // Check if ads have been viewed today
+      // const adsViewedCookie = useCookie('ads-viewed', {
+      //   path: '/',
+      //   maxAge: 86400, // 24 hours
+      // })
+      // const currentDate = new Date().toDateString()
+      // console.log('adsViewedCookie: ', adsViewedCookie.value)
+      // // If ads haven't been viewed today, redirect to ads page
+      // if (adsViewedCookie.value !== currentDate) {
+      //   // Set cookie to mark ads as viewed for today
+      //   adsViewedCookie.value = currentDate
 
-        // Only redirect to ads page if not already on the ads page and the link is older than 2 days
-        if (!useRoute().path.endsWith('/ads') && isLinkOlderThan2Days) {
-          return navigateTo(`/${params.alias}/ads`)
-        }
-      }
+      //   // Only redirect to ads page if not already on the ads page and the link is older than 2 days
+      //   if (!useRoute().path.endsWith('/ads') && isLinkOlderThan2Days) {
+      //     return navigateTo(`/${params.alias}/ads`)
+      //   }
+      // }
 
       return navigateTo(link.original_url, {
         external: true,
